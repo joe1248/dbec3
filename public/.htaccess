@@ -7,7 +7,7 @@ RewriteRule .* $1.php [QSA,NC,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !(\.png|\.jpg|\.gif|\.jpeg|\.bmp)$
+RewriteCond %{REQUEST_URI} !(\.png|\.jpg|\.gif|\.jpeg|\.bmp|\.html)$
 RewriteRule .* index\.php
 
 # Maintenance page
