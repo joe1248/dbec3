@@ -1,6 +1,6 @@
 # config/routes.yaml
  
-app_lucky_number:
+LuckyRoute:
     path: /lucky
     controller: App\Controller\LuckyController::number
 
@@ -11,3 +11,6 @@ index:
 login:
     path: /login
     controller: App\Controller\SecurityController::login
+
+logout:
+    path: /logout

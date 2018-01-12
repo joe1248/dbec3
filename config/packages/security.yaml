@@ -26,12 +26,22 @@ security:
             # form_login: ~
             # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
+            # FROM https://symfony.com/doc/current/reference/configuration/security.html
             form_login:
                 login_path: login
                 check_path: login
+                always_use_default_target_path: false
+                default_target_path: LuckyRoute
+                #target_path_parameter:          _target_path
+                use_referer:                    false
 
             provider: our_db_provider
 
-    access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/lucky, roles: ROLE_ADMIN }
+            logout:
+                path: /logout
+                target: /
+
+# only needed if you have roles per users
+#    access_control:
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/lucky, roles: ROLE_ADMIN }
