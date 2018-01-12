@@ -1,0 +1,144 @@
+<!-- src/Resources/views/Dashboard/dashboard.html.twig -->
+{% extends 'base.html.twig' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block body %}
+<!--body class="hidden" style="overflow:hidden;"-->
+    <div id="home_tabs" class="ui-layout-center">
+        <div id="home_tab_welcome" class="tab_content">
+            <div class="col-group">
+                <div>
+                    <div><br><br>
+                        <fieldset class="fieldset one_line hidden" style="position:relative;top:7px;height:60px;">
+                            <input type="button" value="Add A DB Server" id="welcome_big_button_add_db_server" style="top:10px;" class="welcome_button_add_db_server">
+                        </fieldset>
+                        <fieldset class="fieldset one_line">
+                            <!--legend class="legend">DB Servers</legend-->
+                            <legend class="legend">Basics</legend>
+                            
+                            <!-- BIGGER BUTTON create entity if no DB SERVERS yet ==> manager button disappear too -->
+                            <input type="button" value="Manage your servers" id="welcome_button_db_servers_list">
+                            <input type="button" value="+" class="welcome_button_add_db_server" title="Add a DB server"> 
+                            <br>
+                            <br>
+                            <input type="button" value="Create A New Entity" id="welcome_big_button_create_entity" class="welcome_button_create_entity">
+                            
+                            <!-- BIGGER BUTTON create entity if no entities yet ==> manager button disappear too -->
+                            <div>
+                                <input type="button" value="Manage your entities" id="welcome_button_entities_list">
+                                <input type="button" value="+" class="welcome_button_create_entity" title="Create a new entity">
+                            </div>
+                            <br>
+                            <input type="button" value="Database Explorer" id="welcome_button_database_explorer">
+                        </fieldset>
+                    </div>
+                </div>
+                
+                <div><br><br>
+                    <fieldset class="fieldset one_line">
+                        <legend class="legend">Clone Data</legend>
+                        <input type="button" value="one entire table" id="welcome_big_button_clone_entire_table" class="welcome_button_clone_entire_table">
+                        <br>
+                        <!-- Message : please create an entity if none yet -->
+                        <span id="div_list_of_entities_to_clone">...</span>
+                    </fieldset>
+                </div>
+            
+                <div style="clear:left;">
+                </div>
+    
+                <!--div><br><br>
+                    <fieldset class="fieldset one_line">
+                        <legend class="legend">Saved Data Files</legend>
+                        <span id="div_list_of_sql_file_ready_to_paste"></span>
+                    </fieldset>
+                </div-->
+    
+                <div><br><br>
+                    <fieldset class="fieldset one_line">
+                        <legend class="legend">Recent Transfers</legend>
+                        <span id="div_list_of_recent_transfers">...</span>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <ul class="top_tabs">
+            <li><a id="link_home_tab" href="#home_tab_welcome">Home</a></li>
+        </ul>
+    </div>
+    <input type="hidden" id="new_registered_id" value="0">
+
+    <!-- TOP MENU = 1 setting icon and onmousehover : link to account settings, soon FK guesser and log out link  + Version number + occasional UPdate DBEC button.. --->
+
+    <div class="nobr dbec_about_menu"><br><br>
+        <!-- TOOLS BUTTON -->
+        <ul class="jquery_menu_main" id="menu_settings" style="position:relative;display:inline-block;">
+            <li> 
+                <img style="height:20px;width:21px;" src="../html_cdn/images_icon/settings.jpg">
+                <ul style="display:none;"> 
+                    <li><a href="#" class="nobr" id="button_account_details">Account Settings</a></li>
+                    <li><a href="#" id="button_new_logout" class="nobr">Log out</a></li>
+                </ul>
+            </li> 
+        </ul>
+
+        <span id="auto_test_user_home_title">DBEC Version 1.0</span> 
+        <!-- DOCUMENTATION is about old veriosn of dbec, so maybe update it, or at least copy the intro on live web site-->
+        <!--a href="#"  id="button_documentation" style="position:relative;display:inline-block;">
+            <img style="height:24px;border:0;" src="../html_cdn/images_icon/help.jpg">
+        </a-->
+    </div>
+    <div class="title_color nobr dbec_update_menu_button">
+        <input type="button" class="small-button hidden" id="button_to_get_latest_dbec_version" 
+                value="Update to DBec xxx" /> 
+        <span id="dbec_is_up_to_date"  class="color_inverted_1 hidden">Up to date ;)</span>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript"  src="/js_preloaded/pages_map.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/session_timeout.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/0_tabs.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/0_common_delete.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/welcome_page.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_core.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/clone1_fct_trees.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/action_edit.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/js_only_tree.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/jstree.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_base.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/getHtmlIdFromRelPath.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_core.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/clone1_fct_trees.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/action_edit.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/js_only_tree.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/jstree.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_base.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/js_trees/getHtmlIdFromRelPath.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/obfuscation.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/sorttable.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C1_paste_ui_setup.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A4_db_compare_and_extraction_progress.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B0_view_extraction.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B1_extraction_progress_and_end.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A3_start_db_compare_or_paste.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C0_view_transfer.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C2_paste_reset_1_target_ui_and_post.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C3_paste_progress.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A0_view_ui.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A1_clone_ui_setup.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A2_clone_ui_fct.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C1_paste_ui_setup.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A4_db_compare_and_extraction_progress.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B0_view_extraction.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B1_extraction_progress_and_end.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A3_start_db_compare_or_paste.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C0_view_transfer.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C2_paste_reset_1_target_ui_and_post.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C3_paste_progress.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A0_view_ui.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A1_clone_ui_setup.js"></script>
+    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A2_clone_ui_fct.js"></script>
+{% endblock %}

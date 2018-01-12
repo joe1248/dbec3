@@ -13,7 +13,7 @@ class DashboardController  extends Controller
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        return $this->render('Dashboard/dashboard.html.php', [
+        return $this->render('Dashboard/dashboard.html.twig', [
             'user' => $user
         ]);
     }
