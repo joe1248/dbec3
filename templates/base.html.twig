@@ -16,12 +16,12 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}
-            <script type="text/javascript"  src="/html_cdn/lib/jquery/jquery-1.11.0.min.js"></script>
-            <script type="text/javascript"  src="/html_cdn/lib/jquery/jquery-ui.1.10.4.min.js"></script>
-            <script type="text/javascript"  src="/html_cdn/lib/ide_js/proto.js"></script>
-            <script type="text/javascript"  src="/html_cdn/lib/ide_js/mini.js"></script>
-            <script type="text/javascript"  src="/html_cdn/lib/ide_js/mini_jquery.js"></script>
-            <script type="text/javascript"  src="/html_cdn/lib/jquery/spin.min.js"></script>
+            <script type="text/javascript"  src="{{ asset('js/lib/jquery-1.11.0.min.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('js/lib/jquery-ui.1.10.4.min.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('js/lib/proto.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('js/lib/mini.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('js/lib/mini_jquery.js') }}"></script>
+            <script type="text/javascript"  src="{{ asset('js/lib/spin.min.js') }}"></script>
             <script type="text/javascript">"use strict";
                 var pos  = "";
                 var Gcurrent_user = "autotest";

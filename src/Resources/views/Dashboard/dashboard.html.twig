@@ -1,4 +1,3 @@
-<!-- src/Resources/views/Dashboard/dashboard.html.twig -->
 {% extends 'base.html.twig' %}
 
 {% block title %} Dashboard {% endblock %}
@@ -98,47 +97,41 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript"  src="/js_preloaded/pages_map.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/session_timeout.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/0_tabs.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/0_common_delete.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/welcome_page.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_core.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/clone1_fct_trees.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/action_edit.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/js_only_tree.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/jstree.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_base.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/getHtmlIdFromRelPath.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_core.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/clone1_fct_trees.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/action_edit.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/js_only_tree.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/jstree.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/tree_base.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/js_trees/getHtmlIdFromRelPath.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/obfuscation.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/sorttable.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C1_paste_ui_setup.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A4_db_compare_and_extraction_progress.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B0_view_extraction.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B1_extraction_progress_and_end.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A3_start_db_compare_or_paste.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C0_view_transfer.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C2_paste_reset_1_target_ui_and_post.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C3_paste_progress.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A0_view_ui.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A1_clone_ui_setup.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A2_clone_ui_fct.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C1_paste_ui_setup.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A4_db_compare_and_extraction_progress.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B0_view_extraction.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/B1_extraction_progress_and_end.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A3_start_db_compare_or_paste.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C0_view_transfer.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C2_paste_reset_1_target_ui_and_post.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/C3_paste_progress.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A0_view_ui.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A1_clone_ui_setup.js"></script>
-    <script type="text/javascript"  src="/js_preloaded/3_cloning_helpers/A2_clone_ui_fct.js"></script>
+    <script type="text/javascript"  src="{{ asset('js/lib/jquery-1.11.0.min.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/lib/jquery-ui.1.10.4.min.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/lib/proto.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/lib/mini.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/lib/mini_jquery.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/lib/spin.min.js') }}"></script>
+    <script type="text/javascript">"use strict";
+        var pos  = "";
+        var Gcurrent_user = "autotest";
+        //if(document.body){document.body.style.display="none";}
+    </script>
+
+    <script type="text/javascript"  src="{{ asset('js_preloaded/pages_map.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/session_timeout.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/0_tabs.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/0_common_delete.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/welcome_page.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/tree_core.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/clone1_fct_trees.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/action_edit.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/js_only_tree.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/jquery.jstree.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/tree_base.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/js_trees/getHtmlIdFromRelPath.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/obfuscation.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/sorttable.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/A0_view_ui.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/A1_clone_ui_setup.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/A2_clone_ui_fct.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/A3_start_db_compare_or_paste.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/A4_db_compare_and_extraction_progress.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/B0_view_extraction.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/B1_extraction_progress_and_end.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/C0_view_transfer.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/C1_paste_ui_setup.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/C2_paste_reset_1_target_ui_and_post.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js_preloaded/3_cloning_helpers/C3_paste_progress.js') }}"></script>
 {% endblock %}
