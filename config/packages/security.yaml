@@ -4,19 +4,13 @@ security:
         our_db_provider:
             entity:
                 class: App\Entity\User
-                # if you're using multiple entity managers
-                # manager_name: customer        in_memory:
-            #memory:
-             #   users:
-              #      ryan:
-               #         password: ryanpass
-                #        roles: 'ROLE_USER'
-                 #   admin:
-                  #      password: kitten
-                   #     roles: 'ROLE_ADMIN'
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -35,6 +29,8 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+
+            provider: our_db_provider
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
