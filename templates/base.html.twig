@@ -1,12 +1,32 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>DBEC {% block title %}{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="DBEC Database Entity Cloner: Web App to transfer data subsets between MySQL databases, while maintaining referential integrity.">
+        <meta name="author" content="Joseph Barban">
+        <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD//////v/+//7//////////f7+/+f38//P8Of/wuvh/8Lr4f/P8Of/5/fz//3+/v///////v////7//v///////v/////////u+fb/neDP/2LMsf9Ew6L/N76b/zG8mP8xvJj/N76b/0TDov9izLH/neDP/+759v///////v/////////d9O7/SsSl/yC2jv8kuJL/Mr+c/0DFpv9JyKz/Scis/0DFpv8yv5z/JLiS/yC2jv9KxKX/3fTu////////////ftW+/x64kf9u1sL/qObZ/8vp2//b5dP/4ePP/+Hjz//b5dP/y+nb/6jm2f9u1sL/HriR/37Vvv///////////4Tax/+q4dD/79e1/+C4ff/RpVz/yJtL/8SXRP/El0T/yJtL/9GlXP/guH3/79e1/6rh0P+E2sf////////////b6dr/1qto/7mNMv+2jDD/vpI7/8aZR//KnU//yp1P/8aZR/++kjv/toww/7mNMv/Wq2j/2+na////////////28CN/7eJKv/ar2//6syj/+few//e5NH/2OfW/9jn1v/e5NH/597D/+rMo//ar2//t4kq/9vAjf///////////9y9if/izaX/uurg/33byv9YzrX/Rcap/z3Do/89w6P/Rcap/1jOtf9928r/uurg/+LNpf/cvYn////////////i59b/ZtK8/ye5lP8gtYz/J7iS/zG9mv84wJ//OMCf/zG9mv8nuJL/ILWM/ye5lP9m0rv/4ufW////////////idrH/xeziv9VzbP/jN/Q/7Pn2//J6dv/0ujZ/9Lo2f/J6dv/s+fb/4zf0P9VzbP/F7OK/4nax////////////3rWwP+R3s3/6eDI/+bElP/bsG//0qVc/86gVP/OoFT/0qVc/9uwb//mxJT/6eDI/5Hezf961sD////////////R7OD/3Ld9/8OVP/+8kjv/vpVA/8CXRP/AmEb/wJhG/8CXRP++lUD/vJI7/8OVP//ct33/0evg////////////38SV/7uONP/EnU7/xJxM/8SbS//Dmkr/w5pK/8OaSv/Dmkr/xJtL/8ScTP/EnU7/u440/9/ElP///////////97Jnv+8jjP/w5tK/8SbS//Em0v/w5pK/8OaSv/Dmkr/w5pK/8SbS//Em0v/w5tK/7yOM//eyZ7////////////+/Pr/3MSV/8OaSv/AlD//wZZB/8KYRf/CmUb/wplG/8KYRf/BlkH/wJQ//8OaSv/cxJX//fz6//////////////7+///////17uH/4cyj/9K0eP/Lp2H/x6FX/8ehV//Lp2H/0rR4/+HMo//17uH////////+/v//////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="/>
+        {% block stylesheets %}
+            <link  id="jquery_css"  href="/html_cdn/lib/jquery_themes/flick/jquery-ui.min.css?v=1494682968" rel="stylesheet" type="text/css" />
+            <link  id="user_color_css"  href="/html_cdn/lib/jquery_themes/auto_css/flick.css?v=1494682968" rel="stylesheet" type="text/css" />
+            <link  href="/html_cdn/lib/css.css?v=1494682968" rel="stylesheet" type="text/css" />    
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript"  src="/html_cdn/lib/jquery/jquery-1.11.0.min.js"></script>
+            <script type="text/javascript"  src="/html_cdn/lib/jquery/jquery-ui.1.10.4.min.js"></script>
+            <script type="text/javascript"  src="/html_cdn/lib/ide_js/proto.js"></script>
+            <script type="text/javascript"  src="/html_cdn/lib/ide_js/mini.js"></script>
+            <script type="text/javascript"  src="/html_cdn/lib/ide_js/mini_jquery.js"></script>
+            <script type="text/javascript"  src="/html_cdn/lib/jquery/spin.min.js"></script>
+            <script type="text/javascript">"use strict";
+                var pos  = "";
+                var Gcurrent_user = "autotest";
+                //if(document.body){document.body.style.display="none";}
+            </script>
+        {% endblock %}
     </body>
 </html>
