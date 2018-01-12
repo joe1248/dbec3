@@ -25,3 +25,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    Symfony\Component\Security\Http\Authentication\AuthenticationUtils:
+        # redundant thanks to _defaults, but value is overridable on each service
+        autowire: true
+        # not required, will help in our example
+        public: true

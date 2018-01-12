@@ -4,7 +4,10 @@ app_lucky_number:
     path: /lucky
     controller: App\Controller\LuckyController::number
 
-
 index:
     path: /
     controller: App\Controller\IndexController::index
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
