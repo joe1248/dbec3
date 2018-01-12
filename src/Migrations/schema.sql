@@ -367,18 +367,22 @@ CREATE TABLE `idea_reset_code` (
 --
 
 DROP TABLE IF EXISTS `idea_user`;
+DROP TABLE IF EXISTS users;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `idea_user` (
+CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) DEFAULT NULL,
-  `mail` varchar(75) DEFAULT NULL,
+  `username` varchar(25) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `is_active` TINYINT(1) NOT NULL,
   `timezone_offset` int(11) DEFAULT NULL,
-  `password` varchar(125) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL COMMENT 'emailValid or whatever',
   `signup_date` date DEFAULT NULL,
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `json_settings` varchar(254) DEFAULT NULL,
+  UNIQUE INDEX UNIQ_1483A5E9F85E0677 (username),
+  UNIQUE INDEX UNIQ_1483A5E9E7927C74 (email),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
