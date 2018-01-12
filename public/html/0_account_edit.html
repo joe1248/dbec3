@@ -1,0 +1,33 @@
+<div class="center1 content">
+  <div class="center2">
+    <div class="center3" style="width:500px;">
+        <h2>Your account</h2>
+        <input id="submit_account_form" type="button" value="Update account details">
+        <span id="font_account_is_up_to_date"></span>
+        <div id="div_for_server_messages"   style="display:inline-block;line-height:30px;text-align:center;width:450px;"></div>
+        <form action="">
+            <table class="centered" style="border-spacing: 10px; border-collapse: separate;">
+                <tr>
+                    <td class="align_right">Email</td>
+                    <td><input class="ui-button" type="text" size="50" style="width:371px;" maxlength="50" name="user_mail"></td>
+                </tr>
+                <tr>
+                    <td class="center" colspan="2" id="row_email_validation">
+                        <input type="hidden" id="email_was_validated" value="false">
+                        <span style="display:none;" id="email_is_valid_message">Your email has been validated.</span>
+                        <input style="display:none;" id="validate_email" type="button" class="medium-button" value="Validate this email adress">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align_right">User&nbsp;name</td>
+                    <td><input class="ui-button" type="text" size="50" style="width:371px;" maxlength="50" name="your_user_name"></td>
+                </tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr>
+                    <td class="align_right">Theme</td>
+                    <td><select style="width:371px;" id="theme_switcher"></select></td>
+                </tr>
+        </form>
+    </div>
+  </div>
+</div>

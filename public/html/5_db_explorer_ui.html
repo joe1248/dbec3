@@ -1,0 +1,27 @@
+    <div class="center3" style="vertical-align:top;width:90%;">
+        <br>
+        
+        <!-- TODO put some infos about the transfer like whcich table copied and which ids... -->
+        
+        <fieldset class="fieldset" style="vertical-align:top;width:30%;float:left;">
+            <legend class="legend">Your servers</legend> 
+            <div id="div_db_explorer_servers_container">
+                <select id="select_db_explorer_limit_[#TAB_COUNTER#]">
+                    <option value="10">Limit 10</option>
+                    <option value="100" selected>Limit 100</option>
+                    <option value="1000">Limit 1000</option>
+                    <option value="no_limit">No limit</option>
+                </select>
+                <br><br>
+                <div id="div_pick_a_db_to_explore" style="max-height:400px;overflow:auto;">
+                    <br><br>Loading soon...
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset id="db_explorer_right" class="any_side fieldset"  style="vertical-align:top;width:60%;float:right;">
+            <legend class="legend db_explorer_screen_legend">Data in <span id="div_table_results_title_[#TAB_COUNTER#]"></span></legend> 
+            <div id="div_table_results_[#TAB_COUNTER#]" class="data_tables"></div>
+        </fieldset>
+        
+    </div>

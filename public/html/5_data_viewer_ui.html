@@ -1,0 +1,35 @@
+    <div class="center3" style="vertical-align:top;width:90%;">
+        <br>
+        
+        <!-- TODO put some infos about the transfer like whcich table copied and which ids... -->
+        
+        <fieldset class="fieldset" style="vertical-align:top;width:30%;float:left;">
+            <legend class="legend">Tables in this tranfer</legend> 
+            <div id="div_view_data_src_select_tables_container">
+                <br>Click on a table to be view <br>the data which have been transfered :
+                <select id="select_view_data_limit_[#TAB_COUNTER#]">
+                    <option value="10">Limit 10</option>
+                    <option value="100" selected>Limit 100</option>
+                    <option value="1000">Limit 1000</option>
+                    <option value="no_limit">No limit</option>
+                </select>
+                <br><br>
+                <div id="js_only_tree_of_tables_to_view_data_[#TAB_COUNTER#]" style="max-height:400px;overflow:auto;">
+                    <br><br>Loading soon...
+                </div>
+            </div>
+        </fieldset>
+
+
+        <fieldset id="top" class="any_side fieldset"  style="vertical-align:top;width:60%;float:right;">
+            <legend class="legend view_data_src_screen_legend">Data in source DB<span id="data_view_src_title_[#TAB_COUNTER#]"></span></legend> 
+            <div id="div_source_filters_[#TAB_COUNTER#]"></div>
+            <div id="div_table_source_[#TAB_COUNTER#]" class="data_tables"></div>
+        </fieldset>
+        
+        <fieldset id="bottom" class="any_side fieldset"  style="vertical-align:top;width:60%;float:right;margin-top:30px;">
+            <legend class="legend view_data_src_screen_legend">Data in target DB<span id="data_view_dest_title_[#TAB_COUNTER#]"></span></legend> 
+            <div id="div_target_filters_[#TAB_COUNTER#]"></div>
+            <div id="div_table_target_[#TAB_COUNTER#]" class="data_tables"></div>
+        </fieldset>
+    </div>

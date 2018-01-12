@@ -1,0 +1,114 @@
+<div class="div_title hidden"></div>
+<div id="div_transfer_questions[#TAB_COUNTER#]">
+    <form id="form_to_clone_entity_data[#TAB_COUNTER#]">
+        <input type="hidden" name="src_db_name"      id="clone_[#TAB_COUNTER#]src_db_name"      value="">
+        <input type="hidden" name="src_db_svr_id"    id="clone_[#TAB_COUNTER#]src_db_svr_id"    value="">
+        <input type="hidden" name="src_db_svr_name"  id="clone_[#TAB_COUNTER#]src_db_svr_name"  value="">
+        
+        <input type="hidden" name="dest_db_name"     id="clone_[#TAB_COUNTER#]dest_db_name"     value="">
+        <input type="hidden" name="dest_db_svr_id"   id="clone_[#TAB_COUNTER#]dest_db_svr_id"   value="">
+        <input type="hidden" name="dest_db_svr_name" id="clone_[#TAB_COUNTER#]dest_db_svr_name" value="">
+        <input type="hidden" name="end_of_perso_query" id="clone_[#TAB_COUNTER#]end_of_perso_query" value="">
+        
+        <input type="hidden" name="entity_ready_id"  id="clone_[#TAB_COUNTER#]entity_ready_id"  value="">
+        <input type="hidden" name="copy_sql"         id="clone_[#TAB_COUNTER#]copy_sql"         value="true">
+        <input type="hidden" name="delete_sql"       id="clone_[#TAB_COUNTER#]delete_sql"       value="false">
+        <input type="hidden" name="object_id"        id="clone_[#TAB_COUNTER#]object_id"        value="">
+        <input type="hidden" name="copy_transfer_id" id="clone_[#TAB_COUNTER#]copy_transfer_id" value="">
+        <div class="div_left">
+        
+            <!------------- SOURCE -------------------->
+            <br>
+            <div id="div_db_tree_source_dad[#TAB_COUNTER#]" class="hidden">
+                 <fieldset class="fieldset fieldset_copy_entity">
+                    <legend class="legend clone_ui_screen_legend">Source</legend> 
+                    <h3 id="h3_db_tree_source_title" class="user_instruction hidden"></h3>
+                    <div id="div_db_tree_source"></div>
+                    <div id="div_db_tree_source_chosen"></div>
+                 </fieldset>
+            </div>
+            <br>
+            <!------------- RECORDS TO COPY/DELETE -------------------->
+            
+            <div class="hidden" id="div_first_question">
+             <fieldset class="fieldset fieldset_copy_entity">
+                <legend class="legend clone_ui_screen_legend">Records to copy</legend> 
+                <div>
+                    <div style="display: inline-block; margin-left: 12%; margin-right: 10%; min-width:30%;" >
+                        <input type="button" class="medium-button" id="user_choice_1" value="One record by ID">
+                    </div>
+                    <div style="display: inline-block; margin-left: 3%; margin-right: 10%; min-width:30%;" >
+                        <input type="button" class="medium-button" id="user_choice_2" value="Many records by SQL query">
+                    </div>
+                </div>
+            </div>
+            <!------------- BY IDs -------------->
+            <div id="div1" class="hidden">
+                 <fieldset class="fieldset fieldset_copy_entity">
+                    <legend class="legend clone_ui_screen_legend">Records to copy</legend> 
+                    <span id="real_second_answer" class="float_right_container"></span>
+                    <span id="font_second_answer" class="user_instruction float_right_container"></span>
+                </fieldset>
+            </div>
+            <!------------- BY SQL QUERY -------------->
+            <div id="div2" class="hidden"><br>
+                <fieldset class="fieldset fieldset_copy_entity">
+                    <legend class="legend clone_ui_screen_legend">Records to copy</legend> 
+                    <span id="font_third_answer" class="float_right_container"></span>
+                </fieldset>
+            </div>
+        </div>
+        
+        
+        
+        <!-----------------------LEFT : above -----------------------RIGHT : below ------------------------------------------------------->
+        
+        <div class="div_right">
+            <div id="div_db_tree_destination_dad" class="hidden center_simple">
+                 <fieldset class="fieldset fieldset_copy_entity">
+                    <legend class="legend clone_ui_screen_legend">Target(s)</legend> 
+                    <div id="h3_db_tree_destination_title">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <input type="hidden" name="multiple_destinations" id="multiple_destinations" value="false">
+                        <input type="checkbox" id="real_multiple_destinations">
+
+                        <span>Allow multiple targets.</span>
+                        <span class="nowrap hidden" style="float:right;">
+                            <input  id="button_submit_db_destination" type="button" class="small-button user_instruction" value="All DBs chosen">
+                        </span>
+                        <br><br>
+                    </div>
+                    <div id="div_db_tree_destination"></div>
+                    <div id="div_db_tree_destination_chosen"></div>
+                </fieldset>
+            </div>
+            <div id="div_extra_questions" class="hidden"><br>
+                <fieldset class="fieldset fieldset_copy_entity">
+                    <legend class="legend clone_ui_screen_legend">Options</legend> 
+                    <div class="two_mini_boxes box2" style="margin:10px;">
+                        <input id="transfer_submit_button" type="button" value="Start Data Transfer">
+                    </div>
+                    <div class="two_mini_boxes box1">
+                        <input type="hidden" name="save_in_data_file[#TAB_COUNTER#]" value="checked" size="50" style="width:200px;"/>
+                        <input type="hidden" name="shown_user_data_filename[#TAB_COUNTER#]" size="50" style="width:200px;"/>
+
+                        <input type="hidden" name="multiple_destinations" id="multiple_destinations" value="true">
+                        <input type="checkbox" id="real_multiple_destinations" checked>
+
+                        <label for="real_on_error_stop_n_do_a_rollback">If error, interrupt transfer and rollback.</label>
+
+                        <input type="hidden" name="enable_debug_mode_[#TAB_COUNTER#]" id="enable_debug_mode_[#TAB_COUNTER#]" value="false">
+                        <input type="checkbox" id="real_enable_debug_mode_[#TAB_COUNTER#]">
+
+                        <label for="real_enable_debug_mode">Enable Debug Mode.</label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="new_main_extraction_div[#TAB_COUNTER#]" class="hidden">
+</div>
+<br><br>
+<br><br>

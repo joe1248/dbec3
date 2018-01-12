@@ -1,0 +1,42 @@
+		<!--div class="centered hidden" id="div_recent_transfer_list" style="height:97%; overflow:auto;"-->
+		<div class="centered hidden" id="div_recent_transfer_list">
+			<br>
+			<fieldset class="fieldset one_line">
+				<legend class="legend">Transfer History (<span id="span_nb_transfers">XXX</span> transfers).</legend>
+				
+				<table class="sortable_history" style="width:650px;">
+					<thead><tr><th>When<span id="sorttable_sortrevind"> ▴</span></th><th>What</th><th>From</th><th>To</th><th>Size</th></tr></thead>
+                    <tfoot><tr><th colspan="5">
+                    	<div id="pagination_small">
+                            Page $page_index of $expected_number_of_pages
+                            <div id="not_first_page">
+                                <input class="histo_go_to_page" data="0"				type="button" value="<<" title="First Page"    class="small-button jqtooltip" style="margin-left:40px;">
+                                <input class="histo_go_to_page" data="$page_index - 1" type="button" value="<"  title="Previous Page" class="small-button jqtooltip" style="margin-left:40px;">
+                                <span style="width:100px; display: inline-block;">&nbsp;</span>
+                            </div>
+                            <div id="not_last_page">
+                                <input class="histo_go_to_page" data="page_index" type="button" value=">" title="Next Page" class="small-button jqtooltip" style="margin-left:40px;">
+                                <input class="histo_go_to_page" data="expected_number_of_pages type="button" value=">>" title="Last Page" class="small-button jqtooltip" style="margin-left:40px;">
+                                <span style="width:100px; display: inline-block;">&nbsp;</span>'
+                            </div>
+                        </div>
+                    </th></tr></tfoot>
+                    <!--tfoot><tr><th>When</th><th>What</th><th>From</th><th>To</th><th>Size</th></tr></tfoot-->
+					<tbody class="html_example">
+						<tr>
+							<td class="td_left_align" sorttable_customkey="__paste_sql_id">Label</td>
+							<td class="td_right_align" sorttable_customkey="__a['nb_bytes']">Size</td>
+							<td><input type="button" value="?"		title="__info" class="small-button jqtooltip"></td>
+							<td><input type="button" value="Replay" html_entity_id="__entity_id" paste_transfer_id="__paste_sql_id"
+                                       entity_label="__entity_label" class="small-button button_recent_transfer_go">
+                            </td>
+                            <td><input type="button" value="View data T__transfer_idx" html_entity_id="__entity_id" transfer_idx="__transfer_id"
+									   paste_transfer_id="__paste_sql_id" copy_transfer_id="__copy_sql_id"
+                                       entity_label="__entity_label" class="small-button button_view_data_go"></td>
+                        </tr>
+					</tbody>
+				</table>
+				<br><br>
+			</fieldset>
+		</div>
+		<br><br>

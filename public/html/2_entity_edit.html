@@ -1,0 +1,166 @@
+        <br>
+        <table class="center hidden" id="table_edit_entity_[#TAB_COUNTER#]"><!--</table> class=""-->
+            <tr>
+                <td colspan="3" style="text-align:center;">
+                            <span id="html_font_saved_edited_entity_[#TAB_COUNTER#]" style="width:200px;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <fieldset class="fieldset edit_entity_fieldset">
+                        <legend class="legend edit_entity_screen_legend">Infos</legend>
+                        <br>
+                        This entity is based on the DB
+                        <strong><span id="span_edit_entity_[#TAB_COUNTER#]_entity_database"></span></strong>
+                        from the DB server 
+                        <strong><span id="span_edit_entity_[#TAB_COUNTER#]_entity_server"></span></strong>
+                        <!--br><br>
+                        The number of virtual Foreign Keys is 153.>
+                        <input type="button" class="margin_15 medium-button" id="button_foreign_keys_wizard_[#TAB_COUNTER#]" value="Open FK wizard">
+                        <input type="button" class="margin_15 medium-button" id="button_foreign_keys_manually_[#TAB_COUNTER#]" value="Add virtual FK manually">
+                        <!--br><br>
+                        Your 153 virtual FKs are "stored" in <strong>_virtual_model_clara_virtual</strong> for future re-use.
+                        <br--><br>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;
+                </td>
+            </tr>
+                <td colspan="3">
+                    <fieldset class="fieldset edit_entity_fieldset"> 
+                        <legend class="legend edit_entity_screen_legend">Entity name</legend> 
+                        <input type="hidden"    id="input_edit_entity_[#TAB_COUNTER#]_entity_ready_id"  value="" >
+                        <input type="text"      id="input_edit_entity_[#TAB_COUNTER#]_entity_label"     value=""
+                                class="medium-input align_left margin_15" size="35">
+                        <span class="hidden">
+                            <input type="button" class="margin_15 medium-button" value="Save Entity Definition" id="button_save_edited_entity_[#TAB_COUNTER#]"/>
+                            &nbsp;&nbsp;
+                            <input type="button" class="button_clone_data margin_15 medium-button" value="Clone Data"  id="button_clone_edited_entity_[#TAB_COUNTER#]"/>
+                        </span>
+                    </fieldset>
+                </td>
+            </tr>
+            
+            <tr class="only_tr_when_never_saved tr_for_form_extra_tables_decisions_[#TAB_COUNTER#]">
+                <td colspan="3">&nbsp;
+                </td>
+            </tr>
+            <tr class="only_tr_when_never_saved tr_for_form_extra_tables_decisions_[#TAB_COUNTER#]">
+                <td colspan="3" style="vertical-align:top;">
+                    <fieldset class="fieldset edit_entity_fieldset">
+                        <legend class="legend edit_entity_screen_legend">More tables to copy ? <input id="button_to_open_div_extra_table_container" type="button" class="small-button" value="Open"></legend>
+                        <div id="div_extra_table_container">
+                            <div style="margin-left:100px;margin-top:20px;">For each extra table for which to duplicate records, select the most appropriate association table</div>
+                            <div class="center" style="width:600px;">
+                                <br>
+                                <form id="form_extra_tables_decisions_[#TAB_COUNTER#]">
+                                    <table>
+                                    <!--?php
+                                    foreach ($here->Aextra_tables_possible as $table => $Apossible_asso_fathers) {
+                                        $select_name = 'html_select_extra_table_' . $table;
+                                        echo "\n" . '<tr><td>Extra entity : <label for="'       . $select_name . '">' . $table . '</label></td>';
+                                            
+                                        $Apossible_asso_fathers = array_unique($Apossible_asso_fathers);
+                                            
+                                        echo "\n" . '<td><select name="'    . $select_name . '" class="html_select_extra_table_' . $_GET['tab_counter'] . '">';
+                                        $default_choice_value = 'do_not_plug';
+                                        $default_choice_label = 'Do NOT Duplicate';
+                                        echo "\n" . '<option value="' . $default_choice_value . '" ';
+                                        echo '>' . $default_choice_label . '</option>';
+                                        foreach ($Apossible_asso_fathers as $one_possible_asso_father) {
+                                            echo "\n" . '<option value="' . $one_possible_asso_father . '" ';
+                                            if (isset($here->Aextra_tables_decisions[$table]) &&
+                                                        $here->Aextra_tables_decisions[$table] ==  $one_possible_asso_father) {
+                                                echo ' selected="selected" ';
+                                            }
+                                            echo '">' . $one_possible_asso_father . '</option>';
+                                        }
+                                        echo "\n" . '</select></td></tr>';
+                                    }
+                                    ?-->
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </fieldset>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="3">&nbsp;
+                </td>
+            </tr>
+            <tr class="second_tr_after_valid_asso_chosen_by_user">
+                <td style="vertical-align:top;width:100%;">
+                    <fieldset class="fieldset edit_entity_fieldset_half">
+                        <legend class="legend edit_entity_screen_legend">Tables to copy 
+                            <span class="div_edit_entity_select_tables_container_loader">
+                                <img src="../html_cdn/images_icon/small_ajax_loader.gif">
+                            </span>
+                        </legend> 
+                        <div id="div_edit_entity_select_tables_container" class="hidden">
+                            <br>Select tables to be ignored :
+                            <br><br>
+                            <div id="js_only_tree_main_entity_[#TAB_COUNTER#]" class="center_small">
+                                
+                                <br><br>...Child Tables... Loading...
+                            </div>
+                        </div>
+                    </fieldset>
+                </td>
+                <!--td style="width:10%;">&nbsp;</td>
+                <td style="vertical-align:top;width:45%;height:100%;">
+                    <fieldset class="fieldset edit_entity_fieldset_half">
+                        <legend class="legend edit_entity_screen_legend">Fields to copy 
+                            <span class="div_edit_entity_select_fields_container_loader"><img src="../html_cdn/images_icon/small_ajax_loader.gif"><span>
+                        </legend> 
+                        <div id="div_edit_entity_select_fields_container" class="hidden">
+                            <div style="float:right;">
+                                <input id="unselect_all_fields" type="button" class="small-button" value="Unselect all fields">
+                            </div>
+                            <br>
+                            Select fields to be ignored :
+                            <br>
+                            <div id="js_only_tree_fields_to_exclude_[#TAB_COUNTER#]">
+                                <br><br>...List Of Fields... Loading...
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                </td-->
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;
+                </td>
+            </tr>
+            <tr class="last_tr_anomyze">
+                <td style="vertical-align:top;width:100%;height:100%;" colspan="3">
+                    <fieldset class="fieldset">
+                        <legend class="legend edit_entity_screen_legend">Fields to mask: 
+                            <span class="div_edit_entity_anomyze_container_loader hidden">
+                                <img src="../html_cdn/images_icon/small_ajax_loader.gif">
+                            </span>
+                        </legend> 
+                        
+                            <div id="div_edit_entity_anomyze_container_[#TAB_COUNTER#]" class="hidden">
+                                <!--br><br>
+                                Select fields to be masked :-->
+                                <br>
+                                <form id="form_for_obfuscated_fieds_[#TAB_COUNTER#]">        
+                                        <div id="div_for_select_fields_to_obfuscate_[#TAB_COUNTER#]">
+                                        </div>
+                                </form>
+                                <!--div id="js_only_tree_fields_to_obfuscate_[#TAB_COUNTER#]">
+                                    <br><br>...List Of Fields... Loading...
+                                </div-->
+                            </div>
+                    
+                    </fieldset>
+                </td>
+            </tr>
+
+        </table>
+        <br>
+        <br>
