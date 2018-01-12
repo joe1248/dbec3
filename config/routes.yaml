@@ -1,12 +1,12 @@
 # config/routes.yaml
  
-LuckyRoute:
-    path: /lucky
-    controller: App\Controller\LuckyController::number
-
-index:
+indexRoute:
     path: /
     controller: App\Controller\IndexController::index
+
+luckyRoute:
+    path: /lucky
+    controller: App\Controller\LuckyController::number
 
 login:
     path: /login

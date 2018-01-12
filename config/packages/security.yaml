@@ -31,7 +31,7 @@ security:
                 login_path: login
                 check_path: login
                 always_use_default_target_path: false
-                default_target_path: LuckyRoute
+                default_target_path: luckyRoute
                 #target_path_parameter:          _target_path
                 use_referer:                    false
 
