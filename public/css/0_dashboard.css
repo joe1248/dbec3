@@ -1,0 +1,45 @@
+.row1{ background-color:#3399ff;}
+.row2{ background-color:#b3d9ff;}
+.col-group{
+    width:100%;
+    padding-left:5%;        
+}
+.fieldset{
+    /* NOK when sql query errors ! SO just cancel it inside the debug_dibv !*/
+    white-space: nowrap;
+    margin-left:auto;    margin-right:auto;    
+    padding:5px 15px 10px 15px; /* top right bottom left */ 
+     /*min-height:55px;*/
+    border:0; /* IMPRTNAT COS the cause of margin-left cross browser issue with the legend !*/     
+     /*color:#ff0084;    PINK to be seen on the blue sky */
+     /*-webkit-border-radius    : 18px;
+    -moz-border-radius        : 18px;
+    border-radius            : 18px;*/
+    /*border: solid 1px #080808;*/
+/*background-color:transparent !important;*/
+}
+.one_line{/* Not 100% width used in welocme page and entity list*/
+     display:inline-block;
+}/*
+.fieldset .welcome_fieldset{
+    height:55px;
+}*/
+/* If screen big enough 3 columns */
+@media screen and (min-width: 1000px) {
+    .col-group > div {
+        float: left;
+        padding-left:5%;
+        /* EASY DEBUG UI border:1px solid;*/
+        width: 30%;
+    }
+    .saved_files{
+        margin-left:60%;
+    }
+}
+/* the opposite, if too small saved files back below  */
+@media screen and (max-width: 800px) {
+    .saved_files{
+        margin-left:0;
+    }
+
+}

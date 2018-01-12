@@ -1,0 +1,307 @@
+
+/* from view data start **/
+.any_side {
+    display     : block;
+    overflow : hidden;
+}
+.data_tables{
+    height    : 200px; /* vyou must calcule percentage in js to set height in PIXELS !! */
+    overflow: auto;
+}
+    body, table { font-family: sans-serif; }
+    table { border-collapse: collapse; }
+    td, th { padding: 6px; }
+/* from view data end **/
+
+.td_left_align{
+    text-align:left; 
+    padding-left:10px;
+    padding-right:10px;
+}
+.td_right_align{
+    text-align:right; 
+    padding-left:10px;
+    padding-right:10px;
+}
+.easy_tip{
+    color:blue;
+}
+.legend{
+    border:3px outset ;
+    background:rgba(255, 255, 255);
+    background:rgba(255, 255, 255, 0.53) !important;
+}
+.fieldset{
+    background:rgba(255, 255, 255);
+    background:rgba(255, 255, 255, 0.23) !important;
+}
+h2,
+.highlighted{
+    background:rgba(255, 255, 255);
+    background:rgba(255, 255, 255, 0.23) !important;
+}
+.highlighted_strong{
+    background:rgba(255, 255, 255);
+    background:rgba(255, 255, 255, 0.53) !important;
+}
+.edit_entity_fieldset{
+    min-width:800px;
+}
+.edit_entity_fieldset_half{
+    /* 800 = 100% so 45 % is 400-80*/
+    min-width:320px;
+}
+.fieldset_copy_entity{
+    width:75%;
+    max-width:600px;
+}
+
+@font-face {
+    font-family: loginFont;
+    /*src: url(../opensource/fonts/honey_script/honeyscriptsemibold.ttf);*/
+    src: url(fonts/jenna_sue/jennasue.ttf);
+}
+.yourLoginFontBig {
+    font-family: loginFont;
+    font-size:90px;
+    color:#0073ea;
+    padding:40px;
+} 
+.yourLoginFont {
+    font-family: loginFont;
+    font-size:40px;
+    color:#0073ea;
+} 
+.ui-tabs /* NOt too bad but will never live with the jquery UI themes user changes,
+.ui-widget-header .ui-state-active*/
+{
+    background-image:url('../images_bg/sky.jpg');background-repeat:no-repeat;background-size: 100% 100%;
+}
+
+#home_tabs .ui-tabs-nav { 
+    height: 2.35em; 
+    text-align: center; 
+} 
+#home_tabs .ui-tabs-nav li { 
+    display: inline-block; 
+    float: none; 
+    top:0;
+    margin:0; 
+}
+.top_tabs{                    position:fixed; top:0;        left:170px; width:100%;text-align:center;}
+
+.dbec_about_menu{            position:fixed;    top:-22px; left:10px; }
+.dbec_update_menu_button{    position:fixed;    top:10px; left:180px; display:block;}
+
+.tab_content{    margin-left:auto;    margin-right:auto;    width:95%; overflow:auto;padding:0;}
+
+
+@media screen and (min-width: 600px) {
+
+    .two_mini_boxes{
+        float: left;
+        padding-left:5%;
+        /*border:1px solid;*/
+    }
+        .two_mini_boxes .box1{
+            width: 60%;
+        }
+        .two_mini_boxes .box2{
+            width: 60%;
+        }
+}
+.margin_15{margin:15px;}
+.red{        color:red;        text-align:center;}
+.orange{    color:#f58400;    text-align:center;}
+.green{     color:green;    text-align:center;}
+.bg_orange{    background-color:#f58400;}
+.border_transparent    {border                :1px solid transparent; border-bottom-right-radius: 2px;}
+.full_screen{position:absolute;left:0;top:0;width:100%;height:100%;}
+.hidden{display:none;}
+.nowrap{white-space: nowrap;}
+.nobr{white-space: nowrap;}
+.table_2_columns{width:40%;min-width:350px;text-align:left;position:relative;top:20px;}
+.table_4_columns{width:70%;min-width:350px;text-align:left;position:relative;top:20px;}
+.legend {
+    font-weight:bold;
+    padding:7px 17px;
+    -webkit-border-radius    : 18px;
+    -moz-border-radius        : 18px;
+    border-radius            : 18px;
+    text-align:left;
+    position:relative;
+    left:-15px;
+    top:0px;
+}
+.edit_entity_screen_legend,
+.clone_ui_screen_legend {
+    /*margin-left:-11px !important;*/
+    left:-15px;
+}
+/*legend { input
+    background: #eee;
+    border: solid 1px #aaa;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}*/
+/*     padding: 6px;       Arial, Times, "Times New Roman", serif;*/
+html, body {
+    font-family: Ubuntu, sans-serif;
+    font-size:11pt;
+    line-height:12pt;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+#tabs {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+table{border-spacing:0;}
+td{border:0;}
+a{text-decoration:none;}
+h2{    white-space: nowrap;    
+    text-decoration:bold;
+    line-height:50px;
+    overflow:hidden;
+    margin:  5px 20px 5px 20px;
+    padding:  5px 20px 5px 20px;
+}
+h3{    padding: 0; margin: 0;}
+.ui-menu {
+       font-size: .86em;
+}      
+.tiny-button {
+       font-size: .55em;
+       padding: 1px 9px 1px 9px;
+       margin-bottom:2px;
+}
+.small-button {
+       font-size: .70em;
+       padding: 0 11px 0 11px;
+       margin: 3px 11px 1px 11px;
+}
+.medium-button {
+       font-size: .82em;
+       padding: 3px 15px 3px 15px;
+}
+.large-button {
+       font-size: .102em;
+       padding: 5px 15px 5px 15px;
+}
+.medium-input {
+       font-size: .92em;
+}
+/*EDIT: try setting a CSS style directly on .ui-button-text to inherit:*/
+.ui-button-text {
+   font-size: inherit;
+   padding: inherit;
+} 
+            a,
+            .normal_menu,
+            #tr_with_all_tabs,
+            .disable_txt_selection    {
+                        -ms-user-select: none;
+                          -moz-user-select: none;
+                          -khtml-user-select: none;
+                          -webkit-user-select: none;
+                          user-select: none;}                  
+            /* HORIZONTAL*/
+            .center_simple{        margin-left:auto;    margin-right:auto;}
+            .center{        margin-left:auto;    margin-right:auto;    min-width:550px;}
+            .center_small{    margin-left:auto;    margin-right:auto;    width:500px; }
+            .center_normal{    margin-left:auto;    margin-right:auto;    width:80%; }
+            .centered{            text-align:center;     }
+            .align_left{        text-align:left;    margin-left:20px;}
+            .align_right{        text-align:right;}
+            .table_column{        width:25%;}
+            .big_line{ line-height:26px; padding-top:0;}
+            .float_right_container{    white-space:normal;}
+            .float_right{        float:right;        margin-right:10px;}
+            .float_left_percent{float:left;            margin-left:5%; width:90%;text-align:left;padding-top: 5px;padding-left: 5px;padding-bottom: 5px;}
+            .text_area_border{
+                border: none;
+                margin-bottom: 10px;
+                padding:0;
+                padding-left: 5px;
+                padding-top: 5px;
+                width:90%;
+                height:75px;
+                font-size:17px;
+            }
+            /* HORIZONTAL + VERTICAL CENTERING */
+            .center1 {  text-align: center;}
+            .center3 {  margin: 0 auto;}
+            .center1, .vcenter1 {  display: table;}
+            .center2, .vcenter2 {  display: table-cell;  vertical-align: middle;}
+            .center3, .vcenter3 {  display: block;}
+
+            /*    .center1, .vcenter1 { border: 1px solid #f00 !important; }
+                .center2, .vcenter2 { border: 1px solid #0f0 !important; }
+                .center3, .vcenter3 { border: 1px solid #00f !important; } 
+            */
+            html, body {  width: 100%;  height: 100%;  margin: 0;  padding: 0;}
+            .content {  width: 100%;  height: 100%;}
+            .content_top {  width: 100%;  height: 20%; padding-top:5%;}
+            
+            .unselectable {
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            .unselectable input { 
+                -webkit-user-select: text; 
+                -khtml-user-select: text; 
+                -moz-user-select: text; 
+                -o-user-select: text; 
+                user-select: text; 
+             }            
+             
+            .jqueryDialogNoTitle .ui-dialog-titlebar {
+                display:none;
+            }
+            /*
+            .wait_progressbar{float:right; width:100%; text-align: center; }
+            .wait_progress-label {    float: left;         
+                    margin-top: 5px;    font-weight: bold;    text-shadow: 1px 1px 0 #000; width:100%; z-index:99999
+            }*/
+.hidden {
+    display: none;
+}
+.circle {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    float: left;
+    display: inline-block;
+    /* text styling for circles - see also the .text style below */
+    font-size: 35px;
+    color: #FFF;
+    line-height: 220px;
+    text-align: center;
+    font-family: Ubuntu, sans-serif;
+}
+.dialog {
+    font-family:Ubuntu, sans-serif;
+    font-size: 15pt;
+    line-height: 20pt;
+}
+.tr_color_alternate:odd     {    background-color    :        #eee;    }
+.tr_color_alternate > th    {    text-indent            :        20px;    }
+.tr_color_alternate > th    {    padding-right        :        20px;    }
+.tr_color_alternate > td    {    text-indent            :        20px;    }
+.tr_color_alternate > td    {    padding-right        :        20px;    }
+.margin_5{
+    margin    :    5px;
+}

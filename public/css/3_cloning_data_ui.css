@@ -1,0 +1,45 @@
+.column_for_obfuscated_fields{
+    display:inline-block;
+    width:25%;
+}
+ .hidden{display:none;}
+
+/* CSS ONLY for the title : cloning data now
+Then left_div === src_db
+Then right_div ==== dest_db
+Then bottom_div : button transfer now !
+
+top part for samll screen
+
+bottom part for wide screen.
+
+NB if margin:auto, DO NOT use left or in will be a lot more of the right than you thiink !
+*/
+
+.little_box{ position:relative;margin-left:auto; margin-right:auto; padding:10px;  border : 1px white solid;}
+.div_title    { position:relative;height:60px;width:100%;margin-left:100px;text-align:center;}
+.div_left    { position:relative;width:100%;margin:auto;}
+.div_right    { position:relative;width:100%;margin:auto;top:20px;display:none;}
+.div_bottom    { position:relative;width:100%;margin:auto;display:none;}
+/*
+@media all and (min-width: 900px) { 
+    .div_left    { position:relative;margin:0;width:40%;height:60%;left:35%;}
+    .div_right    { position:fixed;margin:0;width: 45%;top:80px;height:60%;left:50%;display:none;} 
+    .div_bottom    { position:relative;margin:0;width: 50%;top:30px;display:none;}
+}
+*/
+
+
+#home_tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+.button { cursor: pointer; }
+/*
+#home_tabs .ui-tabs-nav { 
+    height: 2.35em; 
+    text-align: center; 
+} 
+#home_tabs .ui-tabs-nav li { 
+    display: inline-block; 
+    float: none; 
+    top: 0px; 
+    margin: 0px; 
+}*/

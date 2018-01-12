@@ -1,0 +1,19 @@
+
+.ui-tabs .ui-tabs-nav{background-color    :#b2cecf;}
+.back_color            {background-color    :#b2cecf;}
+.font_color            {color                :#444444;}
+
+.color_inverted_1    {background-color    :#444444; color:#b2cecf;}
+.color_inverted_2    {background-color    :#d02552; color:#b2cecf;}
+ 
+.border_font        {border                :1px ridge #444444; border-bottom-right-radius: 2px;}
+.border_title        {border                :0px solid #d02552;border-bottom-right-radius: 2px;}
+.border_back        {border                :0px solid #b2cecf;}
+
+.title_color        {color                :#d02552;}
+.user_instruction     {color                :#d02552;}
+.orange             {color                :#d02552;}
+.ide_colors, body {    
+                   background-color    :#b2cecf;
+                   color                :#444444;
+}

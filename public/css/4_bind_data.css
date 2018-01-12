@@ -1,0 +1,28 @@
+/*
+//? CLONE_DATA_UI CSS for progress bar and error_counter 
+
+#progressbar .ui-progressbar-value {    position: relative; background-color: #ccc;}*/
+.final_progressbar{        
+    position:relative;
+    display:inline-block;
+    top:12px;    height:30px;
+    left:4% !important;    width:22%; 
+    text-align: center; 
+}
+.final_progress-label {    float: left;         /* IMPORTANT : parent : position: relative; AND float: left;        */
+                    margin-top: 5px;    font-weight: bold;    text-shadow: 1px 1px 0 #000; width:100%;
+}
+.error_counter{
+    position:relative;
+    left:30px;
+    top:0;
+    display:none;
+    color:yellow;
+    background-color:red;
+}
+.rounded-corners{
+    -moz-border-radius:        5px;
+    -webkit-border-radius:    5px;
+    -khtml-border-radius:    5px;
+    border-radius:            5px;
+}
