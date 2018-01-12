@@ -11,16 +11,14 @@ class SecurityController extends Controller
 {
     private $authUtils;
 
-    /**
-     * @Route("/login", name="login")
-     */
     public function login(Request $request)
     {
-        $this->authUtils =  $this->get(AuthenticationUtils::class);//new ();
+        $this->authUtils =  $this->get(AuthenticationUtils::class);
+
         // get the login error if there is one
         $error = $this->authUtils->getLastAuthenticationError();
     
-        // last username entered by the user
+        // last username entered by the user.
         $lastUsername = $this->authUtils->getLastUsername();
     
         return $this->render('Security/login.html.php', [

@@ -1,8 +1,8 @@
 # config/routes.yaml
  
-luckyRoute:
-    path: /lucky
-    controller: App\Controller\LuckyController::number
+dashboardRoute:
+    path: /dashboard
+    controller: App\Controller\DashboardController::dashboard
 
 login:
     path: /login
