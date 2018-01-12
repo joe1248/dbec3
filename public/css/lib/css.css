@@ -75,7 +75,7 @@ h2,
 .ui-tabs /* NOt too bad but will never live with the jquery UI themes user changes,
 .ui-widget-header .ui-state-active*/
 {
-    background-image:url('../images_bg/sky.jpg');background-repeat:no-repeat;background-size: 100% 100%;
+    background-image:url('/images/sky.jpg');background-repeat:no-repeat;background-size: 100% 100%;
 }
 
 #home_tabs .ui-tabs-nav { 
