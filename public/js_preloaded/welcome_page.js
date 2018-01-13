@@ -1,15 +1,15 @@
 //? USER_HOME_PAGE Javascript/jQuery lauching 3 GET AJAX request to fill up UI with 1.Opages.ENTITIES_LIST.php_url, 2:sql_files_list, 3:recent_transfer
 var Aobfuscation_types, Aobfuscation_options, Glast_version, Gcurr_version;
-// Dynamic loading of Obfuscation options proposed by the back end !!!
-$.get( Opages.obfuscation_options.php_json_url, function (back){
+
+// Dynamic loading of Obfuscation options from BE
+$.get( Opages.obfuscation_options.php_json_url, function (backEndData){
     $(document).ajaxError(function(e, xhr, settings, exception) {
         console.log(exception + 'error in: ' + settings.url + ' \n'+'error:\n' + exception );
     });
-    var backEndData = JSON.parse(back);
     Aobfuscation_types = backEndData.Adatatypes;
     Aobfuscation_options = backEndData.AoptionsByDatatypes;
-    Glast_version = parseInt(backEndData.last_version, 10);
-    Gcurr_version = parseInt(backEndData.curr_version, 10);
+    Glast_version = parseInt(backEndData.lastVersion, 10);
+    Gcurr_version = parseInt(backEndData.currentVersion, 10);
     $('#auto_test_user_home_title').text('DBEC Version '+Gcurr_version/100);
     if(Glast_version > 100 && Glast_version != Gcurr_version) {
         $('#button_to_get_latest_dbec_version').val('Update to DBec ' + Glast_version/100);
@@ -27,20 +27,20 @@ $('.welcome_button_create_entity').tooltip({
     show: { effect: "blind", duration: 400, direction :'left' } 
 });
 
-$('#welcome_button_db_servers_list'        ).click( function(){        addStaticTab(false, Opages.db_servers_list        );        });
-$('.welcome_button_add_db_server'        ).click( function(){        addStaticTab(false, Opages.db_server_edit        );        });
+$('#welcome_button_db_servers_list').click( function(){   addStaticTab(false, Opages.db_servers_list); });
+$('.welcome_button_add_db_server').click( function(){     addStaticTab(false, Opages.db_server_edit); });
 
-$('#welcome_button_entities_list'        ).click( function(){        addStaticTab(false, Opages.entities_list        );        });
-$('.welcome_button_create_entity'        ).click( function(){        addStaticTab(false, Opages.create_entity        );        });
+$('#welcome_button_entities_list').click( function(){     addStaticTab(false, Opages.entities_list); });
+$('.welcome_button_create_entity').click( function(){     addStaticTab(false, Opages.create_entity); });
 
-$('#welcome_button_database_explorer'   ).click( function(){        addStaticTab(false, Opages.simple_db_explorer   );        });
+$('#welcome_button_database_explorer').click( function(){ addStaticTab(false, Opages.simple_db_explorer); });
 
-$('#button_account_details'                ).click( function(){        addStaticTab(false, Opages.your_account            );        });
+$('#button_account_details').click( function(){           addStaticTab(false, Opages.your_account); });
 
-$('#button_foreign_keys_wizard'            ).click( function(){        addStaticTab(false, Opages.fk_wizard            );        });
-$('#button_foreign_keys_manually'        ).click( function(){        addStaticTab(false, Opages.fk_by_hand            );        });
+$('#button_foreign_keys_wizard').click( function(){       addStaticTab(false, Opages.fk_wizard); });
+$('#button_foreign_keys_manually').click( function(){     addStaticTab(false, Opages.fk_by_hand); });
 
-$('#button_documentation'                ).click( function(){        addStaticTab(false, Opages.the_documentation    );        });
+$('#button_documentation').click( function(){             addStaticTab(false, Opages.the_documentation); });
 
 $('#button_to_get_latest_dbec_version').click( function(e){
     $('#button_to_get_latest_dbec_version').hide();
@@ -53,7 +53,6 @@ $('#button_to_get_latest_dbec_version').click( function(e){
         }else{
             $('#button_to_get_latest_dbec_version').hide();
             $('#dbec_is_up_to_date').show();
-            //showDivSimple('Well done, DBec is now up to date !', '');
             showDivAlert('Well done, DBec is now up to date !<br>Press OK to reload the page.', '');
             $('#divAlertOk' ).click( function(){ 
                 $('#divAlert').dialog('close'); 
@@ -63,17 +62,12 @@ $('#button_to_get_latest_dbec_version').click( function(e){
                     top.location.reload(); 
                 }
             });
-            // NOw ask if OK to switch to new version, old version always OK to go back to "hopefully if DB changes are handled?!?!?!ask sumeet !"
-            //===> if ok, top.location reload and for old version loaction = old_version/ !!!
-            
-            //==> quite now you need to detect in echo type if needed to redirect to new_version or old_version, depending on user_choice saved in DB ???
         }
     });
 });
-function refresh_jquery_menus(context){
-    //if(typeof context === 'undefined'){
-        context = window;
-    //}
+
+function refresh_jquery_menus(){
+    context = window;
     context.$('.img_jquery_menu').menu({position:{ my: "left bottom", at: "right+7 top" , collision:"flipfit"},
                                         icons: { submenu: "ui-icon-circle-triangle-e" }
                                         })
@@ -84,6 +78,7 @@ function refresh_jquery_menus(context){
                                         icons: { submenu: "ui-icon-circle-triangle-e" }
                                         });
 }
+
 function refresh_js_db_connections_list_so_show_db_buttons(){
     $.get( Opages.json_db_servers_list.php_url, function(back){
         if(check_ajax_response_first_2_chars_is_ok(back,' callback of json_db_servers_list')){
@@ -93,18 +88,21 @@ function refresh_js_db_connections_list_so_show_db_buttons(){
         }
     });
 }
+
 function refresh_html_select_entities_to_clone(){
     $.get( Opages.entities_list.php_url + '?list_type=button', function(html_back){
         $( "#div_list_of_entities_to_clone" ).html( html_back );
         success_refresh_html_select_entities_to_clone();
     });
 }
+
 function refresh_list_of_sql_file_ready_to_paste(){
     $.get( Opages.sql_files_list.php_url + '?list_type=button', function(html_back){
         $( "#div_list_of_sql_file_ready_to_paste" ).html( html_back );
         success_refresh_list_of_sql_file_ready_to_paste();
     });
 }
+
 function refresh_list_of_recent_transfers(){
     $.get( Opages.recent_transfer.php_url + '?list_type=button', function(html_back){
         if ( html_back !== 'Ide::YOU_ARE_NOW_LOGGED_OUT') {
@@ -113,8 +111,6 @@ function refresh_list_of_recent_transfers(){
         }
     });
 }
-
-
 
 function add_events_to_welcome_page_clone_data_buttons(){
     reset_jquery_styles();
@@ -125,6 +121,7 @@ function add_events_to_welcome_page_clone_data_buttons(){
         addStaticTab(false, Opages.clone_entire_tables_ui);//, $(this).attr('html_entity_id'), $(this).attr('value') );
     }); 
 }
+
 function show_buttons_to_add_and_list_connections(){
     //dump(Aconnections_db);
     if(Aconnections_db.length === 0){
@@ -137,6 +134,7 @@ function show_buttons_to_add_and_list_connections(){
         //$('#welcome_big_button_create_entity'    ).show(); // show BIG create_new_entity button.
     }    
 }
+
 function success_refresh_html_select_entities_to_clone(){
     // HIDE CLONE DATA box from home page when NO ENTITY AT ALL !
     if($( "#div_list_of_entities_to_clone" ).html() === ''){

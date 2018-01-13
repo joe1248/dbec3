@@ -123,7 +123,7 @@ var Opages = {
                         php_json_url    : 'page_ajax_entity_edit?entity_ready_id=',
                         js_init_fct        : function (tab_id){ init_js_in_edit_one_entity(tab_id);}
                     },
-    obfuscation_options:{php_json_url    : 'page_ajax_all?module=obfuscation_options'},
+    obfuscation_options:{php_json_url    : '/config'},
     entity_edit_two:{    php_json_url    : 'page_ajax_entity_edit_two?ajax=true&entity_ready_id='},
     // not used entity_edit_three:{    php_url            : 'page_entity_edit_three?ajax=true&entity_ready_id=',},
     entity_edit_quatre:{php_json_url    : 'page_ajax_entity_edit_quatre?ajax=true&entity_ready_id='},

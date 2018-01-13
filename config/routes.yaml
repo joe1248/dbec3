@@ -1,5 +1,10 @@
 # config/routes.yaml
- 
+
+
+configRoute:
+    path: /config
+    controller: App\Controller\ConfigController::getConfig
+
 dashboardRoute:
     path: /dashboard
     controller: App\Controller\DashboardController::dashboard

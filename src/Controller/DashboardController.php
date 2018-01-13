@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class DashboardController  extends Controller 
+class DashboardController extends Controller 
 {
     public function dashboard(UserInterface $user = null)
     {
