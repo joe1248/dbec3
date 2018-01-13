@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * IdeaUserConnections
  *
  * @ORM\Table(name="idea_user_connections", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="selected_ftp_id", columns={"selected_ftp_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\IdeaUserConnectionsRepository")
  */
 class IdeaUserConnections
 {
@@ -146,6 +146,26 @@ class IdeaUserConnections
      */
     private $selectedFtp;
 
+    public function getConnectionName()
+    {
+        return $this->connectionName;
+    }
+    public function getUrlHost()
+    {
+        return $this->urlHost;
+    }
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+    public function getPassWord()
+    {
+        return $this->passWord;
+    }
+    public function getPortNumber()
+    {
+        return $this->portNumber;
+    }
     public function getSelectedFtpId()
     {
         return $this->selectedFtp;

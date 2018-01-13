@@ -17,7 +17,7 @@ class ConnectionController extends Controller
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
 
-        $connections = $em->findAll();
+        $connections = $em->getAll();
     
         return new JsonResponse($connections);
     }
