@@ -1,8 +1,28 @@
 # config/routes.yaml
 
-ConnectionRoute:
+
+# -----------  CONNECTIONS ROUTES ----------------------------
+
+
+ConnectionsList:
     path: /connections
     controller: App\Controller\ConnectionController::getAll
+
+ConnectionAdd:
+    path: /connection/new
+    controller: App\Controller\ConnectionController::getNew
+
+ConnectionGet:
+    path: /connection/{id}
+    controller: App\Controller\ConnectionController::getOne
+
+#ConnectionEdit:
+#    path: /connection/{id}
+#    controller: App\Controller\ConnectionController::patch
+
+
+# -----------  GENERIC ROUTES ----------------------------
+
 
 configRoute:
     path: /config

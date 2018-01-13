@@ -82,7 +82,15 @@ var Opages = {
 
                         php_url      : 'html/1_connection_edit.html',
                         js_url       :   'js/1_connection_edit.js',
-                        php_json_url : 'page_ajax_db_server_edit?edited_connection_id=',//page_ajax_db_server_edit defined in router_back_end.php
+                        php_json_url : 'connection/', // id must be appened to this URL
+                        js_init_fct  : function (tab_id){ init_js_in_edit_connection(tab_id);}
+                    },
+    db_server_add:{    static_label : 'Add DB Server',
+                        static_id    : 'tab_db_server_edit',
+
+                        php_url      : 'html/1_connection_edit.html',
+                        js_url       :   'js/1_connection_edit.js',
+                        php_json_url : 'connection/new',
                         js_init_fct  : function (tab_id){ init_js_in_edit_connection(tab_id);}
                     },
     db_server_clone:{   static_label : 'Clone DB Server',

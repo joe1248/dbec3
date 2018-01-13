@@ -165,10 +165,13 @@ function addStaticTab( force_refresh, Opage, get_string, end_of_label, extra_get
 
                 return;
             }else{
+                var replaced = $('#' + content_id).html().replace(/\[#TAB_COUNTER#\]/g, currentTabCounter);
+                $('#' + content_id).html( replaced );
+
                 // 2. Opage.js_url
                 $.getScript(Opage.js_url, function(){
                     $('.ui-tabs-anchor').click(function(){    adjust_tab_height(); /* Fix height so scroll bug */    });
-                    //alert('JS loaded, victory, now trying to init it !! with tabCounter  =  ' + tabNumber);
+                    //alert('JS loaded, victory, now trying to init it !! with tabCounter  =  ' + currentTabCounter);
                     
                     // 3. Opage.php_json_url
                     if (typeof Opage.php_json_url !== 'undefined') {
@@ -179,7 +182,8 @@ function addStaticTab( force_refresh, Opage, get_string, end_of_label, extra_get
                         alert('php_json_url is not defined in pages.js to feed ' + Opage.js_url + ' BUt Firing JS init anyway...');
                         
                         if (typeof Opage.js_init_fct !== 'undefined') {
-                            Opage.js_init_fct(tabNumber);       // NOW MAGICALLY inint the newly load JS, using New JSON and new HTML!!!
+                            alert('init for tab id = ' + currentTabCounter);
+                            Opage.js_init_fct(currentTabCounter);       // NOW MAGICALLY inint the newly load JS, using New JSON and new HTML!!!
                         }
 
                         return;
@@ -207,27 +211,17 @@ function bind_back_end_JSON_into_front_end_HTML(json_php_url, tabNumber, Opage, 
     $.ajax({
         type: "GET",
         url: pos + json_php_url,
-        success: function(back){
+        success: function(json_back){
             hide_central_spinner();
-            if(!check_ajax_response_first_2_chars_is_ok(back,' callback of bind_back_end_JSON:' + json_php_url)){
-
+            //if(!check_ajax_response_first_2_chars_is_ok(back,' callback of bind_back_end_JSON:' + json_php_url)){
+            if (typeof json_back !== 'object') {
                 removeTab(content_id, header_id);
                 return;
             }
-            back = back.substr(2);
-            var json_back = JSON.parse(back);
-            
-            //alert('JOSN back = ' + typeof json_back);
-            if (typeof json_back !== 'object') {
-                alert('Error everythin should be json ' + data);
-                return;
-            }
             if (typeof json_back.form_id !== 'string') {
-                //$('#divSimple').dialog('open');
-                //showDivAlert('Sorry but form_id is missing in ' + data);
-                //alert('perfect tehn it is a collection to display so delegate to init fct');
                 varInTab[tabNumber]    = {};
                 varInTab[tabNumber].my_json = json_back;
+                //console.log(Opage);
                 Opage.js_init_fct(tabNumber);            // NOW MAGICALLY inint the newly load JS, using New JSON and new HTML!!!
                 adjust_tab_height(); // finally works !
                 return;
@@ -250,7 +244,7 @@ function bind_back_end_JSON_into_front_end_HTML(json_php_url, tabNumber, Opage, 
                         if (typeof ObjectInput.val() !== 'undefined') {
                             ObjectInput.val(json_back[prop]);
                         }else{
-                            alert('NB, checkboxes not done yet, and that is Not a select ' + prop + ' with value ' +json_back[prop]);
+                            //alert('NB, checkboxes not done yet, and that is Not a select ' + prop + ' with value ' +json_back[prop]);
                         }    
                     }
                 }

@@ -146,5 +146,31 @@ class IdeaUserConnections
      */
     private $selectedFtp;
 
+    public function getSelectedFtpId()
+    {
+        return $this->selectedFtp;
+    }
 
+    public function readAsDbDetails()
+    {
+        return [
+            'db_connection_name' => $this->connectionName,
+            'db_url_host' => $this->urlHost,
+            'db_user_name' => $this->userName,
+            'db_pass_word' => $this->passWord,
+            'db_port_number' => $this->portNumber,
+            'db_selected_ftp' => $this->selectedFtp,
+        ];
+    }
+
+    public function readAsFtpDetails()
+    {
+        return [
+            'ftp_connection_name' => $this->connectionName,
+            'ftp_url_host' => $this->urlHost,
+            'ftp_user_name' => $this->userName,
+            'ftp_pass_word' => $this->passWord,
+            'ftp_port_number' => $this->portNumber,
+        ];
+    }
 }

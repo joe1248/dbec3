@@ -28,7 +28,7 @@ $('.welcome_button_create_entity').tooltip({
 });
 
 $('#welcome_button_db_servers_list').click( function(){   addStaticTab(false, Opages.db_servers_list); });
-$('.welcome_button_add_db_server').click( function(){     addStaticTab(false, Opages.db_server_edit); });
+$('.welcome_button_add_db_server').click( function(){     addStaticTab(false, Opages.db_server_add); });
 
 $('#welcome_button_entities_list').click( function(){     addStaticTab(false, Opages.entities_list); });
 $('.welcome_button_create_entity').click( function(){     addStaticTab(false, Opages.create_entity); });

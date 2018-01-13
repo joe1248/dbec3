@@ -37,7 +37,7 @@ function init_js_in_db_servers_list(tabNumber) {
     reset_jquery_styles();
     $( '.connection_statuses'  ).addClass('ui-corner-all');
     $( '#div_connections_list' ).fadeIn();
-    $( '#connection_list_button_add_connection').click( function(){        addStaticTab(false, Opages.db_server_edit        );        });
+    $( '#connection_list_button_add_connection').click( function(){        addStaticTab(false, Opages.db_server_add        );        });
     
     $( '.button_connection_edit'    ).click( function(){ addStaticTab(false, Opages.db_server_edit,    $(this).attr('html_connection_id'), $(this).attr('html_connection_label') );    });
     $( '.button_connection_clone'    ).click( function(){ addStaticTab(false, Opages.db_server_clone,$(this).attr('html_connection_id'), $(this).attr('html_connection_label') );    });
