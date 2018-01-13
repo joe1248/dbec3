@@ -70,16 +70,18 @@ var Opages = {
                     },
     db_servers_list:{   static_label : 'DB Servers',
                         static_id    : 'tab_db_servers_list',
+
                         php_url      : 'html/1_connections_list.html',
+                        js_url       :   'js/1_connections_list.js',
                         php_json_url : 'page_ajax_all?module=connections/conn_list&connection_genre=db',
-                        js_url       : Oapp.js_cache + 'page_db_servers_list.js',
                         js_init_fct  : function (tab_id){ init_js_in_db_servers_list(tab_id);}
                         
                     },
     db_server_edit:{    static_label : 'Edit DB Server',
                         static_id    : 'tab_db_server_edit',
+
                         php_url      : 'html/1_connection_edit.html',
-                        js_url       : Oapp.js_cache + 'page_db_server_edit.js',
+                        js_url       :   'js/1_connection_edit.js',
                         php_json_url : 'page_ajax_db_server_edit?edited_connection_id=',//page_ajax_db_server_edit defined in router_back_end.php
                         js_init_fct  : function (tab_id){ init_js_in_edit_connection(tab_id);}
                     },
@@ -95,8 +97,9 @@ var Opages = {
     // THIS JUST SHOW THE TREE OF DR SERVERS/DATABEASES/TABLES
     create_entity : {   static_label : 'New Entity Creation',
                         static_id    : 'tab_create_entity',
+
                         php_url      : 'html/2_entity_create.html',
-                        js_url       : Oapp.js_cache + 'page_create_entity.js',
+                        js_url       :   'js/2_entity_create.js',
                         php_json_url : 'page_ajax_create_entity',
                         js_init_fct  : function (tab_id){ init_js_in_create_one_entity(tab_id);},
                         removeOnLoad : false,
@@ -111,9 +114,10 @@ var Opages = {
                     },
     entities_list : {   static_label : 'Manage Entities',
                         static_id    : 'tab_entities_list',
-                        php_url      : 'html/2_entities_list.html', 
+
+                        php_url      : 'html/2_entities_list.html',
+                        js_url       :   'js/2_entities_list.js',
                         php_json_url : 'page_ajax_all?module=entities/get_all',
-                        js_url       : Oapp.js_cache + 'page_entities_list.js',
                         js_init_fct  : function (tab_id){ init_js_in_entity_list(tab_id);}
                     },
     entity_edit:    {    static_label    : 'Edit Entity',
