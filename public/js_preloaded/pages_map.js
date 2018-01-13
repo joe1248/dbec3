@@ -40,7 +40,7 @@ var varInTab = [];        // BIGGEST AND SOON FAIRLY UNIQUE GLOBAL VARIABLE.
 var Opages = {
     your_account :    {    static_label    : 'Your Account',
                         static_id        : 'tab_user_account',
-                        php_url            : 'page_your_account',
+                        php_url            : 'html/0_account_edit.html',
                         php_json_url    : 'page_ajax_all?module=_00_my_account/get_user_details',
                         js_url            : Oapp.js_cache + 'page_your_account.js',
                         js_init_fct        : function (tab_id){ init_js_in_my_account(tab_id);}
@@ -68,53 +68,53 @@ var Opages = {
     json_db_servers_list:{
                         php_url            : '/connections'
                     },
-    db_servers_list:{    static_label    : 'DB Servers',
-                        static_id        : 'tab_db_servers_list',
-                        php_url            : 'page_db_servers_list',  // NOW HTML !!!so route in router_front_end_ajax_html.php
-                        php_json_url    : 'page_ajax_all?module=connections/conn_list&connection_genre=db',// backend so in 
-                        js_url            : Oapp.js_cache + 'page_db_servers_list.js',
-                        js_init_fct        : function (tab_id){ init_js_in_db_servers_list(tab_id);}
+    db_servers_list:{   static_label : 'DB Servers',
+                        static_id    : 'tab_db_servers_list',
+                        php_url      : 'html/1_connections_list.html',
+                        php_json_url : 'page_ajax_all?module=connections/conn_list&connection_genre=db',
+                        js_url       : Oapp.js_cache + 'page_db_servers_list.js',
+                        js_init_fct  : function (tab_id){ init_js_in_db_servers_list(tab_id);}
                         
                     },
-    db_server_edit:{    static_label    : 'Edit DB Server',
-                        static_id        : 'tab_db_server_edit',
-                        php_url            : 'page_db_server_edit',//'?edited_connection_id=',  // NOW HTML !!! so page_db_server_edit defined in router_front_end_ajax_html.php
-                        js_url            : Oapp.js_cache + 'page_db_server_edit.js',
-                        php_json_url    : 'page_ajax_db_server_edit?edited_connection_id=',//page_ajax_db_server_edit defined in router_back_end.php
-                        js_init_fct        : function (tab_id){ init_js_in_edit_connection(tab_id);}
+    db_server_edit:{    static_label : 'Edit DB Server',
+                        static_id    : 'tab_db_server_edit',
+                        php_url      : 'html/1_connection_edit.html',
+                        js_url       : Oapp.js_cache + 'page_db_server_edit.js',
+                        php_json_url : 'page_ajax_db_server_edit?edited_connection_id=',//page_ajax_db_server_edit defined in router_back_end.php
+                        js_init_fct  : function (tab_id){ init_js_in_edit_connection(tab_id);}
                     },
-    db_server_clone:{    static_label    : 'Clone DB Server',
-                        static_id        : 'tab_db_server_clone',
-                        php_url            : 'page_db_server_edit?action=clone&edited_connection_id=',
-                        js_url            : Oapp.js_cache + 'page_db_server_edit.js'
+    db_server_clone:{   static_label : 'Clone DB Server',
+                        static_id    : 'tab_db_server_clone',
+                        php_url      : 'page_db_server_edit?action=clone&edited_connection_id=',
+                        js_url       : Oapp.js_cache + 'page_db_server_edit.js'
                     },
                     
         /*******************    ENTITIES ***************************/
                     
     // rename all Opages.create_entity to Opages.entity_create
     // THIS JUST SHOW THE TREE OF DR SERVERS/DATABEASES/TABLES
-    create_entity : {    static_label    : 'New Entity Creation',
-                        static_id        : 'tab_create_entity',
-                        php_url            : 'page_create_entity', // NOW HTML !!! so page_create_entity defined in router_front_end_ajax_html.php
-                        js_url            : Oapp.js_cache + 'page_create_entity.js',
-                        php_json_url    : 'page_ajax_create_entity',//as defined in router_back_end.php
-                        js_init_fct        : function (tab_id){ init_js_in_create_one_entity(tab_id);},
-                        removeOnLoad    : false,
-                        removeOnSecondLoad    : true
+    create_entity : {   static_label : 'New Entity Creation',
+                        static_id    : 'tab_create_entity',
+                        php_url      : 'html/2_entity_create.html',
+                        js_url       : Oapp.js_cache + 'page_create_entity.js',
+                        php_json_url : 'page_ajax_create_entity',
+                        js_init_fct  : function (tab_id){ init_js_in_create_one_entity(tab_id);},
+                        removeOnLoad : false,
+                        removeOnSecondLoad : true
                     },
     
-    entity_refresh : {    static_label    : 'Refresh Entity Definition',
-                        static_id        : 'tab_refresh_entity',
-                        php_url            : 'page_ajax_create_entity?ajax=true&entity_ready_id=',
-                        js_url            : Oapp.js_cache + 'page_create_entity.js',
-                        removeOnLoad    : true
+    entity_refresh : {  static_label : 'Refresh Entity Definition',
+                        static_id    : 'tab_refresh_entity',
+                        php_url      : 'page_ajax_create_entity?ajax=true&entity_ready_id=',
+                        js_url       : Oapp.js_cache + 'page_create_entity.js',
+                        removeOnLoad : true
                     },
-    entities_list:    {    static_label    : 'Manage Entities',
-                        static_id        : 'tab_entities_list',
-                        php_url            : 'page_entities_list', 
-                        php_json_url    : 'page_ajax_all?module=entities/get_all',// backend so in 
-                        js_url            : Oapp.js_cache + 'page_entities_list.js',
-                        js_init_fct        : function (tab_id){ init_js_in_entity_list(tab_id);}
+    entities_list : {   static_label : 'Manage Entities',
+                        static_id    : 'tab_entities_list',
+                        php_url      : 'html/2_entities_list.html', 
+                        php_json_url : 'page_ajax_all?module=entities/get_all',
+                        js_url       : Oapp.js_cache + 'page_entities_list.js',
+                        js_init_fct  : function (tab_id){ init_js_in_entity_list(tab_id);}
                     },
     entity_edit:    {    static_label    : 'Edit Entity',
                         static_id        : 'tab_edit_entity',
