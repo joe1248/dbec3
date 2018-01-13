@@ -1,6 +1,6 @@
 <?php
 
-
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -127,9 +127,9 @@ class IdeaUserConnections
     private $myPass = 'NULL';
 
     /**
-     * @var \IdeaUser
+     * @var \Users
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUser")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

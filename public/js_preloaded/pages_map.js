@@ -66,7 +66,7 @@ var Opages = {
 
         /*******************    DB SERVERS ***************************/
     json_db_servers_list:{
-                        php_url            : 'page_ajax_all?module=connections/conn_list&connection_genre=db'
+                        php_url            : '/connections'
                     },
     db_servers_list:{    static_label    : 'DB Servers',
                         static_id        : 'tab_db_servers_list',

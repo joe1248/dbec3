@@ -80,12 +80,8 @@ function refresh_jquery_menus(){
 }
 
 function refresh_js_db_connections_list_so_show_db_buttons(){
-    $.get( Opages.json_db_servers_list.php_url, function(back){
-        if(check_ajax_response_first_2_chars_is_ok(back,' callback of json_db_servers_list')){
-            back = back.substr(2);
-            Aconnections_db = JSON.parse(back);
-            show_buttons_to_add_and_list_connections();
-        }
+    $.get( Opages.json_db_servers_list.php_url, function(Aconnections_db){
+        show_buttons_to_add_and_list_connections();
     });
 }
 

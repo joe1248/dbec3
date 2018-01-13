@@ -1,5 +1,8 @@
 # config/routes.yaml
 
+ConnectionRoute:
+    path: /connections
+    controller: App\Controller\ConnectionController::getAll
 
 configRoute:
     path: /config

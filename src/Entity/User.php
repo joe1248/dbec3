@@ -1,8 +1,5 @@
 <?php
 
-
-
-use Doctrine\ORM\Mapping as ORM;
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
