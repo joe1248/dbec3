@@ -203,7 +203,7 @@ class ConfigObfuscationCatalog
             'category'  =>  'OBFUSCATION',
             'label'         =>  'Replace by a fixed string',
             'method'    =>  'replace_by_fixed_string',
-            'php_code'  =>  function ($value, $param1) {
+            'php_code'  =>  function ( $value, $param1) {
                 return $param1;
             },
             'needed'    =>  'fixed_str',

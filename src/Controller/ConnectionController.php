@@ -122,13 +122,49 @@ class ConnectionController extends Controller
 
     /**
      * @param Request $request
-     * @param UserInterface|null $user
+     * @param UserInterface|null $userI
      *
      * @return JsonResponse
      */
-    public function patch(Request $request, UserInterface $user = null)
+    public function patch(Request $request, UserInterface $userI = null)
     {
-        return $this->post($request, $user);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** User $user */
+        $user = $userI;
+        $db = $this->getDoctrine()->getManager();
+        /** @var IdeaUserConnectionsRepository $em */
+        $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        $input = $request->request->all();
+
+        $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
+        if ($input['select_db_protocol'] === 'over_ssh') {
+            $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
+            $inputConnectionFtp['connection_genre'] = 'ftp';
+
+            /** @var IdeaUserConnections $ideaUserConnectionEntityFtp */
+            $ideaUserConnectionEntityFtp = $em->findOneBy([
+                'id' => $inputConnectionDb['selected_ftp_id'],
+                'user' => $user
+            ]);
+            $ideaUserConnectionEntityFtp->update($inputConnectionFtp);
+            $db->persist($ideaUserConnectionEntityFtp);
+        }
+        $inputConnectionDb['connection_genre'] = 'db';
+
+        /** @var IdeaUserConnections $ideaUserConnectionEntityFtp */
+        $ideaUserConnectionEntityDb = $em->findOneBy([
+            'id' => $inputConnectionDb['id'],
+            'user' => $user
+        ]);
+        $ideaUserConnectionEntityDb->update($inputConnectionDb);
+        $db->persist($ideaUserConnectionEntityDb);
+        $db->flush();
+
+        return new JsonResponse([
+            'connection_id' => $ideaUserConnectionEntityDb->getId(),
+            'message' => 'Success updating the DB server.'
+        ]);
     }
 
     /**
@@ -140,28 +176,28 @@ class ConnectionController extends Controller
     public function post(Request $request, UserInterface $user = null)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $em = $this->getDoctrine()->getManager();
+        $db = $this->getDoctrine()->getManager();
 
         $input = $request->request->all();
-        
+
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
     
         if ($input['select_db_protocol'] === 'over_ssh') {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
             $inputConnectionFtp['connection_genre'] = 'ftp';
             $ideaUserConnectionEntityFtp = new IdeaUserConnections($inputConnectionFtp, $user);
-            $em->persist($ideaUserConnectionEntityFtp);
-            $em->flush();
+            $db->persist($ideaUserConnectionEntityFtp);
+            $db->flush();
             $inputConnectionDb['selected_ftp_id'] = $ideaUserConnectionEntityFtp->getId();
         }
         $inputConnectionDb['connection_genre'] = 'db';
         $ideaUserConnectionEntityDb = new IdeaUserConnections($inputConnectionDb, $user);
-        $em->persist($ideaUserConnectionEntityDb);
-        $em->flush();
+        $db->persist($ideaUserConnectionEntityDb);
+        $db->flush();
 
         return new JsonResponse([
             'connection_id' => $ideaUserConnectionEntityDb->getId(),
-            'message' => 'Success saving the new DB server.'
+            'message' => 'Success creating the new DB server.'
         ]);
     }
 

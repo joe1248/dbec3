@@ -160,6 +160,16 @@ class IdeaUserConnections
         $this->selectedFtp = $input['selected_ftp_id'] ?? null;
     }
 
+    public function update(array $input)
+    {
+        $this->connectionGenre = $input['connection_genre'];
+        $this->connectionName  = $input['connection_name'];
+        $this->urlHost = $input['url_host'];
+        $this->userName = $input['user_name'];
+        $this->passWord = $input['pass_word'];
+        $this->portNumber = $input['port_number'];
+    }
+
     public function delete()
     {
         $this->deleted = true;
