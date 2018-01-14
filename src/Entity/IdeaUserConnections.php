@@ -157,7 +157,12 @@ class IdeaUserConnections
         $this->userName = $input['user_name'];
         $this->passWord = $input['pass_word'];
         $this->portNumber = $input['port_number'];
-        $this->selectedFtpId = $input['selected_ftp_id'] ?? null;
+        $this->selectedFtp = $input['selected_ftp_id'] ?? null;
+    }
+
+    public function delete()
+    {
+        $this->deleted = true;
     }
 
     public function getId()

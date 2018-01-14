@@ -18,12 +18,16 @@ ConnectionEdit:
     methods: [PATCH]
     path: /connection/edit
     controller: App\Controller\ConnectionController::patch
-    
 
 ConnectionGet:
     methods: [GET]
     path: /connection/{id}
     controller: App\Controller\ConnectionController::getOne
+
+ConnectionDelete:
+    methods: [DELETE]
+    path: /connection/{id}
+    controller: App\Controller\ConnectionController::delete
 
 
 # -----------  GENERIC ROUTES ----------------------------
@@ -40,7 +44,7 @@ dashboardRoute:
     controller: App\Controller\DashboardController::dashboard
 
 login:
-    methods: [POST]
+    methods: [GET,POST]
     path: /login
     controller: App\Controller\SecurityController::login
 
