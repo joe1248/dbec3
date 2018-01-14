@@ -8,8 +8,11 @@ function init_js_in_edit_connection( tab_id )
     var button_disable        = $('#button_to_disable_one_connection_'+ tab_id);
     var button_enable        = $('#button_to_enable_one_connection_' + tab_id);
     var button_submit        = $('#submit_conn_form_'                + tab_id);
+    this.isNewConnection = function() {
+        return input_connection_id.val() === '' ? true : false;
+    };
     
-    if(input_connection_id.val() === '0' || input_connection_id.val() === '')
+    if(this.isNewConnection())
     {
         div_server_message.html("Please, enter DB connection details:");
     }
@@ -20,7 +23,9 @@ function init_js_in_edit_connection( tab_id )
     }else
     {
         div_server_message.html("Testing..." );
-        call_check_if_one_connection_works( tab_id );
+        if (!this.isNewConnection()) {
+            call_check_if_one_connection_works( tab_id );
+        }
     }
     $( '#edit_connection_jquery_tabs_' + tab_id ).tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
     
@@ -123,29 +128,31 @@ function init_js_in_edit_connection( tab_id )
         button_submit.val('Save');
         div_server_message.html('Saving in progress...');
         var post_data = html_form_to_object('form_connection_' + tab_id);
-        var url = pos + 'page_ajax_all?module=connections/conn_upd';//$('#form_connection').attr('action')
-        $.post( url, post_data, function(back){
-            if(check_ajax_response_first_2_chars_is_ok(back,' callback of confirmedGoSaveConnection ')){
-                back = back.substr(2);
-                var Aback = back.split('#!!#');
-                input_connection_id.val(    Aback[0] );
-                div_server_message.html(    Aback[1] );
-                var is_disabled            = $('#hidden_disabled_connection_id_'    + tab_id).val();
-                if(is_disabled === '1'){
-                    $('#button_test_connection_works_' + tab_id).show();
-                }else{
-                    call_check_if_one_connection_works( tab_id );
-                }
-                Aconnections_db.push('ok');    // why ?
-                success_refresh_html_select_entities_to_clone();
-                $('#welcome_big_button_add_db_server'    ).parent().hide(); // hide BIG add_new_db_server button.
-                $('#welcome_button_db_servers_list'        ).parent().show();// show fielset to manage db servers
-
+        var successCallBack = function(backEndData){
+            input_connection_id.val(backEndData.connection_id);
+            div_server_message.html(backEndData.message);
+            var is_disabled = $('#hidden_disabled_connection_id_'    + tab_id).val();
+            if(is_disabled === '1'){
+                $('#button_test_connection_works_' + tab_id).show();
             }else{
-                div_server_message.html(    'Error while saving...');
+                call_check_if_one_connection_works( tab_id );
             }
+            Aconnections_db.push('ok');    // why ?
+            success_refresh_html_select_entities_to_clone();
+            $('#welcome_big_button_add_db_server'    ).parent().hide(); // hide BIG add_new_db_server button.
+            $('#welcome_button_db_servers_list'        ).parent().show();// show fielset to manage db servers
             addStaticTab(true, Opages.db_servers_list ); // REfresh db_servers_list (if already opened though...)
-        }, 'html');
+        };
+        if (this.isNewConnection()) {
+            $.post(Opages.db_server_create.php_url, post_data, successCallBack, 'json');
+        } else {
+            $.ajax({
+                type    : 'PATCH',
+                url     : Opages.db_server_update.php_url,
+                data    : post_data,
+                success    : successCallBack
+            });
+        }
     };
     $('#select_db_protocol_' + tab_id).change( function(){
         var selected_val = $(this).val();

@@ -179,11 +179,9 @@ function addStaticTab( force_refresh, Opage, get_string, end_of_label, extra_get
                         bind_back_end_JSON_into_front_end_HTML(Opage.php_json_url + get_string_php + extra_get_string, currentTabCounter, Opage, content_id, header_id);
                     } else {
                         
-                        
-                        alert('php_json_url is not defined in pages.js to feed ' + Opage.js_url + ' BUt Firing JS init anyway...');
-                        
+                        // There is NO PHP JSON to load, so just fire the JS loader...
                         if (typeof Opage.js_init_fct !== 'undefined') {
-                            alert('init for tab id = ' + currentTabCounter);
+                            //alert('init for tab id = ' + currentTabCounter);
                             Opage.js_init_fct(currentTabCounter);       // NOW MAGICALLY inint the newly load JS, using New JSON and new HTML!!!
                         }
 

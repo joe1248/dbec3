@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * IdeaUserConnections
@@ -103,7 +104,7 @@ class IdeaUserConnections
      *
      * @ORM\Column(name="key_date", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $keyDate = 'NULL';
+    private $keyDate = null;
 
     /**
      * @var string|null
@@ -146,31 +147,24 @@ class IdeaUserConnections
      */
     private $selectedFtp;
 
+    public function __construct(array $input, UserInterface $user)
+    {
+        $this->user = $user;
+        $this->id = $input['id'] ?? null;
+        $this->connectionGenre = $input['connection_genre'];
+        $this->connectionName  = $input['connection_name'];
+        $this->urlHost = $input['url_host'];
+        $this->userName = $input['user_name'];
+        $this->passWord = $input['pass_word'];
+        $this->portNumber = $input['port_number'];
+        $this->selectedFtpId = $input['selected_ftp_id'] ?? null;
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-/*    public function getConnectionName()
-    {
-        return $this->connectionName;
-    }
-    public function getUrlHost()
-    {
-        return $this->urlHost;
-    }
-    public function getUserName()
-    {
-        return $this->userName;
-    }
-    public function getPassWord()
-    {
-        return $this->passWord;
-    }
-    public function getPortNumber()
-    {
-        return $this->portNumber;
-    }*/
     public function getSelectedFtp()
     {
         return $this->selectedFtp;
@@ -179,6 +173,7 @@ class IdeaUserConnections
     public function readAsDbDetails()
     {
         return [
+            'db_id' => $this->id,
             'db_connection_name' => $this->connectionName,
             'db_url_host' => $this->urlHost,
             'db_user_name' => $this->userName,

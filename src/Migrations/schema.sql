@@ -50,7 +50,7 @@ CREATE TABLE `dbec_1_analysed_db` (
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `json_data` longtext NOT NULL COMMENT 'JSON describing the differents DB entities',
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_dbec_1_analysed_db_user_id` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`),
+  CONSTRAINT `fk_dbec_1_analysed_db_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_dbec_1_analysed_db_svr_id` FOREIGN KEY (`svr_id`) REFERENCES `idea_user_connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -73,7 +73,7 @@ CREATE TABLE `dbec_2_entity_ready` (
   UNIQUE KEY `unique_label_per_user` (`user_id`,`entity_ready_name`),
   KEY `analysed_db_id` (`analysed_db_id`),
   CONSTRAINT `dbec_2_entity_ready_ibfk_1` FOREIGN KEY (`analysed_db_id`) REFERENCES `dbec_1_analysed_db` (`id`),
-  CONSTRAINT `dbec_2_entity_ready_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`)
+  CONSTRAINT `dbec_2_entity_ready_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,7 +95,7 @@ CREATE TABLE `dbec_3_src_fave` (
   KEY `svr_id` (`svr_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `dbec_3_src_fave_ibfk_1` FOREIGN KEY (`svr_id`) REFERENCES `idea_user_connections` (`id`),
-  CONSTRAINT `dbec_3_src_fave_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`)
+  CONSTRAINT `dbec_3_src_fave_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -113,7 +113,7 @@ CREATE TABLE `dbec_4_dest_fave` (
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `dbec_4_dest_fave_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`)
+  CONSTRAINT `dbec_4_dest_fave_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -159,7 +159,7 @@ CREATE TABLE `dbec_6_user_sql_file` (
   KEY `user_id` (`user_id`),
   KEY `user_sql_file_label_idx` (`user_sql_file_label`),
   CONSTRAINT `dbec_6_user_sql_file_ibfk_1` FOREIGN KEY (`entity_ready_id`) REFERENCES `dbec_2_entity_ready` (`id`),
-  CONSTRAINT `dbec_6_user_sql_file_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`)
+  CONSTRAINT `dbec_6_user_sql_file_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -215,7 +215,7 @@ CREATE TABLE `dbec_7_transfer` (
   KEY `db_srv_id` (`db_srv_id`),
   KEY `is_extraction_idx` (`is_extraction`),
   KEY `is_success_idx` (`is_success`),
-  CONSTRAINT `dbec_7_transfer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`),
+  CONSTRAINT `dbec_7_transfer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `dbec_7_transfer_ibfk_2` FOREIGN KEY (`db_srv_id`) REFERENCES `idea_user_connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -339,7 +339,7 @@ CREATE TABLE `idea_db_tunnel` (
   KEY `connection_id_index` (`connection_id`),
   KEY `distant_db_port_index` (`distant_db_port`),
   KEY `deleted_idx` (`deleted`),
-  CONSTRAINT `idea_db_tunnel_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`),
+  CONSTRAINT `idea_db_tunnel_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `idea_db_tunnel_ibfk_2` FOREIGN KEY (`connection_id`) REFERENCES `idea_user_connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -358,7 +358,7 @@ CREATE TABLE `idea_reset_code` (
   `request_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `idea_reset_code_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`)
+  CONSTRAINT `idea_reset_code_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -416,7 +416,7 @@ CREATE TABLE `idea_user_connections` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `selected_ftp_id` (`selected_ftp_id`),
-  CONSTRAINT `idea_user_connections_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`),
+  CONSTRAINT `idea_user_connections_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `idea_user_connections_ibfk_2` FOREIGN KEY (`selected_ftp_id`) REFERENCES `idea_user_connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -452,7 +452,7 @@ CREATE TABLE `idea_valid_code` (
   `request_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `idea_valid_code_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `idea_user` (`id`)
+  CONSTRAINT `idea_valid_code_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

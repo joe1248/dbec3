@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\IdeaUserConnections;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ConnectionController extends Controller 
@@ -21,18 +22,6 @@ class ConnectionController extends Controller
         $connections = $em->getAll($user->getId());
     
         return new JsonResponse($connections);
-    }
-
-    // Get empty connection details
-    public function getNew()
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $connection = [
-            'form_id' => 'form_connection_',
-        ];
-
-        return new JsonResponse($connection);
     }
 
     // Get 1 connection details
@@ -67,5 +56,62 @@ class ConnectionController extends Controller
                 $connectionTwoDetails
             )
         );
+    }
+
+    private function filterArrayByKeyPrefix(array $toFilterByKeyPrefix, string $prefix)
+    {
+        return array_filter(
+            $toFilterByKeyPrefix,
+            function($key) use ($prefix) {
+                return substr($key, 0, strlen($prefix)) == $prefix;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    private function removeKeyPrefix(array $toRemoveKeyPrefix, string $prefix)
+    {
+        $withKeyRemoved = [];
+        foreach ($toRemoveKeyPrefix as $key => $value)
+        {
+            $key = substr($key, 0, strlen($prefix)) == $prefix ? substr($key, strlen($prefix)) : $key;
+            $withKeyRemoved[$key] = $value;
+        }
+        return $withKeyRemoved;
+    }
+
+    public function patch(Request $request, UserInterface $user = null)
+    {
+        return $this->post($request, $user);
+    }
+
+    public function post(Request $request, UserInterface $user = null)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $em = $this->getDoctrine()->getManager();//->getRepository(IdeaUserConnections::class);
+
+        //return new JsonResponse($request->request->all());
+
+        $input = $request->request->all();
+        
+        $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
+    
+        if ($input['select_db_protocol'] === 'over_ssh') {
+            $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
+            $inputConnectionFtp['connection_genre'] = 'ftp';
+            $ideaUserConnectionEntityFtp = new IdeaUserConnections($inputConnectionFtp, $user);
+            $em->persist($ideaUserConnectionEntityFtp);
+            $em->flush();
+            $inputConnectionDb['selected_ftp_id'] = $ideaUserConnectionEntityFtp->getId();
+        }
+        $inputConnectionDb['connection_genre'] = 'db';
+        $ideaUserConnectionEntityDb = new IdeaUserConnections($inputConnectionDb, $user);
+        $em->persist($ideaUserConnectionEntityDb);
+        $em->flush();
+
+        return new JsonResponse([
+            'connection_id' => $ideaUserConnectionEntityDb->getId(),
+            'message' => 'Success saving the new DB server.'
+        ]);
     }
 }

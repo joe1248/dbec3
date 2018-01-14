@@ -1,1 +1,2 @@
 svn_ignore#ide_sep#public/remi_log.txt
+svn_ignore#ide_sep#todo.txt

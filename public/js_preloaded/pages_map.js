@@ -85,12 +85,16 @@ var Opages = {
                         php_json_url : 'connection/', // id must be appened to this URL
                         js_init_fct  : function (tab_id){ init_js_in_edit_connection(tab_id);}
                     },
+    db_server_create:{ php_url      : '/connection/new'
+                    },
+    db_server_update:{ php_url      : '/connection/edit'
+                    },
     db_server_add:{    static_label : 'Add DB Server',
                         static_id    : 'tab_db_server_edit',
 
                         php_url      : 'html/1_connection_edit.html',
                         js_url       :   'js/1_connection_edit.js',
-                        php_json_url : 'connection/new',
+                        //php_json_url : 'connection/new',
                         js_init_fct  : function (tab_id){ init_js_in_edit_connection(tab_id);}
                     },
     db_server_clone:{   static_label : 'Clone DB Server',

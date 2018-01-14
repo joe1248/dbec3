@@ -5,38 +5,47 @@
 
 
 ConnectionsList:
+    methods: [GET]
     path: /connections
     controller: App\Controller\ConnectionController::getAll
 
 ConnectionAdd:
+    methods: [POST]
     path: /connection/new
-    controller: App\Controller\ConnectionController::getNew
+    controller: App\Controller\ConnectionController::post
+
+ConnectionEdit:
+    methods: [PATCH]
+    path: /connection/edit
+    controller: App\Controller\ConnectionController::patch
+    
 
 ConnectionGet:
+    methods: [GET]
     path: /connection/{id}
     controller: App\Controller\ConnectionController::getOne
-
-#ConnectionEdit:
-#    path: /connection/{id}
-#    controller: App\Controller\ConnectionController::patch
 
 
 # -----------  GENERIC ROUTES ----------------------------
 
 
 configRoute:
+    methods: [GET]
     path: /config
     controller: App\Controller\ConfigController::getConfig
 
 dashboardRoute:
+    methods: [GET]
     path: /dashboard
     controller: App\Controller\DashboardController::dashboard
 
 login:
+    methods: [POST]
     path: /login
     controller: App\Controller\SecurityController::login
 
 index:
+    methods: [GET]
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
     defaults:
@@ -44,4 +53,5 @@ index:
         permanent: true
 
 logout:
+    methods: [GET]
     path: /logout
