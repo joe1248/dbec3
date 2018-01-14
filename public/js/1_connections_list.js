@@ -1,23 +1,29 @@
 //? USER_DB_SERVERS_LIST In the DB servers list : call_check_connection_availibility + its scallback and display
 function init_js_in_db_servers_list(tabNumber) {
-    var Aconn = varInTab[tabNumber].my_json;
-    //dump(Aconn);
-    var html = '';
-    for( var i=0 ; i < Aconn.length ; i++) {
+    var connectionsCollection = varInTab[tabNumber].my_json;
+    var i, html = '';
+    for (i=0 ; i < connectionsCollection.length ; i++) {
+        var connexionEntity = connectionsCollection[i];
+        var connexionId = connexionEntity.id;
+        var connectionName = connexionEntity.connectionName;
+        var commonTags =
+            ' html_connection_id="' + connexionId + '"' +
+            ' html_connection_label="' + connectionName + '"' +
+            ' class="small-button ';
         html += 
             '<tr>' +
             '    <td class="centered" style="width:20px;">' +
-            '        <div id="td_connection_status_' + Aconn[i].id + '" class="connection_statuses">&nbsp;</div>' +
+            '        <div id="td_connection_status_' + connexionId + '" class="connection_statuses">&nbsp;</div>' +
             '    </td>' +
-            '    <td style="text-indent:20px;">' + Aconn[i].connection_name + '</td>' +
-            '    <td class="centered" id="td_button_connection_' + Aconn[i].id + '" style="width:55px;">&nbsp;    </td>';
-        if (Aconn[i].connection_disabled == 1) {
-            html += '    <td><input type="button" value="Enable"        html_connection_id="' + Aconn[i].id + '" html_connection_label="' + Aconn[i].connection_name + '" class="small-button button_connection_enable"></td>';
+            '    <td style="text-indent:20px;">' + connectionName + '</td>' +
+            '    <td class="centered" id="td_button_connection_' + connexionId + '" style="width:55px;">&nbsp;    </td>';
+        if (connexionEntity.connectionDisabled == 1) {
+            html += '    <td><input type="button" value="Enable"' + commonTags + 'button_connection_enable"></td>';
         } else {
-            html += '    <td><input type="button" value="Edit"        html_connection_id="' + Aconn[i].id + '" html_connection_label="' + Aconn[i].connection_name + '" class="small-button button_connection_edit"></td>' +
-                    '    <td><input type="button" value="Clone"        html_connection_id="' + Aconn[i].id + '" html_connection_label="' + Aconn[i].connection_name + '" class="small-button button_connection_clone"></td>' +
-                    '    <td><input type="button" value="Delete"        html_connection_id="' + Aconn[i].id + '" html_connection_label="' + Aconn[i].connection_name + '" class="small-button button_connection_delete"' +
-                    ' id="oto_del_conn_' + Aconn[i].id + '"></td>';
+            html += '    <td><input type="button" value="Edit"  ' + commonTags + 'button_connection_edit"></td>' +
+                    '    <td><input type="button" value="Clone" ' + commonTags + 'button_connection_clone"></td>' +
+                    '    <td><input type="button" value="Delete"' + commonTags + 'button_connection_delete"' +
+                    ' id="oto_del_conn_' + connexionId + '"></td>';
         }
         html += '</tr>';
     }
@@ -25,13 +31,15 @@ function init_js_in_db_servers_list(tabNumber) {
     // Render
     $('.html_example').html(html);$('.html_example').attr('class', '');
     
-    for(i=0 ; i < Aconn.length ; i++) {
-        if (Aconn[i].connection_disabled == 0) {
-            ///$('input["html_connection_id=' + Aconn[i].id + '"]').hide();
-            call_check_connection_availibility(Aconn[i].id);
-            do_the_display(Aconn[i].id, "Being tested...", "orange");
+    for (i=0 ; i < connectionsCollection.length ; i++) {
+        var connexionEntity = connectionsCollection[i];
+        var connexionId = connexionEntity.id;
+        if (connexionEntity.connectionDisabled === 0) {
+            ///$('input["html_connection_id=' + connexionEntity.id + '"]').hide();
+            call_check_connection_availibility(connexionId);
+            do_the_display(connexionId, "Being tested...", "orange");
         } else {
-            do_the_display(Aconn[i].id, "Disabled", "#555");
+            do_the_display(connexionId, "Disabled", "#555");
         }
     }
     reset_jquery_styles();

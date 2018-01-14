@@ -11,9 +11,12 @@
             <link href="{{ asset('css/lib/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" id="jquery_css"/>
             <link href="{{ asset('css/lib/flick.css') }}" rel="stylesheet" type="text/css" id="user_color_css"/>
             <link href="{{ asset('css/lib/css.css') }}" rel="stylesheet" type="text/css" />    
+            <link href="{{ asset('css/0_dashboard.css') }}" rel="stylesheet" type="text/css" />    
+            <link href="{{ asset('css/3_cloning_data_ui.css') }}" rel="stylesheet" type="text/css" />    
+            <link href="{{ asset('css/4_bind_data.css') }}" rel="stylesheet" type="text/css" />    
         {% endblock %}
     </head>
-    <body>
+    <body style="display:none;">
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script type="text/javascript"  src="{{ asset('js/lib/jquery-1.11.0.min.js') }}"></script>

@@ -73,7 +73,7 @@ var Opages = {
 
                         php_url      : 'html/1_connections_list.html',
                         js_url       :   'js/1_connections_list.js',
-                        php_json_url : 'page_ajax_all?module=connections/conn_list&connection_genre=db',
+                        php_json_url : 'connections',
                         js_init_fct  : function (tab_id){ init_js_in_db_servers_list(tab_id);}
                         
                     },

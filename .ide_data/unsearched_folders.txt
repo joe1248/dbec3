@@ -1,2 +1,5 @@
 
 New ignored#ide_sep#/var/cache
+New ignored#ide_sep#/vendor
+New ignored#ide_sep#/bin
+New ignored#ide_sep#/.git
