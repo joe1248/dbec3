@@ -3,21 +3,22 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\IdeaUserConnections;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ConnectionController extends Controller 
 {
     private $ideaUserConnectionsManager;
 
     // List all connections    @todo of current user nad not deleted
-    public function getAll()
+    public function getAll(UserInterface $user = null)
     {        
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
 
-        $connections = $em->getAll();
+        $connections = $em->getAll($user->getId());
     
         return new JsonResponse($connections);
     }
@@ -50,18 +51,11 @@ class ConnectionController extends Controller
         $connectionOne = $connections[0];
         $connectionOneDetails = $connectionOne->readAsDbDetails();
         
-        $ftpConnectionId  = $connectionOne->getSelectedFtpId();
+        $connectionTwo = $connectionOne->getSelectedFtp();
         $connectionTwoDetails = [];
-        if ($ftpConnectionId > 0) {
-            $ftpConnections = $em->findById($ftpConnectionId);
-            if (!$ftpConnections) {
-                throw $this->createNotFoundException(
-                    'No connection2 found for id ' . $ftpConnectionId
-                );
-            }
-            $accessProtocol = 'over_ssh';
-            $connectionTwo = $ftpConnections[0];
+        if (!empty($connectionTwo)) {
             $connectionTwoDetails = $connectionTwo->readAsFtpDetails();
+            $accessProtocol = 'over_ssh';
         }
 
         return new JsonResponse(

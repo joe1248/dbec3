@@ -135,12 +135,13 @@ function addStaticTab( force_refresh, Opage, get_string, end_of_label, extra_get
         if(get_string == 'new'){
             get_string = '';
         }
-        //var get_string_html = get_string;
         var get_string_php = get_string;
-        //get_string_html += (get_string === '' && Opage.php_url.indexOf('?') < 0) ? '?' : '&';
         if (typeof Opage.php_json_url !== 'undefined') {
-            get_string_php  += (get_string === '' && Opage.php_json_url.indexOf('?') < 0) ? '?' : '&';
-            get_string_php  += 'tab_counter=' + tabCounter;
+            //alert('get_string = ' + get_string + ' and Opage.php_json_url = ' +Opage.php_json_url);
+            //var hasMoreArgumentsThanMaxAnId = get_string !== '' && isNaN(get_string);
+            //get_string_php  += (!hasMoreArgumentsThanMaxAnId && Opage.php_json_url.indexOf('?') < 0) ? '?' : '&';
+            //get_string_php  += 'tab_counter=' + tabCounter;
+            
         }
         var get_string_html = '?tab_counter=' + tabCounter;
         

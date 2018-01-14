@@ -17,7 +17,7 @@ function init_js_in_db_servers_list(tabNumber) {
             '    </td>' +
             '    <td style="text-indent:20px;">' + connectionName + '</td>' +
             '    <td class="centered" id="td_button_connection_' + connexionId + '" style="width:55px;">&nbsp;    </td>';
-        if (connexionEntity.connectionDisabled == 1) {
+        if (connexionEntity.connectionDisabled === true) {
             html += '    <td><input type="button" value="Enable"' + commonTags + 'button_connection_enable"></td>';
         } else {
             html += '    <td><input type="button" value="Edit"  ' + commonTags + 'button_connection_edit"></td>' +
@@ -34,7 +34,7 @@ function init_js_in_db_servers_list(tabNumber) {
     for (i=0 ; i < connectionsCollection.length ; i++) {
         var connexionEntity = connectionsCollection[i];
         var connexionId = connexionEntity.id;
-        if (connexionEntity.connectionDisabled === 0) {
+        if (connexionEntity.connectionDisabled === false) {
             ///$('input["html_connection_id=' + connexionEntity.id + '"]').hide();
             call_check_connection_availibility(connexionId);
             do_the_display(connexionId, "Being tested...", "orange");

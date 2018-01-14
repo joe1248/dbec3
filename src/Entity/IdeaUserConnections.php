@@ -146,7 +146,12 @@ class IdeaUserConnections
      */
     private $selectedFtp;
 
-    public function getConnectionName()
+    public function getId()
+    {
+        return $this->id;
+    }
+
+/*    public function getConnectionName()
     {
         return $this->connectionName;
     }
@@ -165,8 +170,8 @@ class IdeaUserConnections
     public function getPortNumber()
     {
         return $this->portNumber;
-    }
-    public function getSelectedFtpId()
+    }*/
+    public function getSelectedFtp()
     {
         return $this->selectedFtp;
     }
@@ -179,7 +184,7 @@ class IdeaUserConnections
             'db_user_name' => $this->userName,
             'db_pass_word' => $this->passWord,
             'db_port_number' => $this->portNumber,
-            'db_selected_ftp' => $this->selectedFtp,
+            'db_selected_ftp_id' => empty($this->selectedFtp) ? 0 : $this->selectedFtp->getId(),
         ];
     }
 

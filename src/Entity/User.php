@@ -45,7 +45,7 @@ class User implements UserInterface, \Serializable
     private $timezoneOffset = 'NULL';
 
     /**
-     * @var string|null
+-     * @var string|null
      *
      * @ORM\Column(name="status", type="string", length=10, nullable=true, options={"default"="NULL","comment"="emailValid or whatever"})
      */
@@ -77,6 +77,11 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getUsername()
