@@ -41,7 +41,7 @@ class ConfigObfuscationCatalog
         
         $field_type_param = $Afield_types_for_that_table[$field_name];
 
-        return $this->convert_sql_type_to_pdo_type($field_type_param, $table, $field_name, $debug = '');
+        return $this->convert_sql_type_to_pdo_type($field_type_param, $table, $field_name, $debug);
     }
     public function convert_sql_type_to_pdo_type($field_type_param, $table = '', $field_name = '', $debug = '')
     {

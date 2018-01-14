@@ -11,9 +11,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ConnectionController extends Controller 
 {
-    private $ideaUserConnectionsManager;
-
-    // List all connections    @todo of current user nad not deleted
+    /**
+     * List all  not deleted connections of current user
+     *
+     * @param UserInterface|null $user
+     *
+     * @return JsonResponse
+     */
     public function getAll(UserInterface $user = null)
     {        
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -24,11 +28,18 @@ class ConnectionController extends Controller
         return new JsonResponse($connections);
     }
 
-    // Get 1 connection details
+    /**
+     * Get 1 connection details
+     *
+     * @param string $id
+     *
+     * @return JsonResponse
+     */
     public function getOne(string $id)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+
 
         $connections = $em->findById($id);
         if (!$connections) {
@@ -37,6 +48,7 @@ class ConnectionController extends Controller
             );
         }
         $accessProtocol = '';
+        /** @var IdeaUserConnections $connections */
         $connectionOne = $connections[0];
         $connectionOneDetails = $connectionOne->readAsDbDetails();
         
@@ -58,39 +70,27 @@ class ConnectionController extends Controller
         );
     }
 
-    private function filterArrayByKeyPrefix(array $toFilterByKeyPrefix, string $prefix)
-    {
-        return array_filter(
-            $toFilterByKeyPrefix,
-            function($key) use ($prefix) {
-                return substr($key, 0, strlen($prefix)) == $prefix;
-            },
-            ARRAY_FILTER_USE_KEY
-        );
-    }
-
-    private function removeKeyPrefix(array $toRemoveKeyPrefix, string $prefix)
-    {
-        $withKeyRemoved = [];
-        foreach ($toRemoveKeyPrefix as $key => $value)
-        {
-            $key = substr($key, 0, strlen($prefix)) == $prefix ? substr($key, strlen($prefix)) : $key;
-            $withKeyRemoved[$key] = $value;
-        }
-        return $withKeyRemoved;
-    }
-
+    /**
+     * @param Request $request
+     * @param UserInterface|null $user
+     *
+     * @return JsonResponse
+     */
     public function patch(Request $request, UserInterface $user = null)
     {
         return $this->post($request, $user);
     }
 
+    /**
+     * @param Request $request
+     * @param UserInterface|null $user
+     *
+     * @return JsonResponse
+     */
     public function post(Request $request, UserInterface $user = null)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();//->getRepository(IdeaUserConnections::class);
-
-        //return new JsonResponse($request->request->all());
 
         $input = $request->request->all();
         
@@ -113,5 +113,41 @@ class ConnectionController extends Controller
             'connection_id' => $ideaUserConnectionEntityDb->getId(),
             'message' => 'Success saving the new DB server.'
         ]);
+    }
+
+    /**
+     * @param array $toFilterByKeyPrefix
+     * @param string $prefix
+     *
+     * @return array
+     */
+    private function filterArrayByKeyPrefix(array $toFilterByKeyPrefix, string $prefix)
+    {
+        return array_filter(
+            $toFilterByKeyPrefix,
+            function($key) use ($prefix) {
+                return substr($key, 0, strlen($prefix)) == $prefix;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    /**
+     * Remove a prefix from the keys of an array
+     *
+     * @param array $toRemoveKeyPrefix
+     * @param string $prefix
+     *
+     * @return array
+     */
+    private function removeKeyPrefix(array $toRemoveKeyPrefix, string $prefix)
+    {
+        $withKeyRemoved = [];
+        foreach ($toRemoveKeyPrefix as $key => $value)
+        {
+            $key = substr($key, 0, strlen($prefix)) == $prefix ? substr($key, strlen($prefix)) : $key;
+            $withKeyRemoved[$key] = $value;
+        }
+        return $withKeyRemoved;
     }
 }
