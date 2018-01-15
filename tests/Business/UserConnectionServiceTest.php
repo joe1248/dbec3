@@ -5,7 +5,9 @@ namespace App\Tests\Business;
 use App\Business\UserConnectionService;
 use App\Entity\Connection;
 use App\Repository\ConnectionsRepo;
+use App\Tests\MyMockObjectManager;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -66,6 +68,25 @@ class UserConnectionServiceTest extends TestCase
 
     }
 
+    /**
+     * @expectedException \Doctrine\ORM\EntityNotFoundException
+     * @expectedExceptionMessage No connection found for id 123
+     */
+    public function testGetConnectionDbAndFtpDetailsThrowsEntityNotFoundException()
+    {
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
+            ->method('findOneBy')
+            ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
+            ->willReturn(null);
+
+        // Actual Test
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $connectionsRepo, $this->user);
+    }
+
     public function testGetConnectionDbAndFtpDetailsSuccessA()
     {
         /** @var Connection $dbConnectionEntity */
@@ -80,7 +101,12 @@ class UserConnectionServiceTest extends TestCase
         // Actual Test
         /** UserConnectionService $userConnectionServiceToTest */
         $userConnectionServiceToTest = new UserConnectionService();
-        $result = $userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $connectionsRepo, $this->user);
+        $result = [];
+        try {
+            $result = $userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $connectionsRepo, $this->user);
+        } catch (EntityNotFoundException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
+        }
 
         // assert that your calculator added the numbers correctly!
         $this->assertEquals(
@@ -116,8 +142,12 @@ class UserConnectionServiceTest extends TestCase
         // Actual Test
         /** UserConnectionService $userConnectionServiceToTest */
         $userConnectionServiceToTest = new UserConnectionService();
-        $result = $userConnectionServiceToTest->getConnectionDbAndFtpDetails('456', $connectionsRepo, $this->user);
-
+        $result = [];
+        try {
+            $result = $userConnectionServiceToTest->getConnectionDbAndFtpDetails('456', $connectionsRepo, $this->user);
+        } catch (EntityNotFoundException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
+        }
         // assert that your calculator added the numbers correctly!
         $this->assertEquals(
             [
@@ -131,25 +161,6 @@ class UserConnectionServiceTest extends TestCase
             ],
             $result
         );
-    }
-
-    /**
-     * @expectedException \Doctrine\ORM\EntityNotFoundException
-     * @expectedExceptionMessage No connection found for id 123
-     */
-    public function testGetConnectionDbAndFtpDetailsThrowsEntityNotFoundException()
-    {
-        /** ConnectionsRepo */
-        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
-        $connectionsRepo->expects($this->once())
-            ->method('findOneBy')
-            ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
-            ->willReturn(null);
-
-        // Actual Test
-        /** UserConnectionService $userConnectionServiceToTest */
-        $userConnectionServiceToTest = new UserConnectionService();
-        $userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $connectionsRepo, $this->user);
     }
 
     public function testDeleteDbAndFtpConnectionZeroDeleted()
@@ -309,7 +320,6 @@ class UserConnectionServiceTest extends TestCase
 
         /** @var Connection */
         $expectedDbConnectionEntity = new Connection($dbConnectionParametersAfterUpdate, $this->user);
-        $providedFtpConnectionEntity = new Connection($this->ftpConnectionParameters , $this->user);
         $providedDbConnectionEntity = new Connection($this->dbConnectionParametersA, $this->user);
 
         /** ConnectionsRepo */
@@ -335,12 +345,17 @@ class UserConnectionServiceTest extends TestCase
         // Actual Test
         /** UserConnectionService $userConnectionServiceToTest */
         $userConnectionServiceToTest = new UserConnectionService();
-        $dbConnectionUpdated = $userConnectionServiceToTest->updateConnectionDbAndFtp(
-            $input,
-            $this->user,
-            $dbManager,
-            $connectionsRepo
-        );
+        $dbConnectionUpdated = 0;
+        try {
+            $dbConnectionUpdated = $userConnectionServiceToTest->updateConnectionDbAndFtp(
+                $input,
+                $this->user,
+                $dbManager,
+                $connectionsRepo
+            );
+        } catch (EntityNotFoundException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
+        }
         $this->assertEquals($expectedDbConnectionEntity, $dbConnectionUpdated);
         $this->assertEquals($expectedFtpConnectionEntity , $dbConnectionUpdated->getSelectedFtp());
     }
@@ -350,7 +365,7 @@ class UserConnectionServiceTest extends TestCase
         $input = [
             'select_db_protocol' => 'over_ssh',
             'db_id' => 456,
-            'db_connection_name' => 'Test_connection_THREEokok',
+            'db_connection_name' => 'Test_connection_THREE_ok',
             'db_url_host' => 'localhostUPDATED_6',
             'db_user_name' => 'db_userUPDATED_7',
             'db_pass_word' => 'db_passwordUPDATED_8',
@@ -371,7 +386,7 @@ class UserConnectionServiceTest extends TestCase
         $dbConnectionParametersAfterUpdate = [
             'id' => 456,
             'connection_genre' => 'db',
-            'connection_name' => 'Test_connection_THREEokok',
+            'connection_name' => 'Test_connection_THREE_ok',
             'url_host' => 'localhostUPDATED_6',
             'user_name' => 'db_userUPDATED_7',
             'pass_word' => 'db_passwordUPDATED_8',
@@ -406,12 +421,18 @@ class UserConnectionServiceTest extends TestCase
         // Actual Test
         /** UserConnectionService $userConnectionServiceToTest */
         $userConnectionServiceToTest = new UserConnectionService();
-        $dbConnectionUpdated = $userConnectionServiceToTest->updateConnectionDbAndFtp(
-            $input,
-            $this->user,
-            $dbManager,
-            $connectionsRepo
-        );
+        $dbConnectionUpdated = 0;
+        try {
+            $dbConnectionUpdated = $userConnectionServiceToTest->updateConnectionDbAndFtp(
+                $input,
+                $this->user,
+                $dbManager,
+                $connectionsRepo
+            );
+        } catch (EntityNotFoundException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
+        }
+
         $this->assertEquals($expectedDbConnectionEntity, $dbConnectionUpdated);
         $this->assertEquals($expectedFtpConnectionEntity , $dbConnectionUpdated->getSelectedFtp());
     }
@@ -420,7 +441,7 @@ class UserConnectionServiceTest extends TestCase
      * @expectedException \Doctrine\ORM\EntityNotFoundException
      * @expectedExceptionMessage No connection found for id 456
      */
-    public function testUpdateConnectionDbAndFtpUpdatesWillThrowNotFoundException()
+    public function testUpdateConnectionDbAndFtpWillThrowNotFoundException()
     {
         $input = [
             'db_id' => 456,
@@ -447,5 +468,57 @@ class UserConnectionServiceTest extends TestCase
             $dbManager,
             $connectionsRepo
         );
+    }
+
+    public function testCreateConnectionDbAndFtp()
+    {
+        $input = [
+            'select_db_protocol' => 'over_ssh',
+            'db_id' => null,
+            'db_connection_name' => 'Test_connection_ONE. brand_new',
+            'db_url_host' => 'localhost',
+            'db_user_name' => 'db_user',
+            'db_pass_word' => 'db_password',
+            'db_port_number' => 3306,
+            'db_selected_ftp_id' => null,
+            'ftp_connection_name' => 'Test_connection_TWO. brand_new',
+            'ftp_url_host' => 'example_ssh.com',
+            'ftp_user_name' => 'ssh_user',
+            'ftp_pass_word' => 'ssh_password',
+            'ftp_port_number' => 22,
+        ];
+
+
+        /** ObjectManager */
+        $dbManager = new MyMockObjectManager(555);
+
+        // Actual Test
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $dbConnectionCreated = $userConnectionServiceToTest->createConnectionDbAndFtp(
+            $input,
+            $this->user,
+            $dbManager
+        );
+
+        // Build expectations as they use objects
+        $this->ftpConnectionParameters['id'] = 555; // FTP id : First one to be created
+        $this->ftpConnectionParameters['connection_name'] .= ' brand_new';
+
+        /** @var Connection $expectedFtpConnectionEntity */
+        $expectedFtpConnectionEntity = new Connection($this->ftpConnectionParameters, $this->user);
+
+        $this->dbConnectionParametersA['id'] = 556; // DB id : Second one to be created
+        $this->dbConnectionParametersA['selected_ftp_id'] = $expectedFtpConnectionEntity;
+        $this->dbConnectionParametersA['connection_name'] .= ' brand_new';
+
+        /** @var Connection $expectedDbConnectionEntity1 */
+        $expectedDbConnectionEntity = new Connection($this->dbConnectionParametersA, $this->user);
+
+        $expectedFtpDetails = $expectedFtpConnectionEntity->readAsFtpDetails();
+        $expectedDbDetails = $expectedDbConnectionEntity->readAsDbDetails();
+
+        $this->assertEquals($expectedFtpDetails, $dbConnectionCreated->getSelectedFtp()->readAsFtpDetails());
+        $this->assertEquals($expectedDbDetails, $dbConnectionCreated->readAsDbDetails());
     }
 }

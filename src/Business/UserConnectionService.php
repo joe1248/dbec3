@@ -6,23 +6,27 @@ use App\Entity\Connection;
 use App\Repository\ConnectionsRepo;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityNotFoundException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserConnectionService
 {
     /**
      * @param int $id
-     * @param ConnectionsRepo $em
+     * @param ConnectionsRepo|MockObject $connectionsRepo
      * @param UserInterface $user
      *
      * @return array
      *
      * @throws EntityNotFoundException
      */
-    public function getConnectionDbAndFtpDetails(int $id, ConnectionsRepo $em, UserInterface $user)
-    {
+    public function getConnectionDbAndFtpDetails(
+        int $id,
+        ConnectionsRepo $connectionsRepo,
+        UserInterface $user
+    ) {
         /** @var Connection $connectionOne */
-        $connectionOne = $em->findOneBy(['id' => $id, 'user' => $user]);
+        $connectionOne = $connectionsRepo->findOneBy(['id' => $id, 'user' => $user]);
         if (empty($connectionOne)) {
             throw new EntityNotFoundException(
                 'No connection found for id ' . $id
@@ -40,8 +44,8 @@ class UserConnectionService
     /**
      * @param int $dbId
      * @param UserInterface $user
-     * @param ObjectManager $dbManager
-     * @param ConnectionsRepo $connectionsRepository
+     * @param ObjectManager|MockObject $dbManager
+     * @param ConnectionsRepo|MockObject $connectionsRepo
      *
      * @return bool
      */
@@ -49,11 +53,11 @@ class UserConnectionService
         int $dbId,
         UserInterface $user,
         ObjectManager $dbManager,
-        ConnectionsRepo $connectionsRepository
+        ConnectionsRepo $connectionsRepo
     )
     {
         /** @var Connection $connectionOne */
-        $connectionOne = $connectionsRepository->findOneBy(['id' => $dbId, 'user' => $user]);
+        $connectionOne = $connectionsRepo->findOneBy(['id' => $dbId, 'user' => $user]);
         if (empty($connectionOne)) {
 
             return false;
@@ -79,8 +83,8 @@ class UserConnectionService
     /**
      * @param array $input
      * @param UserInterface $user
-     * @param ObjectManager $dbManager
-     * @param ConnectionsRepo $connectionsRepository
+     * @param ObjectManager|MockObject $dbManager
+     * @param ConnectionsRepo|MockObject $connectionsRepo
      *
      * @return Connection
      *
@@ -90,12 +94,12 @@ class UserConnectionService
         array $input,
         UserInterface $user,
         ObjectManager $dbManager,
-        ConnectionsRepo $connectionsRepository
+        ConnectionsRepo $connectionsRepo
     ) {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'db_'), 'db_');
 
         /** @var Connection $connectionEntityDb */
-        $connectionEntityDb = $connectionsRepository->findOneBy([
+        $connectionEntityDb = $connectionsRepo->findOneBy([
             'id' => $inputConnectionDb['id'],
             'user' => $user
         ]);
@@ -129,7 +133,7 @@ class UserConnectionService
     /**
      * @param array $input
      * @param UserInterface $user
-     * @param ObjectManager $dbManager
+     * @param ObjectManager|MyMockObjectManager $dbManager
      *
      * @return Connection
      */
