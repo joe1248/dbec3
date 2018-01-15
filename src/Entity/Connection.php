@@ -162,12 +162,13 @@ class Connection
 
     public function update(array $input)
     {
-        $this->connectionGenre = $input['connection_genre'];
+        // Genre not changeable
         $this->connectionName  = $input['connection_name'];
         $this->urlHost = $input['url_host'];
         $this->userName = $input['user_name'];
         $this->passWord = $input['pass_word'];
         $this->portNumber = $input['port_number'];
+        $this->selectedFtp = $input['selected_ftp_id'] ?? null;
     }
 
     public function delete()
@@ -211,6 +212,26 @@ class Connection
             'ftp_user_name' => $this->userName,
             'ftp_pass_word' => $this->passWord,
             'ftp_port_number' => $this->portNumber,
+        ];
+    }
+
+    public function getAttributes()
+    {
+        return [
+            'id' => $this->id,
+            'connection_name' => $this->connectionName,
+            'url_host' => $this->urlHost,
+            'user_name' => $this->userName,
+            'pass_word' => $this->passWord,
+            'port_number' => $this->portNumber,
+            'selected_ftp' => empty($this->selectedFtp) ? null : [
+                'id' => $this->selectedFtp->id,
+                'connection_name' => $this->selectedFtp->connectionName,
+                'url_host' => $this->selectedFtp->urlHost,
+                'user_name' => $this->selectedFtp->userName,
+                'pass_word' => $this->selectedFtp->passWord,
+                'port_number' => $this->selectedFtp->portNumber,
+            ]
         ];
     }
 }

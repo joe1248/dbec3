@@ -21,32 +21,27 @@ class UserConnectionService
      */
     public function getConnectionDbAndFtpDetails(int $id, ConnectionsRepo $em, UserInterface $user)
     {
-        /** @var Connection[] $connections */
-        $connections = $em->findBy(['id' => $id, 'user' => $user]);
-        if (!count($connections)) {
+        /** @var Connection $connectionOne */
+        $connectionOne = $em->findOneBy(['id' => $id, 'user' => $user]);
+        if (empty($connectionOne)) {
             throw new EntityNotFoundException(
                 'No connection found for id ' . $id
             );
         }
-        /** @var Connection $connectionOne */
-        $connectionOne = $connections[0];
-        /** @var [] $connectionOneDetails */
-        $connectionOneDetails = $connectionOne->readAsDbDetails();
-
         /** @var Connection $connectionTwo */
         $connectionTwo = $connectionOne->getSelectedFtp();
 
         /** @var [] $connectionTwoDetails */
         $connectionTwoDetails = empty($connectionTwo) ? [] : $connectionTwo->readAsFtpDetails();
 
-        return array_merge($connectionOneDetails, $connectionTwoDetails);
+        return array_merge($connectionOne->readAsDbDetails(), $connectionTwoDetails);
     }
 
     /**
      * @param int $dbId
      * @param UserInterface $user
      * @param ObjectManager $dbManager
-     * @param ConnectionsRepo $ConnectionsRepository
+     * @param ConnectionsRepo $connectionsRepository
      *
      * @return bool
      */
@@ -54,18 +49,16 @@ class UserConnectionService
         int $dbId,
         UserInterface $user,
         ObjectManager $dbManager,
-        ConnectionsRepo $ConnectionsRepository
+        ConnectionsRepo $connectionsRepository
     )
     {
-        /** @var Connection[] $connections */
-        $connections = $ConnectionsRepository->findBy(['id' => $dbId, 'user' => $user]);
-        if (!count($connections)) {
+        /** @var Connection $connectionOne */
+        $connectionOne = $connectionsRepository->findOneBy(['id' => $dbId, 'user' => $user]);
+        if (empty($connectionOne)) {
 
             return false;
         }
 
-        /** @var Connection $connectionOne */
-        $connectionOne = $connections[0];
         /** @var Connection $connectionTwo */
         $connectionTwo = $connectionOne->getSelectedFtp();
 
@@ -87,41 +80,50 @@ class UserConnectionService
      * @param array $input
      * @param UserInterface $user
      * @param ObjectManager $dbManager
-     * @param ConnectionsRepo $ConnectionsRepository
+     * @param ConnectionsRepo $connectionsRepository
      *
      * @return Connection
+     *
+     * @throws EntityNotFoundException
      */
     public function updateConnectionDbAndFtp(
         array $input,
         UserInterface $user,
         ObjectManager $dbManager,
-        ConnectionsRepo $ConnectionsRepository
+        ConnectionsRepo $connectionsRepository
     ) {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'db_'), 'db_');
-        if ($input['select_db_protocol'] === 'over_ssh') {
-            $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'ftp_'), 'ftp_');
-            $inputConnectionFtp['connection_genre'] = 'ftp';
 
-            /** @var Connection $ideaUserConnectionEntityFtp */
-            $ideaUserConnectionEntityFtp = $ConnectionsRepository->findOneBy([
-                'id' => $inputConnectionDb['selected_ftp_id'],
-                'user' => $user
-            ]);
-            $ideaUserConnectionEntityFtp->update($inputConnectionFtp);
-            $dbManager->persist($ideaUserConnectionEntityFtp);
-        }
-        $inputConnectionDb['connection_genre'] = 'db';
-
-        /** @var Connection $ideaUserConnectionEntityDb */
-        $ideaUserConnectionEntityDb = $ConnectionsRepository->findOneBy([
+        /** @var Connection $connectionEntityDb */
+        $connectionEntityDb = $connectionsRepository->findOneBy([
             'id' => $inputConnectionDb['id'],
             'user' => $user
         ]);
-        $ideaUserConnectionEntityDb->update($inputConnectionDb);
-        $dbManager->persist($ideaUserConnectionEntityDb);
+        if (empty($connectionEntityDb)) {
+            throw new EntityNotFoundException(
+                'No connection found for id ' . $inputConnectionDb['id']
+            );
+        }
+
+        if ($input['select_db_protocol'] === 'over_ssh') {
+            $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'ftp_'), 'ftp_');
+            if (empty($connectionEntityDb ->getSelectedFtp())) {
+                $inputConnectionFtp['connection_genre'] = 'ftp';
+                /** @var Connection $connectionEntityFtp */
+                $connectionEntityFtp = new Connection($inputConnectionFtp, $user);
+            } else {
+                /** @var Connection $connectionEntityFtp */
+                $connectionEntityFtp = $connectionEntityDb ->getSelectedFtp();
+                $connectionEntityFtp->update($inputConnectionFtp);
+            }
+            $dbManager->persist($connectionEntityFtp);
+            $inputConnectionDb['selected_ftp_id'] = $connectionEntityFtp;
+        }
+        $connectionEntityDb->update($inputConnectionDb);
+        $dbManager->persist($connectionEntityDb);
         $dbManager->flush();
 
-        return $ideaUserConnectionEntityDb;
+        return $connectionEntityDb;
     }
 
     /**
@@ -141,17 +143,17 @@ class UserConnectionService
         if ($input['select_db_protocol'] === 'over_ssh') {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
             $inputConnectionFtp['connection_genre'] = 'ftp';
-            $ideaUserConnectionEntityFtp = new Connection($inputConnectionFtp, $user);
-            $dbManager->persist($ideaUserConnectionEntityFtp);
+            $connectionEntityFtp = new Connection($inputConnectionFtp, $user);
+            $dbManager->persist($connectionEntityFtp);
             $dbManager->flush();
-            $inputConnectionDb['selected_ftp_id'] = $ideaUserConnectionEntityFtp->getId();
+            $inputConnectionDb['selected_ftp_id'] = $connectionEntityFtp;
         }
         $inputConnectionDb['connection_genre'] = 'db';
-        $ideaUserConnectionEntityDb = new Connection($inputConnectionDb, $user);
-        $dbManager->persist($ideaUserConnectionEntityDb);
+        $connectionEntityDb = new Connection($inputConnectionDb, $user);
+        $dbManager->persist($connectionEntityDb);
         $dbManager->flush();
 
-        return $ideaUserConnectionEntityDb;
+        return $connectionEntityDb;
     }
 
     /**

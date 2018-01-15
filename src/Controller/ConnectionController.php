@@ -89,6 +89,8 @@ class ConnectionController extends Controller
      * @param UserInterface|null $user
      *
      * @return JsonResponse
+     *
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function patch(Request $request, UserConnectionService $UserConnectionService, UserInterface $user)
     {
@@ -102,8 +104,7 @@ class ConnectionController extends Controller
         $userConnectionDb = $UserConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
 
         return new JsonResponse([
-            'connection_id' => $userConnectionDb->getId(),
-            'message' => 'Success updating the DB server.'
+            'entity' => $userConnectionDb->getAttributes()
         ]);
     }
 
@@ -121,11 +122,10 @@ class ConnectionController extends Controller
         $dbManager = $this->getDoctrine()->getManager();
         $input = $request->request->all();
 
-        $ideaUserConnectionEntityDb = $UserConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
+        $userConnectionDb = $UserConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
 
         return new JsonResponse([
-            'connection_id' => $ideaUserConnectionEntityDb->getId(),
-            'message' => 'Success creating the new DB server.'
+            'entity' => $userConnectionDb->getAttributes()
         ]);
     }
 }

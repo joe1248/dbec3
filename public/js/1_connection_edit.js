@@ -129,8 +129,8 @@ function init_js_in_edit_connection( tab_id )
         div_server_message.html('Saving in progress...');
         var post_data = html_form_to_object('form_connection_' + tab_id);
         var successCallBack = function(backEndData){
-            input_connection_id.val(backEndData.connection_id);
-            div_server_message.html(backEndData.message);
+            input_connection_id.val(backEndData.entity.id);
+            div_server_message.html('Success saving.');
             var is_disabled = $('#hidden_disabled_connection_id_'    + tab_id).val();
             if(is_disabled === '1'){
                 $('#button_test_connection_works_' + tab_id).show();
@@ -139,8 +139,8 @@ function init_js_in_edit_connection( tab_id )
             }
             Aconnections_db.push('ok');    // why ?
             success_refresh_html_select_entities_to_clone();
-            $('#welcome_big_button_add_db_server'    ).parent().hide(); // hide BIG add_new_db_server button.
-            $('#welcome_button_db_servers_list'        ).parent().show();// show fielset to manage db servers
+            $('#welcome_big_button_add_db_server').parent().hide(); // hide BIG add_new_db_server button.
+            $('#welcome_button_db_servers_list').parent().show();// show fielset to manage db servers
             addStaticTab(true, Opages.db_servers_list ); // REfresh db_servers_list (if already opened though...)
         };
         if (this.isNewConnection()) {
