@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserConnectionService
 {
     /**
-     * @param string $id
+     * @param int $id
      * @param ConnectionsRepo $em
      * @param UserInterface $user
      *
@@ -19,7 +19,7 @@ class UserConnectionService
      *
      * @throws EntityNotFoundException
      */
-    public function getConnectionDbAndFtpDetails(string $id, ConnectionsRepo $em, UserInterface $user)
+    public function getConnectionDbAndFtpDetails(int $id, ConnectionsRepo $em, UserInterface $user)
     {
         /** @var Connection[] $connections */
         $connections = $em->findBy(['id' => $id, 'user' => $user]);
@@ -43,7 +43,7 @@ class UserConnectionService
     }
 
     /**
-     * @param string $dbId
+     * @param int $dbId
      * @param UserInterface $user
      * @param ObjectManager $dbManager
      * @param ConnectionsRepo $ConnectionsRepository
@@ -51,7 +51,7 @@ class UserConnectionService
      * @return bool
      */
     public function deleteDbAndFtpConnection(
-        string $dbId,
+        int $dbId,
         UserInterface $user,
         ObjectManager $dbManager,
         ConnectionsRepo $ConnectionsRepository
