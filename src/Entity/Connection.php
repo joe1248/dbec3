@@ -175,6 +175,11 @@ class Connection
         $this->deleted = true;
     }
 
+    public function isDeleted()
+    {
+        return (bool) $this->deleted;
+    }
+
     public function getId()
     {
         return $this->id;

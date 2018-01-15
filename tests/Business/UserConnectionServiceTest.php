@@ -11,14 +11,10 @@ use PHPUnit\Framework\TestCase;
 
 class UserConnectionServiceTest extends TestCase
 {
-    /** @var ConnectionsRepo */
-    private $connectionsRepo;
     /** @var UserInterface */
     private $user;
-
-    /** UserConnectionService */
-    private $userConnectionServiceToTest;
-
+    /** @var array */
+    private $ftpConnectionParameters;
     /** @var array */
     private $dbConnectionParametersA;
     /** @var array */
@@ -28,16 +24,11 @@ class UserConnectionServiceTest extends TestCase
     {
         parent::setUp();
 
-        /** ConnectionsRepo */
-        $this->connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
         /** UserInterface */
         $this->user = $this->getMockBuilder(UserInterface::class)->disableOriginalConstructor()->getMock();
-
-        /** UserConnectionService */
-        $this->userConnectionServiceToTest = new UserConnectionService();
-
+        
         /** @var array */
-        $ftpConnectionParameters = [
+        $this->ftpConnectionParameters = [
             'id' => 248,
             'connection_genre' => 'ftp',
             'connection_name' => 'Test_connection_TWO.',
@@ -48,7 +39,7 @@ class UserConnectionServiceTest extends TestCase
         ];
 
         /** @var Connection $ftpConnectionEntity */
-        $ftpConnectionEntity = new Connection($ftpConnectionParameters, $this->user);
+        $ftpConnectionEntity = new Connection($this->ftpConnectionParameters , $this->user);
 
         /** @var array */
         $this->dbConnectionParametersA = [
@@ -79,13 +70,17 @@ class UserConnectionServiceTest extends TestCase
     {
         /** @var Connection $dbConnectionEntity */
         $dbConnectionEntity = new Connection($this->dbConnectionParametersA, $this->user);
-        $this->connectionsRepo->expects($this->once())
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
             ->method('findBy')
             ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
             ->willReturn([$dbConnectionEntity]);
 
         // Actual Test
-        $result = $this->userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $this->connectionsRepo, $this->user);
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $result = $userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $connectionsRepo, $this->user);
 
         // assert that your calculator added the numbers correctly!
         $this->assertEquals(
@@ -111,13 +106,17 @@ class UserConnectionServiceTest extends TestCase
     {
         /** @var Connection $dbConnectionEntity */
         $dbConnectionEntity = new Connection($this->dbConnectionParametersB, $this->user);
-        $this->connectionsRepo->expects($this->once())
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
             ->method('findBy')
             ->with($this->equalTo(['id' => 456, 'user' => $this->user]))
             ->willReturn([$dbConnectionEntity]);
 
         // Actual Test
-        $result = $this->userConnectionServiceToTest->getConnectionDbAndFtpDetails('456', $this->connectionsRepo, $this->user);
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $result = $userConnectionServiceToTest->getConnectionDbAndFtpDetails('456', $connectionsRepo, $this->user);
 
         // assert that your calculator added the numbers correctly!
         $this->assertEquals(
@@ -140,12 +139,129 @@ class UserConnectionServiceTest extends TestCase
      */
     public function testGetConnectionDbAndFtpDetailsThrowsEntityNotFoundException()
     {
-        $this->connectionsRepo->expects($this->once())
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
             ->method('findBy')
             ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
             ->willReturn([]);
 
         // Actual Test
-        $this->userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $this->connectionsRepo, $this->user);
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $userConnectionServiceToTest->getConnectionDbAndFtpDetails('123', $connectionsRepo, $this->user);
     }
+
+    public function testDeleteDbAndFtpConnectionZeroDeleted()
+    {
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
+            ->method('findBy')
+            ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
+            ->willReturn([]);
+
+        /** ObjectManager */
+        $dbManager = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
+        $dbManager->expects($this->never())
+            ->method('persist');
+        $dbManager->expects($this->never())
+            ->method('flush');
+
+        // Actual Test
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $success = $userConnectionServiceToTest->deleteDbAndFtpConnection(
+            '123',
+            $this->user,
+            $dbManager,
+            $connectionsRepo
+        );
+        $this->assertFalse($success);
+    }
+
+    public function testDeleteDbAndFtpConnectionOneDeleted()
+    {
+        /** @var Connection $dbConnectionEntity */
+        $dbConnectionEntity = new Connection($this->dbConnectionParametersB, $this->user);
+        $expectedDbConnectionEntity = new Connection($this->dbConnectionParametersB, $this->user);
+        $expectedDbConnectionEntity->delete();
+
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
+            ->method('findBy')
+            ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
+            ->willReturn([$dbConnectionEntity]);
+
+        /** ObjectManager */
+        $dbManager = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
+        $dbManager->expects($this->at(0))
+            ->method('persist')
+            ->with($this->equalTo($expectedDbConnectionEntity));
+
+        $dbManager->expects($this->at(1))
+            ->method('flush');
+
+        $this->assertFalse($dbConnectionEntity->isDeleted());
+
+        // Actual Test
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $success = $userConnectionServiceToTest->deleteDbAndFtpConnection(
+            '123',
+            $this->user,
+            $dbManager,
+            $connectionsRepo
+        );
+        $this->assertTrue($dbConnectionEntity->isDeleted());
+        $this->assertTrue($success);
+    }
+
+    public function testDeleteDbAndFtpConnectionTwoDeleted()
+    {
+        /** @var Connection $dbConnectionEntity */
+        $dbConnectionEntity = new Connection($this->dbConnectionParametersA, $this->user);
+        $expectedDbConnectionEntity = new Connection($this->dbConnectionParametersA, $this->user);
+        $expectedDbConnectionEntity->delete();
+        $expectedFtpConnectionEntity = new Connection($this->ftpConnectionParameters , $this->user);
+        $expectedFtpConnectionEntity->delete();
+
+        /** ConnectionsRepo */
+        $connectionsRepo = $this->getMockBuilder(ConnectionsRepo::class)->disableOriginalConstructor()->getMock();
+        $connectionsRepo->expects($this->once())
+            ->method('findBy')
+            ->with($this->equalTo(['id' => 123, 'user' => $this->user]))
+            ->willReturn([$dbConnectionEntity]);
+
+        /** ObjectManager */
+        $dbManager = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
+        $dbManager->expects($this->at(0))
+            ->method('persist')
+            ->with($this->equalTo($expectedFtpConnectionEntity));
+
+        $dbManager->expects($this->at(1))
+            ->method('persist')
+            ->with($this->equalTo($expectedDbConnectionEntity));
+
+        $dbManager->expects($this->at(2))
+            ->method('flush');
+
+        $this->assertFalse($dbConnectionEntity->isDeleted());
+        $this->assertFalse($dbConnectionEntity->getSelectedFtp()->isDeleted());
+
+        // Actual Test
+        /** UserConnectionService $userConnectionServiceToTest */
+        $userConnectionServiceToTest = new UserConnectionService();
+        $success = $userConnectionServiceToTest->deleteDbAndFtpConnection(
+            '123',
+            $this->user,
+            $dbManager,
+            $connectionsRepo
+        );
+        $this->assertTrue($dbConnectionEntity->isDeleted());
+        $this->assertTrue($dbConnectionEntity->getSelectedFtp()->isDeleted());
+        $this->assertTrue($success);
+    }
+
 }

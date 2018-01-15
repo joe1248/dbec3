@@ -66,15 +66,17 @@ class UserConnectionService
 
         /** @var Connection $connectionOne */
         $connectionOne = $connections[0];
-        $connectionOne->delete();
-        $dbManager->persist($connectionOne);
-
         /** @var Connection $connectionTwo */
         $connectionTwo = $connectionOne->getSelectedFtp();
+
+        // delete 2 = FTP connection
         if (!empty($connectionTwo)) {
             $connectionTwo->delete();
             $dbManager->persist($connectionTwo);
         }
+        // delete 1 = DB connection
+        $connectionOne->delete();
+        $dbManager->persist($connectionOne);
 
         $dbManager->flush();
 
