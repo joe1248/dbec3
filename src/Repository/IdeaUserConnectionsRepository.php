@@ -3,17 +3,18 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class IdeaUserConnectionsRepository extends EntityRepository
 {
-    public function getAll(int $userId)
+    public function getAll(UserInterface $user)
     {
         return $this->createQueryBuilder('u')
-            ->where('u.user = :user_id')
+            ->where('u.user = :user')
             ->andWhere('u.deleted = 0')
             ->andWhere('u.connectionGenre = \'db\'')
             ->orderBy('u.connectionName')
-            ->setParameter('user_id', $userId)
+            ->setParameter('user', $user)
             ->getQuery()
             ->getArrayResult();
     }

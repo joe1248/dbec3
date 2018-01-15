@@ -3,8 +3,8 @@
 
 namespace App\Controller;
 
+use App\Business\UserConnectionService;
 use App\Entity\IdeaUserConnections;
-use App\Entity\User;
 use App\Repository\IdeaUserConnectionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ConnectionController extends Controller
 {
     /**
-     * List all  not deleted connections of current user
+     * List all non deleted connections of current user
      *
      * @param UserInterface|null $user
      *
@@ -22,14 +22,10 @@ class ConnectionController extends Controller
      */
     public function getAll(UserInterface $user = null)
     {        
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /** @var IdeaUserConnectionsRepository $connectionsRepo */
+        $connectionsRepo = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
 
-        /** @var IdeaUserConnectionsRepository $em */
-        $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
-
-        /** @var User $userEntity */
-        $userEntity = $user;
-        $connections = $em->getAll($userEntity->getId());
+        $connections = $connectionsRepo->getAll($user);
     
         return new JsonResponse($connections);
     }
@@ -38,202 +34,98 @@ class ConnectionController extends Controller
      * Delete 1 DB connection (if exists, delete linked FTP connection too)
      *
      * @param string $id
+     * @param UserConnectionService $userConnectionService
+     * @param UserInterface $user
      *
      * @return JsonResponse
      */
-    public function delete(string $id)
+    public function delete(string $id, UserConnectionService $userConnectionService, UserInterface $user)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $db = $this->getDoctrine()->getManager();
-        /** @var IdeaUserConnectionsRepository $em */
-        $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        $dbManager = $this->getDoctrine()->getManager();
+        /** @var IdeaUserConnectionsRepository $connectionsRepo */
+        $connectionsRepo = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
 
-        /** @var IdeaUserConnections[] $connections */
-        $connections = $em->findById($id);
-        if (!$connections) {
-            throw $this->createNotFoundException(
-                'No connection1 found for id ' . $id
-            );
-        }
+        $success = $userConnectionService->deleteDbAndFtpConnection($id, $user, $dbManager, $connectionsRepo);
 
-        /** @var IdeaUserConnections $connectionOne */
-        $connectionOne = $connections[0];
-        $connectionOne->delete();
-        $db->persist($connectionOne);
-
-        /** @var IdeaUserConnections $connectionTwo */
-        $connectionTwo = $connectionOne->getSelectedFtp();
-        if (!empty($connectionTwo)) {
-            $connectionTwo->delete();
-            $db->persist($connectionTwo);
-        }
-
-        $db->flush();
-
-        return new JsonResponse(['success' => true]);
+        return new JsonResponse(['success' => $success]);
     }
 
     /**
      * Get 1 connection details
      *
      * @param string $id
+     * @param UserConnectionService $userConnectionService
+     * @param UserInterface $user
      *
      * @return JsonResponse
+     *
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function getOne(string $id)
+    public function getOne(string $id, UserConnectionService $userConnectionService, UserInterface $user)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         /** @var IdeaUserConnectionsRepository $em */
         $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
 
-        /** @var IdeaUserConnections[] $connections */
-        $connections = $em->findById($id);
-        if (!$connections) {
-            throw $this->createNotFoundException(
-                'No connection1 found for id ' . $id
-            );
-        }
-        $accessProtocol = '';
-
-        /** @var IdeaUserConnections $connectionOne */
-        $connectionOne = $connections[0];
-        $connectionOneDetails = $connectionOne->readAsDbDetails();
-
-        /** @var IdeaUserConnections $connectionTwo */
-        $connectionTwo = $connectionOne->getSelectedFtp();
-        $connectionTwoDetails = [];
-        if (!empty($connectionTwo)) {
-            $connectionTwoDetails = $connectionTwo->readAsFtpDetails();
-            $accessProtocol = 'over_ssh';
-        }
+        $dbAndFtpDetails = $userConnectionService->getConnectionDbAndFtpDetails($id, $em, $user);
 
         return new JsonResponse(
-            array_merge([
-                'form_id' => 'form_connection_',
-                'select_db_protocol' => $accessProtocol
-            ],
-                $connectionOneDetails,
-                $connectionTwoDetails
+            array_merge(
+                $dbAndFtpDetails,
+                [
+                    'form_id' => 'form_connection_',
+                    'select_db_protocol' => empty($dbAndFtpDetails['db_selected_ftp_id']) ? '' : 'over_ssh'
+                ]
             )
         );
     }
 
     /**
+     * updateConnectionDbAndFtp
+     *
      * @param Request $request
-     * @param UserInterface|null $userI
+     * @param UserConnectionService $userConnectionService
+     * @param UserInterface|null $user
      *
      * @return JsonResponse
      */
-    public function patch(Request $request, UserInterface $userI = null)
+    public function patch(Request $request, UserConnectionService $userConnectionService, UserInterface $user)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        /** User $user */
-        $user = $userI;
-        $db = $this->getDoctrine()->getManager();
-        /** @var IdeaUserConnectionsRepository $em */
-        $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        $dbManager = $this->getDoctrine()->getManager();
+        /** @var IdeaUserConnectionsRepository $connectionsRepo */
+        $connectionsRepo= $this->getDoctrine()->getRepository(IdeaUserConnections::class);
         $input = $request->request->all();
 
-        $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
-        if ($input['select_db_protocol'] === 'over_ssh') {
-            $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
-            $inputConnectionFtp['connection_genre'] = 'ftp';
-
-            /** @var IdeaUserConnections $ideaUserConnectionEntityFtp */
-            $ideaUserConnectionEntityFtp = $em->findOneBy([
-                'id' => $inputConnectionDb['selected_ftp_id'],
-                'user' => $user
-            ]);
-            $ideaUserConnectionEntityFtp->update($inputConnectionFtp);
-            $db->persist($ideaUserConnectionEntityFtp);
-        }
-        $inputConnectionDb['connection_genre'] = 'db';
-
-        /** @var IdeaUserConnections $ideaUserConnectionEntityFtp */
-        $ideaUserConnectionEntityDb = $em->findOneBy([
-            'id' => $inputConnectionDb['id'],
-            'user' => $user
-        ]);
-        $ideaUserConnectionEntityDb->update($inputConnectionDb);
-        $db->persist($ideaUserConnectionEntityDb);
-        $db->flush();
+        $userConnectionDb = $userConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
 
         return new JsonResponse([
-            'connection_id' => $ideaUserConnectionEntityDb->getId(),
+            'connection_id' => $userConnectionDb->getId(),
             'message' => 'Success updating the DB server.'
         ]);
     }
 
     /**
+     * createConnectionDbAndFtp
+     *
      * @param Request $request
+     * @param UserConnectionService $userConnectionService
      * @param UserInterface|null $user
      *
      * @return JsonResponse
      */
-    public function post(Request $request, UserInterface $user = null)
+    public function post(Request $request, UserConnectionService $userConnectionService, UserInterface $user = null)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $db = $this->getDoctrine()->getManager();
-
+        $dbManager = $this->getDoctrine()->getManager();
         $input = $request->request->all();
 
-        $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
-    
-        if ($input['select_db_protocol'] === 'over_ssh') {
-            $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
-            $inputConnectionFtp['connection_genre'] = 'ftp';
-            $ideaUserConnectionEntityFtp = new IdeaUserConnections($inputConnectionFtp, $user);
-            $db->persist($ideaUserConnectionEntityFtp);
-            $db->flush();
-            $inputConnectionDb['selected_ftp_id'] = $ideaUserConnectionEntityFtp->getId();
-        }
-        $inputConnectionDb['connection_genre'] = 'db';
-        $ideaUserConnectionEntityDb = new IdeaUserConnections($inputConnectionDb, $user);
-        $db->persist($ideaUserConnectionEntityDb);
-        $db->flush();
+        $ideaUserConnectionEntityDb = $userConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
 
         return new JsonResponse([
             'connection_id' => $ideaUserConnectionEntityDb->getId(),
             'message' => 'Success creating the new DB server.'
         ]);
-    }
-
-    /**
-     * @param array $toFilterByKeyPrefix
-     * @param string $prefix
-     *
-     * @return array
-     */
-    private function filterArrayByKeyPrefix(array $toFilterByKeyPrefix, string $prefix)
-    {
-        return array_filter(
-            $toFilterByKeyPrefix,
-            function($key) use ($prefix) {
-                return substr($key, 0, strlen($prefix)) == $prefix;
-            },
-            ARRAY_FILTER_USE_KEY
-        );
-    }
-
-    /**
-     * Remove a prefix from the keys of an array
-     *
-     * @param array $toRemoveKeyPrefix
-     * @param string $prefix
-     *
-     * @return array
-     */
-    private function removeKeyPrefix(array $toRemoveKeyPrefix, string $prefix)
-    {
-        $withKeyRemoved = [];
-        foreach ($toRemoveKeyPrefix as $key => $value)
-        {
-            $key = substr($key, 0, strlen($prefix)) == $prefix ? substr($key, strlen($prefix)) : $key;
-            $withKeyRemoved[$key] = $value;
-        }
-        return $withKeyRemoved;
     }
 }
