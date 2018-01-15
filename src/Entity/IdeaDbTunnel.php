@@ -67,9 +67,9 @@ class IdeaDbTunnel
     private $user;
 
     /**
-     * @var \IdeaUserConnections
+     * @var \Connections
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUserConnections")
+     * @ORM\ManyToOne(targetEntity="Connections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="connection_id", referencedColumnName="id")
      * })

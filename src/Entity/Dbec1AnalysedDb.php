@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,9 +55,9 @@ class Dbec1AnalysedDb
     private $jsonData;
 
     /**
-     * @var \IdeaUserConnections
+     * @var \Connections
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUserConnections")
+     * @ORM\ManyToOne(targetEntity="Connections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="svr_id", referencedColumnName="id")
      * })

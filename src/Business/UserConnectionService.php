@@ -2,8 +2,8 @@
 
 namespace App\Business;
 
-use App\Entity\IdeaUserConnections;
-use App\Repository\IdeaUserConnectionsRepository;
+use App\Entity\Connection;
+use App\Repository\ConnectionsRepo;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,28 +12,28 @@ class UserConnectionService
 {
     /**
      * @param string $id
-     * @param IdeaUserConnectionsRepository $em
+     * @param ConnectionsRepo $em
      * @param UserInterface $user
      *
      * @return array
      *
      * @throws EntityNotFoundException
      */
-    public function getConnectionDbAndFtpDetails(string $id, IdeaUserConnectionsRepository $em, UserInterface $user)
+    public function getConnectionDbAndFtpDetails(string $id, ConnectionsRepo $em, UserInterface $user)
     {
-        /** @var IdeaUserConnections[] $connections */
+        /** @var Connection[] $connections */
         $connections = $em->findBy(['id' => $id, 'user' => $user]);
         if (!count($connections)) {
             throw new EntityNotFoundException(
                 'No connection found for id ' . $id
             );
         }
-        /** @var IdeaUserConnections $connectionOne */
+        /** @var Connection $connectionOne */
         $connectionOne = $connections[0];
         /** @var [] $connectionOneDetails */
         $connectionOneDetails = $connectionOne->readAsDbDetails();
 
-        /** @var IdeaUserConnections $connectionTwo */
+        /** @var Connection $connectionTwo */
         $connectionTwo = $connectionOne->getSelectedFtp();
 
         /** @var [] $connectionTwoDetails */
@@ -46,7 +46,7 @@ class UserConnectionService
      * @param string $dbId
      * @param UserInterface $user
      * @param ObjectManager $dbManager
-     * @param IdeaUserConnectionsRepository $userConnectionsRepository
+     * @param ConnectionsRepo $ConnectionsRepository
      *
      * @return bool
      */
@@ -54,22 +54,22 @@ class UserConnectionService
         string $dbId,
         UserInterface $user,
         ObjectManager $dbManager,
-        IdeaUserConnectionsRepository $userConnectionsRepository
+        ConnectionsRepo $ConnectionsRepository
     )
     {
-        /** @var IdeaUserConnections[] $connections */
-        $connections = $userConnectionsRepository->findBy(['id' => $dbId, 'user' => $user]);
+        /** @var Connection[] $connections */
+        $connections = $ConnectionsRepository->findBy(['id' => $dbId, 'user' => $user]);
         if (!count($connections)) {
 
             return false;
         }
 
-        /** @var IdeaUserConnections $connectionOne */
+        /** @var Connection $connectionOne */
         $connectionOne = $connections[0];
         $connectionOne->delete();
         $dbManager->persist($connectionOne);
 
-        /** @var IdeaUserConnections $connectionTwo */
+        /** @var Connection $connectionTwo */
         $connectionTwo = $connectionOne->getSelectedFtp();
         if (!empty($connectionTwo)) {
             $connectionTwo->delete();
@@ -85,23 +85,23 @@ class UserConnectionService
      * @param array $input
      * @param UserInterface $user
      * @param ObjectManager $dbManager
-     * @param IdeaUserConnectionsRepository $userConnectionsRepository
+     * @param ConnectionsRepo $ConnectionsRepository
      *
-     * @return IdeaUserConnections
+     * @return Connection
      */
     public function updateConnectionDbAndFtp(
         array $input,
         UserInterface $user,
         ObjectManager $dbManager,
-        IdeaUserConnectionsRepository $userConnectionsRepository
+        ConnectionsRepo $ConnectionsRepository
     ) {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'db_'), 'db_');
         if ($input['select_db_protocol'] === 'over_ssh') {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'ftp_'), 'ftp_');
             $inputConnectionFtp['connection_genre'] = 'ftp';
 
-            /** @var IdeaUserConnections $ideaUserConnectionEntityFtp */
-            $ideaUserConnectionEntityFtp = $userConnectionsRepository->findOneBy([
+            /** @var Connection $ideaUserConnectionEntityFtp */
+            $ideaUserConnectionEntityFtp = $ConnectionsRepository->findOneBy([
                 'id' => $inputConnectionDb['selected_ftp_id'],
                 'user' => $user
             ]);
@@ -110,8 +110,8 @@ class UserConnectionService
         }
         $inputConnectionDb['connection_genre'] = 'db';
 
-        /** @var IdeaUserConnections $ideaUserConnectionEntityDb */
-        $ideaUserConnectionEntityDb = $userConnectionsRepository->findOneBy([
+        /** @var Connection $ideaUserConnectionEntityDb */
+        $ideaUserConnectionEntityDb = $ConnectionsRepository->findOneBy([
             'id' => $inputConnectionDb['id'],
             'user' => $user
         ]);
@@ -127,7 +127,7 @@ class UserConnectionService
      * @param UserInterface $user
      * @param ObjectManager $dbManager
      *
-     * @return IdeaUserConnections
+     * @return Connection
      */
     public function createConnectionDbAndFtp(
         array $input,
@@ -139,13 +139,13 @@ class UserConnectionService
         if ($input['select_db_protocol'] === 'over_ssh') {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
             $inputConnectionFtp['connection_genre'] = 'ftp';
-            $ideaUserConnectionEntityFtp = new IdeaUserConnections($inputConnectionFtp, $user);
+            $ideaUserConnectionEntityFtp = new Connection($inputConnectionFtp, $user);
             $dbManager->persist($ideaUserConnectionEntityFtp);
             $dbManager->flush();
             $inputConnectionDb['selected_ftp_id'] = $ideaUserConnectionEntityFtp->getId();
         }
         $inputConnectionDb['connection_genre'] = 'db';
-        $ideaUserConnectionEntityDb = new IdeaUserConnections($inputConnectionDb, $user);
+        $ideaUserConnectionEntityDb = new Connection($inputConnectionDb, $user);
         $dbManager->persist($ideaUserConnectionEntityDb);
         $dbManager->flush();
 

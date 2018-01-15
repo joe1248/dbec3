@@ -1,7 +1,9 @@
-1. in IDE, DROP DATABASE db_cloner_test_db;
-2. in console: php bin/console doctrine:database:create
-3. in IDE, execute that file
-4. in console, import the entities by doing : cd ~/projects/dbec3 && php bin/console doctrine:mapping:convert --from-database annotation ./src/Entity
+-- 1. in IDE, DROP DATABASE db_cloner_test_db;
+-- 2. in console: php bin/console doctrine:database:create
+-- 3. in IDE, execute that file
+-- 4. in console, import the entities by doing : cd ~/projects/dbec3 && php bin/console doctrine:mapping:convert --from-database annotation ./src/Entity
+
+
 -- MySQL dump 10.13  Distrib 5.1.73, for redhat-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: db_cloner_test_db
@@ -43,7 +45,7 @@ DROP TABLE IF EXISTS `dbec_1_analysed_db`;
 CREATE TABLE `dbec_1_analysed_db` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
-  `svr_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from idea_user_connections',
+  `svr_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from connections',
   `database_name` varchar(75) NOT NULL COMMENT 'Real database name',
   `main_table_name` varchar(75) NOT NULL COMMENT 'Main table name',
   `main_table_primary_key` varchar(75) NOT NULL COMMENT 'Main DB table PRIMARY KEY name',
@@ -51,7 +53,7 @@ CREATE TABLE `dbec_1_analysed_db` (
   `json_data` longtext NOT NULL COMMENT 'JSON describing the differents DB entities',
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_dbec_1_analysed_db_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `fk_dbec_1_analysed_db_svr_id` FOREIGN KEY (`svr_id`) REFERENCES `idea_user_connections` (`id`)
+  CONSTRAINT `fk_dbec_1_analysed_db_svr_id` FOREIGN KEY (`svr_id`) REFERENCES `connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -87,14 +89,14 @@ DROP TABLE IF EXISTS `dbec_3_src_fave`;
 CREATE TABLE `dbec_3_src_fave` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
-  `svr_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from idea_user_connections',
+  `svr_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from connections',
   `src_fave_label` varchar(75) NOT NULL COMMENT 'User chosen label',
   `database_name` varchar(75) NOT NULL COMMENT 'Real database name',
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `svr_id` (`svr_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `dbec_3_src_fave_ibfk_1` FOREIGN KEY (`svr_id`) REFERENCES `idea_user_connections` (`id`),
+  CONSTRAINT `dbec_3_src_fave_ibfk_1` FOREIGN KEY (`svr_id`) REFERENCES `connections` (`id`),
   CONSTRAINT `dbec_3_src_fave_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -127,14 +129,14 @@ DROP TABLE IF EXISTS `dbec_5_dest_database`;
 CREATE TABLE `dbec_5_dest_database` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `dest_fave_id` int(10) unsigned NOT NULL COMMENT 'foreign to dbec_4_dest_fave.id',
-  `svr_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from idea_user_connections',
+  `svr_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from connections',
   `database_name` varchar(75) NOT NULL COMMENT 'Real database name',
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `database_name_idx` (`database_name`),
   KEY `deleted_idx` (`deleted`),
   FOREIGN KEY (`dest_fave_id`) REFERENCES `dbec_4_dest_fave` (`id`),
-  FOREIGN KEY (`svr_id`) REFERENCES `idea_user_connections` (`id`)
+  FOREIGN KEY (`svr_id`) REFERENCES `connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,7 +201,7 @@ CREATE TABLE `dbec_7_transfer` (
   `dest_db_index` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'ONLY PASTE - index of the destination Db for that transfer (when multi DB)',
   `user_id` int(10) unsigned NOT NULL,
   `entity_ready_id` int(10) unsigned DEFAULT NULL COMMENT 'foreign key to dbec_2_entity_ready.id',
-  `db_srv_id` int(10) unsigned NOT NULL COMMENT 'foreign key id from idea_user_connections',
+  `db_srv_id` int(10) unsigned NOT NULL COMMENT 'foreign key id from connections',
   `db_name` varchar(75) NOT NULL,
   `nb_queries` int(10) unsigned DEFAULT NULL COMMENT '- ONLY EXTRACTION : number of records',
   `nb_bytes` int(10) unsigned NOT NULL COMMENT 'Number of bytes extracted or transfered',
@@ -216,7 +218,7 @@ CREATE TABLE `dbec_7_transfer` (
   KEY `is_extraction_idx` (`is_extraction`),
   KEY `is_success_idx` (`is_success`),
   CONSTRAINT `dbec_7_transfer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `dbec_7_transfer_ibfk_2` FOREIGN KEY (`db_srv_id`) REFERENCES `idea_user_connections` (`id`)
+  CONSTRAINT `dbec_7_transfer_ibfk_2` FOREIGN KEY (`db_srv_id`) REFERENCES `connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -327,7 +329,7 @@ DROP TABLE IF EXISTS `idea_db_tunnel`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `idea_db_tunnel` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `connection_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from idea_user_connections',
+  `connection_id` int(10) unsigned NOT NULL COMMENT 'foreign to id from connections',
   `user_id` int(10) unsigned NOT NULL,
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `distant_db_port` int(10) unsigned NOT NULL COMMENT 'Distant database port, as one ssh may be linked to differents db user...',
@@ -340,7 +342,7 @@ CREATE TABLE `idea_db_tunnel` (
   KEY `distant_db_port_index` (`distant_db_port`),
   KEY `deleted_idx` (`deleted`),
   CONSTRAINT `idea_db_tunnel_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `idea_db_tunnel_ibfk_2` FOREIGN KEY (`connection_id`) REFERENCES `idea_user_connections` (`id`)
+  CONSTRAINT `idea_db_tunnel_ibfk_2` FOREIGN KEY (`connection_id`) REFERENCES `connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -366,7 +368,6 @@ CREATE TABLE `idea_reset_code` (
 -- Table structure for table `idea_user`
 --
 
-DROP TABLE IF EXISTS `idea_user`;
 DROP TABLE IF EXISTS users;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -388,13 +389,13 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `idea_user_connections`
+-- Table structure for table `connections`
 --
 
-DROP TABLE IF EXISTS `idea_user_connections`;
+DROP TABLE IF EXISTS `connections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `idea_user_connections` (
+CREATE TABLE `connections` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
   `deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -416,8 +417,8 @@ CREATE TABLE `idea_user_connections` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `selected_ftp_id` (`selected_ftp_id`),
-  CONSTRAINT `idea_user_connections_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `idea_user_connections_ibfk_2` FOREIGN KEY (`selected_ftp_id`) REFERENCES `idea_user_connections` (`id`)
+  CONSTRAINT `connections_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `connections_ibfk_2` FOREIGN KEY (`selected_ftp_id`) REFERENCES `connections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

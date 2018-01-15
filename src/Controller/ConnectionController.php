@@ -4,8 +4,8 @@
 namespace App\Controller;
 
 use App\Business\UserConnectionService;
-use App\Entity\IdeaUserConnections;
-use App\Repository\IdeaUserConnectionsRepository;
+use App\Entity\Connection;
+use App\Repository\ConnectionsRepo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +22,8 @@ class ConnectionController extends Controller
      */
     public function getAll(UserInterface $user = null)
     {        
-        /** @var IdeaUserConnectionsRepository $connectionsRepo */
-        $connectionsRepo = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        /** @var ConnectionsRepo $connectionsRepo */
+        $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
 
         $connections = $connectionsRepo->getAll($user);
     
@@ -34,20 +34,20 @@ class ConnectionController extends Controller
      * Delete 1 DB connection (if exists, delete linked FTP connection too)
      *
      * @param string $id
-     * @param UserConnectionService $userConnectionService
+     * @param UserConnectionService $UserConnectionService
      * @param UserInterface $user
      *
      * @return JsonResponse
      */
-    public function delete(string $id, UserConnectionService $userConnectionService, UserInterface $user)
+    public function delete(string $id, UserConnectionService $UserConnectionService, UserInterface $user)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $dbManager = $this->getDoctrine()->getManager();
-        /** @var IdeaUserConnectionsRepository $connectionsRepo */
-        $connectionsRepo = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        /** @var ConnectionsRepo $connectionsRepo */
+        $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
 
-        $success = $userConnectionService->deleteDbAndFtpConnection($id, $user, $dbManager, $connectionsRepo);
+        $success = $UserConnectionService->deleteDbAndFtpConnection($id, $user, $dbManager, $connectionsRepo);
 
         return new JsonResponse(['success' => $success]);
     }
@@ -56,19 +56,19 @@ class ConnectionController extends Controller
      * Get 1 connection details
      *
      * @param string $id
-     * @param UserConnectionService $userConnectionService
+     * @param UserConnectionService $UserConnectionService
      * @param UserInterface $user
      *
      * @return JsonResponse
      *
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function getOne(string $id, UserConnectionService $userConnectionService, UserInterface $user)
+    public function getOne(string $id, UserConnectionService $UserConnectionService, UserInterface $user)
     {
-        /** @var IdeaUserConnectionsRepository $em */
-        $em = $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        /** @var ConnectionsRepo $em */
+        $em = $this->getDoctrine()->getRepository(Connection::class);
 
-        $dbAndFtpDetails = $userConnectionService->getConnectionDbAndFtpDetails($id, $em, $user);
+        $dbAndFtpDetails = $UserConnectionService->getConnectionDbAndFtpDetails($id, $em, $user);
 
         return new JsonResponse(
             array_merge(
@@ -85,21 +85,21 @@ class ConnectionController extends Controller
      * updateConnectionDbAndFtp
      *
      * @param Request $request
-     * @param UserConnectionService $userConnectionService
+     * @param UserConnectionService $UserConnectionService
      * @param UserInterface|null $user
      *
      * @return JsonResponse
      */
-    public function patch(Request $request, UserConnectionService $userConnectionService, UserInterface $user)
+    public function patch(Request $request, UserConnectionService $UserConnectionService, UserInterface $user)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $dbManager = $this->getDoctrine()->getManager();
-        /** @var IdeaUserConnectionsRepository $connectionsRepo */
-        $connectionsRepo= $this->getDoctrine()->getRepository(IdeaUserConnections::class);
+        /** @var ConnectionsRepo $connectionsRepo */
+        $connectionsRepo= $this->getDoctrine()->getRepository(Connection::class);
         $input = $request->request->all();
 
-        $userConnectionDb = $userConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
+        $userConnectionDb = $UserConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
 
         return new JsonResponse([
             'connection_id' => $userConnectionDb->getId(),
@@ -111,17 +111,17 @@ class ConnectionController extends Controller
      * createConnectionDbAndFtp
      *
      * @param Request $request
-     * @param UserConnectionService $userConnectionService
+     * @param UserConnectionService $UserConnectionService
      * @param UserInterface|null $user
      *
      * @return JsonResponse
      */
-    public function post(Request $request, UserConnectionService $userConnectionService, UserInterface $user = null)
+    public function post(Request $request, UserConnectionService $UserConnectionService, UserInterface $user = null)
     {
         $dbManager = $this->getDoctrine()->getManager();
         $input = $request->request->all();
 
-        $ideaUserConnectionEntityDb = $userConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
+        $ideaUserConnectionEntityDb = $UserConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
 
         return new JsonResponse([
             'connection_id' => $ideaUserConnectionEntityDb->getId(),

@@ -137,9 +137,9 @@ class Dbec7Transfer
     private $user;
 
     /**
-     * @var \IdeaUserConnections
+     * @var \Connections
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUserConnections")
+     * @ORM\ManyToOne(targetEntity="Connections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="db_srv_id", referencedColumnName="id")
      * })

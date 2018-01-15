@@ -46,9 +46,9 @@ class Dbec5DestDatabase
     private $destFave;
 
     /**
-     * @var \IdeaUserConnections
+     * @var \Connections
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUserConnections")
+     * @ORM\ManyToOne(targetEntity="Connections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="svr_id", referencedColumnName="id")
      * })

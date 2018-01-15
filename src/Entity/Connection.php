@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * IdeaUserConnections
+ * Connection
  *
- * @ORM\Table(name="idea_user_connections", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="selected_ftp_id", columns={"selected_ftp_id"})})
- * @ORM\Entity(repositoryClass="App\Repository\IdeaUserConnectionsRepository")
+ * @ORM\Table(name="connections", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="selected_ftp_id", columns={"selected_ftp_id"})})
+ * @ORM\Entity(repositoryClass="App\Repository\ConnectionsRepo")
  */
-class IdeaUserConnections
+class Connection
 {
     /**
      * @var int
@@ -138,9 +138,9 @@ class IdeaUserConnections
     private $user;
 
     /**
-     * @var \IdeaUserConnections
+     * @var \Connection
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUserConnections")
+     * @ORM\ManyToOne(targetEntity="Connection")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="selected_ftp_id", referencedColumnName="id")
      * })

@@ -1,12 +1,18 @@
 <?php
-// src/Repository/IdeaUserConnectionsRepository.php
+// src/Repository/ConnectionsRepo.php;
+
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class IdeaUserConnectionsRepository extends EntityRepository
+class ConnectionsRepo extends EntityRepository
 {
+    /**
+     * @param UserInterface $user
+     *
+     * @return array
+     */
     public function getAll(UserInterface $user)
     {
         return $this->createQueryBuilder('u')

@@ -43,9 +43,9 @@ class Dbec3SrcFave
     private $deleted = '0';
 
     /**
-     * @var \IdeaUserConnections
+     * @var \Connections
      *
-     * @ORM\ManyToOne(targetEntity="IdeaUserConnections")
+     * @ORM\ManyToOne(targetEntity="Connections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="svr_id", referencedColumnName="id")
      * })
