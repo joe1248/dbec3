@@ -4,10 +4,20 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements FixtureInterface, DependentFixtureInterface
 {
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [];
+    }
+
     /**
      * @param ObjectManager $manager
      *

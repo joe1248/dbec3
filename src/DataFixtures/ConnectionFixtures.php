@@ -6,18 +6,19 @@ use App\Entity\Connection;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ConnectionFixtures extends Fixture implements DependentFixtureInterface
+class ConnectionFixtures extends Fixture implements FixtureInterface, DependentFixtureInterface
 {
     /**
      * @return array
      */
     public function getDependencies()
     {
-        return array(
+        return [
             UserFixtures::class,
-        );
+        ];
     }
 
     /**
