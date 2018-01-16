@@ -30,3 +30,13 @@ services:
         # redundant thanks to _defaults, but value is overridable on each service
         autowire: true
         public: true
+
+    # Subscribe to kernel.request event, so if conditions are met, then redirect user!
+    # other use as in https://coderwall.com/p/w0yyag/redirect-authenticated-user-on-anonymous-pages-in-symfony
+    app.tokens.action_listener:
+        class: App\EventListener\RedirectUserListener
+        arguments:
+            - "@security.token_storage"
+            - "@router"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

@@ -3,7 +3,13 @@
 {% block title %} Login {% endblock %}
 
 {% block body %}
-    <div style="width:100%; height:100%; background-image:url('images/Summer_Solstice_Sunrise_over_Stonehenge_2005.jpg');background-repeat:no-repeat;background-position:center top;">
+    <div style="
+        width: 100%;
+        height: 100%;
+        background-image: url('/images/Summer_Solstice_Sunrise_over_Stonehenge_2005.jpg');
+        background-repeat: no-repeat;
+        background-position: center top;
+    ">
     {% if error  %}
         <div>{{ error.message  }}</div>
     {% endif  %}
@@ -24,8 +30,9 @@
                 <!--
                     If you want to control the URL the user
                     is redirected to on success (more details below)-->
-                <input type="hidden" name="_target_path" value="/dashboard" />
-                <br><br><br>
+                <input type="hidden" name="_target_path" value="{{ path('dashboardRoute') }}" />
+            </form>
+            <br><br><br>
             <span class="nobr yourLoginFont">Not signed up yet ? Please do :&nbsp;&nbsp;</span>
             <input type="button" class="btn btn-primary" id="button_db_cloner_register_2"
                    value="Register">

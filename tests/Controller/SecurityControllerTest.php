@@ -3,20 +3,10 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-//use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-
-    /**
-     * Returns the test dataSet
-     *
-     * @return YamlDataSet
-     */
-    /*protected function getDataSet()
-    {
-        return new YamlDataSet(__DIR__ . '/SecurityController_data.yml');
-    }*/
     // Note that login seems to work with the db defined in /phpunit.xml.dist,
     // but a fixture should be used :
     // so must be created first : https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
@@ -28,8 +18,10 @@ class SecurityControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/');
 
+        /** @var Response $response */
+        $response = $client->getResponse();
         $this->assertEquals(301, $client->getResponse()->getStatusCode());
-        $targetUrl = str_replace('http://localhost', '', $client->getResponse()->getTargetUrl());
+        $targetUrl = str_replace('http://localhost', '', $response->getTargetUrl());
         $this->assertEquals('/login', $targetUrl);
     }
 
@@ -44,6 +36,9 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginPostFails()
     {
         $client = static::createClient();
+        $client->request('GET', '/login');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         // Directly submit a form (but using the Crawler is easier!)
         $client->request(
             'POST',
@@ -112,4 +107,27 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals('/login', $targetUrl);
     }
 
+    public function testLoginGetRedirectToDashboardWhenAlreadyLoggedIn()
+    {
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/login',
+            [
+                '_username' => 'autotest',
+                '_password' => 'autotestokok', // strange if fails if less letter in password, or if username don't exists...
+                '_target_path' => '/dashboard',
+            ]
+        );
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $targetUrl = str_replace('http://localhost', '', $client->getResponse()->getTargetUrl());
+        $this->assertEquals('/dashboard', $targetUrl);
+
+        // Attempt to go back to login screen
+        $client->request('GET', '/login');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $targetUrl = str_replace('http://localhost', '', $client->getResponse()->getTargetUrl());
+        $this->assertEquals('/dashboard', $targetUrl);
+    }
 }
