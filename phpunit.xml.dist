@@ -20,11 +20,15 @@
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
 
+        <!-- add here mysql again, the bottom one is for functional test (only way to test authentication cos not my class) -->
+        <!-- But Your integrations test with Database will need that need TestDbConnectionAbstractClass described in that link: -->
+        <!-- see http://blog.fraserreed.com/phpunit/2016/04/06/database-testing-with-phpunit.html -->
+
         <!-- ###+ doctrine/doctrine-bundle ### -->
         <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->
         <!-- For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db" -->
         <!-- Configure your db driver and server_version in config/packages/doctrine.yaml -->
-        <env name="DATABASE_URL" value="mysql://db_user:db_password@127.0.0.1:3306/db_name"/>
+        <env name="DATABASE_URL" value="mysql://dbuser:dbpassword@127.0.0.1:3306/db_cloner_test_db"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
     </php>
 

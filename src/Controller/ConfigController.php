@@ -1,5 +1,4 @@
 <?php
-// src/Controller/LuckyController.php
 
 namespace App\Controller;
 
