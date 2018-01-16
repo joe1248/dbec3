@@ -1,4 +1,4 @@
-INSERT INTO `users` VALUES (1,'autotest','ReOvP/w0E61TA','josephbarban@gmail.com',1,61,'status',NOW(),0,NULL);
+INSERT INTO `users` VALUES (1,'autotest','$2y$12$bY/iuoSC18RkQZsGgf/Hou9kgcw2dmlcdp/SZD4S86LTwlKS/D9tm','josephbarban@gmail.com',1,61,'status',NOW(),0,NULL);
 
 
 INSERT INTO `idea_user_connections` VALUES (100,1,0,0,'db','vps local','localhost','root','','3306','','',NULL,'0',NULL,'AidyC1dNd6ls+jI1KNZiiZvOKtOEqxHgYeTtLIqOV1o=','e6avEpFLlE+YCddmgBEQ2Q==','2+x9cvpMb99RRloELLFrhQ==');

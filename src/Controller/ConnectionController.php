@@ -16,11 +16,11 @@ class ConnectionController extends Controller
     /**
      * List all non deleted connections of current user
      *
-     * @param UserInterface|null $user
+     * @param UserInterface $user
      *
      * @return JsonResponse
      */
-    public function getAll(UserInterface $user = null)
+    public function getAll(UserInterface $user)
     {        
         /** @var ConnectionsRepo $connectionsRepo */
         $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
@@ -117,7 +117,7 @@ class ConnectionController extends Controller
      *
      * @return JsonResponse
      */
-    public function post(Request $request, UserConnectionService $UserConnectionService, UserInterface $user = null)
+    public function post(Request $request, UserConnectionService $UserConnectionService, UserInterface $user)
     {
         $dbManager = $this->getDoctrine()->getManager();
         $input = $request->request->all();

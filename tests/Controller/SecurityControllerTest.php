@@ -45,7 +45,7 @@ class SecurityControllerTest extends WebTestCase
             '/login',
             [
                 '_username' => 'autotest',
-                '_password' => 'autotes', // strange if fails if less letter in password, or if username don't exists...
+                '_password' => 'autotest',
                 '_target_path' => '/dashboard',
             ]
         );
@@ -63,7 +63,7 @@ class SecurityControllerTest extends WebTestCase
             '/login',
             [
                 '_username' => 'autotest',
-                '_password' => 'autotestokok',
+                '_password' => 'autotest143RR',
                 '_target_path' => '/dashboard',
             ]
         );
@@ -81,7 +81,7 @@ class SecurityControllerTest extends WebTestCase
             '/login',
             [
                 '_username' => 'autotest',
-                '_password' => 'autotestokok', // strange if fails if less letter in password, or if username don't exists...
+                '_password' => 'autotest143RR', // strange if fails if less letter in password, or if username don't exists...
                 '_target_path' => '/dashboard',
             ]
         );
@@ -115,7 +115,7 @@ class SecurityControllerTest extends WebTestCase
             '/login',
             [
                 '_username' => 'autotest',
-                '_password' => 'autotestokok', // strange if fails if less letter in password, or if username don't exists...
+                '_password' => 'autotest143RR', // strange if fails if less letter in password, or if username don't exists...
                 '_target_path' => '/dashboard',
             ]
         );
