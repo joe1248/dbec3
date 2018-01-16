@@ -27,13 +27,10 @@ security:
             # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
             # FROM https://symfony.com/doc/current/reference/configuration/security.html
+            # https://symfony.com/doc/current/security/json_login_setup.html
             form_login:
-                login_path: login
                 check_path: login
-                always_use_default_target_path: false
-                default_target_path: luckyRoute
-                #target_path_parameter:          _target_path
-                use_referer:                    false
+                login_path: login
 
             provider: our_db_provider
 

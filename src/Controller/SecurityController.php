@@ -1,14 +1,18 @@
 <?php
-// src/Controller/SecurityController.php
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends Controller
 {
     private $authUtils;
 
+    /**
+     * @return Response
+     */
     public function login()
     {
         $this->authUtils =  $this->get(AuthenticationUtils::class);

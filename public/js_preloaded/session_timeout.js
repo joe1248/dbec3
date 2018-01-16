@@ -13,21 +13,7 @@ $(document).ready(function(){
 	$('#button_new_logout').click( function(){ try_loggin_out(); } );
 	var try_loggin_out = function(){
 		show_central_spinner();
-		$.ajax({
-			type: "GET",
-			url: 'page_ajax_all?module=logout',
-			success: function(data){
-				hide_central_spinner();
-				if(data.indexOf('OK_logged_out_bye') < 0){
-					showDivSimple(data, 'Error during logout : ' + data);
-				}else{
-					show_central_spinner();
-					showDivSimple('Loading...', 'Success Signing out');
-					// SUCCESS SIGNING OUT !!
-					location =  'login' ;
-				}
-			} 
-		});
+        location =  '/logout' ;
 	};
 	
 	Js_Class_Session.prototype.uniqueInitialSetup = function(){

@@ -4,27 +4,27 @@
 # -----------  CONNECTIONS ROUTES ----------------------------
 
 
-ConnectionsList:
+ConnectionsListRoute:
     methods: [GET]
     path: /connections
     controller: App\Controller\ConnectionController::getAll
 
-ConnectionAdd:
+ConnectionAddRoute:
     methods: [POST]
     path: /connection/new
     controller: App\Controller\ConnectionController::post
 
-ConnectionEdit:
+ConnectionEditRoute:
     methods: [PATCH]
     path: /connection/edit
     controller: App\Controller\ConnectionController::patch
 
-ConnectionGet:
+ConnectionGetRoute:
     methods: [GET]
     path: /connection/{id}
     controller: App\Controller\ConnectionController::getOne
 
-ConnectionDelete:
+ConnectionDeleteRoute:
     methods: [DELETE]
     path: /connection/{id}
     controller: App\Controller\ConnectionController::delete
@@ -48,7 +48,7 @@ login:
     path: /login
     controller: App\Controller\SecurityController::login
 
-index:
+indexRoute:
     methods: [GET]
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
@@ -56,6 +56,6 @@ index:
         path: /login
         permanent: true
 
-logout:
+logoutRoute:
     methods: [GET]
     path: /logout

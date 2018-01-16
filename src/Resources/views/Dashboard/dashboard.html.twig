@@ -97,17 +97,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript"  src="{{ asset('js/lib/jquery-1.11.0.min.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('js/lib/jquery-ui.1.10.4.min.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('js/lib/proto.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('js/lib/mini.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('js/lib/mini_jquery.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('js/lib/spin.min.js') }}"></script>
-    <script type="text/javascript">"use strict";
-        var pos  = "";
-        var Gcurrent_user = "autotest";
-        //if(document.body){document.body.style.display="none";}
-    </script>
+    {{ parent() }}
 
     <script type="text/javascript"  src="{{ asset('js_preloaded/pages_map.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js_preloaded/session_timeout.js') }}"></script>

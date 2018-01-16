@@ -58,8 +58,7 @@ h2,
 
 @font-face {
     font-family: loginFont;
-    /*src: url(../opensource/fonts/honey_script/honeyscriptsemibold.ttf);*/
-    src: url(fonts/jenna_sue/jennasue.ttf);
+    src: url(css.css.jennasue.ttf);
 }
 .yourLoginFontBig {
     font-family: loginFont;
