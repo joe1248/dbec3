@@ -3,15 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends Controller
 {
     private $authUtils;
 
-    public function login(Request $request)
+    public function login()
     {
         $this->authUtils =  $this->get(AuthenticationUtils::class);
 
@@ -21,7 +19,7 @@ class SecurityController extends Controller
         // last username entered by the user.
         $lastUsername = $this->authUtils->getLastUsername();
     
-        return $this->render('Security/login.html.php', [
+        return $this->render('Security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
