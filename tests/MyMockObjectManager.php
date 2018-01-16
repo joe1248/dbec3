@@ -5,6 +5,13 @@ namespace App\Tests;
 use Doctrine\Common\Persistence\ObjectManager;
 use ReflectionClass;
 
+/**
+ * Helps for unit-tests, in order to mock better the database by returning a new ID on each call to persist()
+ *
+ * Class MyMockObjectManager
+ *
+ * @package App\Tests
+ */
 class MyMockObjectManager implements ObjectManager
 {
     /** @var int */

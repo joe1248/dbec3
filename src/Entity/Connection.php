@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM; // Do NOT delete, it is need by symfony to read the annotations
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**

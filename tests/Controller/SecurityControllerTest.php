@@ -7,12 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-    // Note that login seems to work with the db defined in /phpunit.xml.dist,
-    // but a fixture should be used :
-    // so must be created first : https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
-    // because using DBUnit is not possible in functional test : https://phpunit.de/manual/current/en/database.html
-    // or is it ? : https://symfony.com/doc/current/testing/doctrine.html
-
     public function testRootRedirectToLogin()
     {
         $client = static::createClient();

@@ -79,6 +79,17 @@ class User implements UserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
     }
 
+    public function registerNewUserRetails($input)
+    {
+        $this->id = null;
+        $this->username = $input['_username'];
+        $this->password = $input['_password'];
+        $this->email = $input['_email'];
+        $this->signupDate = null;//\DateTime::createFromFormat('Y-m-d', date('Y-m-d H:i:s'));
+
+        return $this;
+    }
+
     public function getId()
     {
         return $this->id;
