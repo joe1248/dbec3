@@ -15,7 +15,7 @@ class SecurityController extends Controller
     /**
      * @return Response
      */
-    public function login()
+    public function login(): Response
     {
         $this->authUtils =  $this->get(AuthenticationUtils::class);
 
@@ -31,7 +31,12 @@ class SecurityController extends Controller
         ]);
     }
 
-    public function register(UserPasswordEncoderInterface $encoder)
+    /**
+     * @param UserPasswordEncoderInterface $encoder
+     *
+     * @return Response
+     */
+    public function register(UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $plainPassword = 'autotest143RR';

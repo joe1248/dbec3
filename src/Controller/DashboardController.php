@@ -1,5 +1,4 @@
 <?php
-// src/Controller/LuckyController.php
 
 namespace App\Controller;
 
@@ -9,7 +8,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends Controller 
 {
-    public function dashboard(UserInterface $user = null)
+    /**
+     * @param UserInterface|null $user
+     *
+     * @return Response
+     */
+    public function dashboard(UserInterface $user = null): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

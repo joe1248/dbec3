@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityNotFoundException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Tests\MyMockObjectManager;
 
 class UserConnectionService
 {
@@ -24,7 +25,7 @@ class UserConnectionService
         int $id,
         ConnectionsRepo $connectionsRepo,
         UserInterface $user
-    ) {
+    ): array {
         /** @var Connection $connectionOne */
         $connectionOne = $connectionsRepo->findOneBy(['id' => $id, 'user' => $user]);
         if (empty($connectionOne)) {
@@ -54,7 +55,7 @@ class UserConnectionService
         UserInterface $user,
         ObjectManager $dbManager,
         ConnectionsRepo $connectionsRepo
-    )
+    ) : bool
     {
         /** @var Connection $connectionOne */
         $connectionOne = $connectionsRepo->findOneBy(['id' => $dbId, 'user' => $user]);
@@ -95,7 +96,7 @@ class UserConnectionService
         UserInterface $user,
         ObjectManager $dbManager,
         ConnectionsRepo $connectionsRepo
-    ) {
+    ): Connection {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'db_'), 'db_');
 
         /** @var Connection $connectionEntityDb */
@@ -141,7 +142,7 @@ class UserConnectionService
         array $input,
         UserInterface $user,
         ObjectManager $dbManager
-    ) {
+    ): Connection {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
 
         if ($input['select_db_protocol'] === 'over_ssh') {
@@ -166,7 +167,7 @@ class UserConnectionService
      *
      * @return array
      */
-    private function filterArrayByKeyPrefix(array $toFilterByKeyPrefix, string $prefix)
+    private function filterArrayByKeyPrefix(array $toFilterByKeyPrefix, string $prefix): array
     {
         return array_filter(
             $toFilterByKeyPrefix,
@@ -185,7 +186,7 @@ class UserConnectionService
      *
      * @return array
      */
-    private function removeKeyPrefix(array $toRemoveKeyPrefix, string $prefix)
+    private function removeKeyPrefix(array $toRemoveKeyPrefix, string $prefix): array
     {
         $withKeyRemoved = [];
         foreach ($toRemoveKeyPrefix as $key => $value)

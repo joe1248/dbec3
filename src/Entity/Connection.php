@@ -160,6 +160,9 @@ class Connection
         $this->selectedFtp = $input['selected_ftp_id'] ?? null;
     }
 
+    /**
+     * @param array $input
+     */
     public function update(array $input)
     {
         // Genre not changeable
@@ -171,27 +174,42 @@ class Connection
         $this->selectedFtp = $input['selected_ftp_id'] ?? null;
     }
 
+    /**
+     *
+     */
     public function delete()
     {
         $this->deleted = true;
     }
 
-    public function isDeleted()
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool
     {
         return (bool) $this->deleted;
     }
 
+    /**
+     * @return int|mixed|null
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return \Connection|mixed|null
+     */
     public function getSelectedFtp()
     {
         return $this->selectedFtp;
     }
 
-    public function readAsDbDetails()
+    /**
+     * @return array
+     */
+    public function readAsDbDetails(): array
     {
         return [
             'db_id' => $this->id,
@@ -204,7 +222,10 @@ class Connection
         ];
     }
 
-    public function readAsFtpDetails()
+    /**
+     * @return array
+     */
+    public function readAsFtpDetails(): array
     {
         return [
             'ftp_connection_name' => $this->connectionName,
@@ -215,7 +236,10 @@ class Connection
         ];
     }
 
-    public function getAttributes()
+    /**
+     * @return array
+     */
+    public function getAttributes(): array
     {
         return [
             'id' => $this->id,

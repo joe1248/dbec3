@@ -14,7 +14,7 @@ class ConnectionFixtures extends Fixture implements FixtureInterface, DependentF
     /**
      * @return array
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             UserFixtures::class,

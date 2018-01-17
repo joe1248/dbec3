@@ -30,10 +30,28 @@ class ConnectionControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $connections = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(1, count($connections));
-        //throw new \Exception($client->getResponse()->getContent());
+
+        $expectedConnections = <<<JSON
+[{
+	"connection_name": "my_test_connection",
+	"url_host": "aaa_host",
+	"user_name": "aaa_user",
+	"pass_word": "aaa_pass",
+	"port_number": "1234",
+	"selected_ftp": null
+}]
+JSON;
+        $expectedConnectionOne = json_decode($expectedConnections, true)[0];
+        $connectionOne = $connections[0];
+        unset($connectionOne['id']); // id always changing cos dynamically loaded at each test.
+        $this->assertEquals(
+            $expectedConnectionOne,
+            $connectionOne,
+            '1 connexion was expected in here ' . print_r($connections, true)
+        );
     }
 
-    public function testGetAllFailsIfWrongPassord()
+    public function testGetAllFailsIfWrongPassword()
     {
         $client = static::createClient();
         $client->request('GET', '/connections', [], [], [

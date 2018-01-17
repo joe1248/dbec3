@@ -8,15 +8,20 @@ use App\Business\Cloning\ConfigObfuscationCatalog;
 
 class ConfigController extends Controller 
 {
-    public function getConfig(ConfigObfuscationCatalog $configObfuscationCatalog)
+    /**
+     * @param ConfigObfuscationCatalog $configObfuscationCatalog
+     *
+     * @return JsonResponse
+     */
+    public function getConfig(ConfigObfuscationCatalog $configObfuscationCatalog): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         return new JsonResponse( [
-            'Adatatypes'          => $configObfuscationCatalog->Adatatypes,
-            'AoptionsByDatatypes' => $configObfuscationCatalog->AoptionsByDatatypes,
-            'lastVersion'         => 301,//$Oide->get_latest_code_version_number(),
-            'currentVersion'      => 301,// $Oide->getCodeVersion(),
+            'dataTypes'          => $configObfuscationCatalog->Adatatypes,
+            'optionsByDataTypes' => $configObfuscationCatalog->AoptionsByDatatypes,
+            'lastVersion'         => 300,
+            'currentVersion'      => 300,
         ]);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-// src/Controller/ConnectionController.php
 
 namespace App\Controller;
 
@@ -20,13 +19,13 @@ class ConnectionController extends Controller
      *
      * @return JsonResponse
      */
-    public function getAll(UserInterface $user)
+    public function getAll(UserInterface $user): JsonResponse
     {        
         /** @var ConnectionsRepo $connectionsRepo */
         $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
 
         $connections = $connectionsRepo->getAllNonDeletedDatabaseConnectionsOfUser($user);
-    
+
         return new JsonResponse($connections);
     }
 
@@ -39,8 +38,11 @@ class ConnectionController extends Controller
      *
      * @return JsonResponse
      */
-    public function delete(string $id, UserConnectionService $UserConnectionService, UserInterface $user)
-    {
+    public function delete(
+        string $id,
+        UserConnectionService $UserConnectionService,
+        UserInterface $user
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $dbManager = $this->getDoctrine()->getManager();
@@ -63,8 +65,11 @@ class ConnectionController extends Controller
      *
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function getOne(string $id, UserConnectionService $UserConnectionService, UserInterface $user)
-    {
+    public function getOne(
+        string $id,
+        UserConnectionService $UserConnectionService,
+        UserInterface $user
+    ): JsonResponse {
         /** @var ConnectionsRepo $em */
         $em = $this->getDoctrine()->getRepository(Connection::class);
 
@@ -92,8 +97,11 @@ class ConnectionController extends Controller
      *
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function patch(Request $request, UserConnectionService $UserConnectionService, UserInterface $user)
-    {
+    public function patch(
+        Request $request,
+        UserConnectionService $UserConnectionService,
+        UserInterface $user
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $dbManager = $this->getDoctrine()->getManager();
@@ -117,8 +125,11 @@ class ConnectionController extends Controller
      *
      * @return JsonResponse
      */
-    public function post(Request $request, UserConnectionService $UserConnectionService, UserInterface $user)
-    {
+    public function post(
+        Request $request,
+        UserConnectionService $UserConnectionService,
+        UserInterface $user
+    ): JsonResponse {
         $dbManager = $this->getDoctrine()->getManager();
         $input = $request->request->all();
 
