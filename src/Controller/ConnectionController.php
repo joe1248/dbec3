@@ -37,21 +37,30 @@ class ConnectionController extends Controller
      * @param UserInterface $user
      *
      * @return JsonResponse
+     *
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function delete(
         string $id,
         UserConnectionService $UserConnectionService,
         UserInterface $user
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $dbManager = $this->getDoctrine()->getManager();
         /** @var ConnectionsRepo $connectionsRepo */
         $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
 
-        $success = $UserConnectionService->deleteDbAndFtpConnection($id, $user, $dbManager, $connectionsRepo);
+        $success = $UserConnectionService->deleteDbAndFtpConnection((int) $id, $user, $dbManager, $connectionsRepo);
 
-        return new JsonResponse(['success' => $success]);
+        /** @var Connection $connection */
+        $connection = $connectionsRepo ->findOneBy(['id' => (int) $id]);
+
+        return new JsonResponse([
+            'success' => $success,
+            'connection' => $connection->getAttributes(),
+        ]);
     }
 
     /**
@@ -69,11 +78,12 @@ class ConnectionController extends Controller
         string $id,
         UserConnectionService $UserConnectionService,
         UserInterface $user
-    ): JsonResponse {
-        /** @var ConnectionsRepo $em */
-        $em = $this->getDoctrine()->getRepository(Connection::class);
+    ): JsonResponse
+    {
+        /** @var ConnectionsRepo $connectionsRepo */
+        $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
 
-        $dbAndFtpDetails = $UserConnectionService->getConnectionDbAndFtpDetails($id, $em, $user);
+        $dbAndFtpDetails = $UserConnectionService->getConnectionDbAndFtpDetails($id, $connectionsRepo, $user);
 
         return new JsonResponse(
             array_merge(
@@ -96,12 +106,14 @@ class ConnectionController extends Controller
      * @return JsonResponse
      *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \App\Exception\UserInputException
      */
     public function patch(
         Request $request,
         UserConnectionService $UserConnectionService,
         UserInterface $user
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $dbManager = $this->getDoctrine()->getManager();
@@ -129,7 +141,8 @@ class ConnectionController extends Controller
         Request $request,
         UserConnectionService $UserConnectionService,
         UserInterface $user
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $dbManager = $this->getDoctrine()->getManager();
         $input = $request->request->all();
 

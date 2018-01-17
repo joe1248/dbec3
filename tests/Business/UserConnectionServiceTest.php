@@ -4,6 +4,7 @@ namespace App\Tests\Business;
 
 use App\Business\UserConnectionService;
 use App\Entity\Connection;
+use App\Exception\UserInputException;
 use App\Repository\ConnectionsRepo;
 use App\Tests\MyMockObjectManager;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -32,7 +33,7 @@ class UserConnectionServiceTest extends TestCase
         /** @var array */
         $this->ftpConnectionParameters = [
             'id' => 248,
-            'connection_genre' => 'ftp',
+            'connection_genre' => 'ssh',
             'connection_name' => 'Test_connection_TWO.',
             'url_host' => 'example_ssh.com',
             'user_name' => 'ssh_user',
@@ -297,7 +298,7 @@ class UserConnectionServiceTest extends TestCase
 
         $ftpConnectionParametersAfterUpdate = [
             'id' => 248,
-            'connection_genre' => 'ftp',
+            'connection_genre' => 'ssh',
             'connection_name' => 'Test_connection_TWO.UPDATED_1',
             'url_host' => 'example_ssh.comUPDATED_2',
             'user_name' => 'ssh_userUPDATED_3',
@@ -355,6 +356,8 @@ class UserConnectionServiceTest extends TestCase
                 $dbManager,
                 $connectionsRepo
             );
+        } catch (UserInputException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
         } catch (EntityNotFoundException $e) {
             $this->fail('Unexpected exception:' . $e->getMessage());
         }
@@ -431,6 +434,8 @@ class UserConnectionServiceTest extends TestCase
                 $dbManager,
                 $connectionsRepo
             );
+        } catch (UserInputException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
         } catch (EntityNotFoundException $e) {
             $this->fail('Unexpected exception:' . $e->getMessage());
         }
@@ -464,12 +469,18 @@ class UserConnectionServiceTest extends TestCase
         // Actual Test
         /** UserConnectionService $userConnectionServiceToTest */
         $userConnectionServiceToTest = new UserConnectionService();
-        $userConnectionServiceToTest->updateConnectionDbAndFtp(
-            $input,
-            $this->user,
-            $dbManager,
-            $connectionsRepo
-        );
+        try {
+            $userConnectionServiceToTest->updateConnectionDbAndFtp(
+                $input,
+                $this->user,
+                $dbManager,
+                $connectionsRepo
+            );
+        } catch (UserInputException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
+        }/* DO NOT UNCOMMENT , As that IS expected here  catch (EntityNotFoundException $e) {
+            $this->fail('Unexpected exception:' . $e->getMessage());
+        }*/
     }
 
     public function testCreateConnectionDbAndFtp()
@@ -504,7 +515,7 @@ class UserConnectionServiceTest extends TestCase
         );
 
         // Build expectations as they use objects
-        $this->ftpConnectionParameters['id'] = 555; // FTP id : First one to be created
+        $this->ftpConnectionParameters['id'] = 555; // SSH connection id : First one to be created
         $this->ftpConnectionParameters['connection_name'] .= ' brand_new';
 
         /** @var Connection $expectedFtpConnectionEntity */

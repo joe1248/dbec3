@@ -3,12 +3,13 @@
 namespace App\Business;
 
 use App\Entity\Connection;
+use App\Exception\UserInputException;
 use App\Repository\ConnectionsRepo;
+use App\Tests\MyMockObjectManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityNotFoundException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Tests\MyMockObjectManager;
 
 class UserConnectionService
 {
@@ -90,6 +91,7 @@ class UserConnectionService
      * @return Connection
      *
      * @throws EntityNotFoundException
+     * @throws UserInputException
      */
     public function updateConnectionDbAndFtp(
         array $input,
@@ -113,7 +115,7 @@ class UserConnectionService
         if ($this->hasFtpConnexion($input)) {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'ftp_'), 'ftp_');
             if (empty($connectionEntityDb ->getSelectedFtp())) {
-                $inputConnectionFtp['connection_genre'] = 'ftp';
+                $inputConnectionFtp['connection_genre'] = Connection::CONNECTION_TYPE_SSH;
                 /** @var Connection $connectionEntityFtp */
                 $connectionEntityFtp = new Connection($inputConnectionFtp, $user);
             } else {
@@ -147,13 +149,13 @@ class UserConnectionService
 
         if ($this->hasFtpConnexion($input)) {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
-            $inputConnectionFtp['connection_genre'] = 'ftp';
+            $inputConnectionFtp['connection_genre'] = Connection::CONNECTION_TYPE_SSH;
             $connectionEntityFtp = new Connection($inputConnectionFtp, $user);
             $dbManager->persist($connectionEntityFtp);
             $dbManager->flush();
             $inputConnectionDb['selected_ftp_id'] = $connectionEntityFtp;
         }
-        $inputConnectionDb['connection_genre'] = 'db';
+        $inputConnectionDb['connection_genre'] = Connection::CONNECTION_TYPE_DB;
         $connectionEntityDb = new Connection($inputConnectionDb, $user);
         $dbManager->persist($connectionEntityDb);
         $dbManager->flush();

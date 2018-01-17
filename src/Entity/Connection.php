@@ -14,6 +14,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Connection
 {
+    const CONNECTION_TYPE_SSH = 'ssh';
+    const CONNECTION_TYPE_DB = 'db';
+
+    const VALID_CONNECTIONS_TYPES = [
+        self::CONNECTION_TYPE_DB,
+        self::CONNECTION_TYPE_SSH
+    ];
+
     const REQUIRED_FIELDS = [
         'connectionGenre',
         'connectionName',
@@ -180,34 +188,6 @@ class Connection
     }
 
     /**
-     * @throws UserInputException
-     */
-    private function validate()
-    {
-        $missingParameters = [];
-        foreach (self::REQUIRED_FIELDS as $requiredField)
-        {
-            if (empty($this->$requiredField))
-            {
-                $missingParameters[] = $requiredField;
-            }
-        }
-
-        $nbErrors = count($missingParameters);
-        if ($nbErrors) {
-            throw new UserInputException(
-                $nbErrors == 1 ? 'A required parameter is missing: ' : 'Several required parameters are missing: '.
-                join(', ', $missingParameters)
-            );
-        }
-
-        if (!in_array($this->connectionGenre, ['db', 'ftp'])) {
-            throw new UserInputException('Invalid connection genre: ' . $this->connectionGenre);
-        }
-    }
-
-
-    /**
      * @param array $input
      *
      * @throws UserInputException
@@ -257,6 +237,14 @@ class Connection
     }
 
     /**
+     * @param Connection
+     */
+    public function setSelectedFtp(Connection $connection)
+    {
+        $this->selectedFtp = $connection;
+    }
+
+    /**
      * @return array
      */
     public function readAsDbDetails(): array
@@ -295,19 +283,43 @@ class Connection
         return [
             'id' => $this->id,
             'connection_name' => $this->connectionName,
+            'connection_genre' => $this->connectionGenre,
             'url_host' => $this->urlHost,
             'user_name' => $this->userName,
             'pass_word' => $this->passWord,
             'port_number' => $this->portNumber,
             'connection_disabled' => $this->connectionDisabled,
-            'selected_ftp' => empty($this->selectedFtp) ? null : [
-                'id' => $this->selectedFtp->id,
-                'connection_name' => $this->selectedFtp->connectionName,
-                'url_host' => $this->selectedFtp->urlHost,
-                'user_name' => $this->selectedFtp->userName,
-                'pass_word' => $this->selectedFtp->passWord,
-                'port_number' => $this->selectedFtp->portNumber,
-            ]
+            'deleted' => $this->deleted,
+            'selected_ftp' => empty($this->selectedFtp) ? null : $this->selectedFtp->getAttributes()
         ];
+    }
+
+    /**
+     * @throws UserInputException
+     */
+    private function validate()
+    {
+        $missingParameters = [];
+        foreach (self::REQUIRED_FIELDS as $requiredField) {
+            if (empty($this->$requiredField)) {
+                $missingParameters[] = $requiredField;
+            }
+        }
+
+        $nbErrors = count($missingParameters);
+        if ($nbErrors) {
+            throw new UserInputException(
+                (
+                    $nbErrors == 1
+                    ? 'A required parameter is missing: '
+                    : 'Several required parameters are missing: '
+                ) .
+                join(', ', $missingParameters)
+            );
+        }
+
+        if (!in_array($this->connectionGenre, self::VALID_CONNECTIONS_TYPES)) {
+            throw new UserInputException('Invalid connection genre: ' . $this->connectionGenre);
+        }
     }
 }

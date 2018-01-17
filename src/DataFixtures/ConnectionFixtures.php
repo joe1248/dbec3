@@ -28,20 +28,36 @@ class ConnectionFixtures extends Fixture implements FixtureInterface, DependentF
      */
     public function load(ObjectManager $manager)
     {
-        $input = [
+        /** @var UserInterface $user */
+        $user = $this->getReference('first-user');
+
+        $inputDb = [
             "connection_genre" => "db",
-            "connection_name" => "my_test_connection",
+            "connection_name" => "my_test_connection_db",
             "url_host" => "aaa_host",
             "user_name" => "aaa_user",
             "pass_word" => "aaa_pass",
             "port_number" => "1234",
+            //"selected_ftp_id" => $this->getReference('dbConnection'),
         ];
+        $dbConnection = new Connection($inputDb, $user);
 
-        /** @var UserInterface $user */
-        $user = $this->getReference('first-user');
-        $connection = new Connection($input, $user);
+        $inputSsh = [
+            "connection_genre" => "ssh",
+            "connection_name" => "my_test_connection_ssh",
+            "url_host" => "bbb_host",
+            "user_name" => "bbb_user",
+            "pass_word" => "bbb_pass",
+            "port_number" => "5678",
+        ];
+        $sshConnection = new Connection($inputSsh, $user);
+        $manager->persist($dbConnection);
+        $manager->persist($sshConnection);
 
-        $manager->persist($connection);
+        $dbConnection->setSelectedFtp($sshConnection);
+        $manager->persist($dbConnection);
+
         $manager->flush();
+        $this->addReference('test-db-connection', $dbConnection);
     }
 }
