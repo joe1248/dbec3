@@ -12,10 +12,15 @@ class ConnectionControllerTest extends WebTestCase
 
     public function testGetAll()
     {
-        $this->loadFixtures([
-            UserFixtures::class,
-            ConnectionFixtures::class,
-        ]);
+        $this->loadFixtures(
+            [
+                UserFixtures::class,
+                ConnectionFixtures::class,
+            ],
+            null,
+            'doctrine',
+            \Doctrine\Common\DataFixtures\Purger\ORMPurger::PURGE_MODE_DELETE //TRUNCATE
+        );
         $client = $this->makeClient();
         $client->request('GET', '/connections', [], [], [
             'PHP_AUTH_USER' => 'autotest_fake',
@@ -38,6 +43,7 @@ class ConnectionControllerTest extends WebTestCase
 	"user_name": "aaa_user",
 	"pass_word": "aaa_pass",
 	"port_number": "1234",
+	"connection_disabled": 0,
 	"selected_ftp": null
 }]
 JSON;
@@ -63,6 +69,30 @@ JSON;
             302,
             $client->getResponse()->getStatusCode(),
             "\n\n??? SHOULD NOT BE LOGGED IN!! \n\n"
+        );
+    }
+
+    public function testPostWithoutParamtersThrowUserInputException()
+    {
+        $this->loadFixtures(
+            [
+                UserFixtures::class,
+                ConnectionFixtures::class,
+            ]
+        );
+        $client = $this->makeClient();
+        $client->request('POST', '/connection/new', [], [], [
+            'PHP_AUTH_USER' => 'autotest_fake',
+            'PHP_AUTH_PW'   => 'autotest143RR',
+        ]);
+
+        $this->assertEquals(
+            400,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertEquals(
+            '{"error":{"code":400,"message":"Several required parameters are missing: connectionName, urlHost, userName, passWord, portNumber"}}',
+            $client->getResponse()->getContent()
         );
     }
 }

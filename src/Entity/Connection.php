@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Exception\UserInputException;
 use Doctrine\ORM\Mapping as ORM; // Do NOT delete, it is need by symfony to read the annotations
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -13,6 +14,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Connection
 {
+    const REQUIRED_FIELDS = [
+        'connectionGenre',
+        'connectionName',
+        'urlHost',
+        'userName',
+        'passWord',
+        'portNumber',
+    ];
+
     /**
      * @var int
      *
@@ -128,7 +138,7 @@ class Connection
     private $myPass = 'NULL';
 
     /**
-     * @var \Users
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
@@ -138,7 +148,7 @@ class Connection
     private $user;
 
     /**
-     * @var \Connection
+     * @var Connection
      *
      * @ORM\ManyToOne(targetEntity="Connection")
      * @ORM\JoinColumns({
@@ -147,31 +157,71 @@ class Connection
      */
     private $selectedFtp;
 
+    /**
+     * Connection constructor.
+     *
+     * @param array $input
+     * @param UserInterface $user
+     *
+     * @throws UserInputException
+     */
     public function __construct(array $input, UserInterface $user)
     {
         $this->user = $user;
         $this->id = $input['id'] ?? null;
-        $this->connectionGenre = $input['connection_genre'];
-        $this->connectionName  = $input['connection_name'];
-        $this->urlHost = $input['url_host'];
-        $this->userName = $input['user_name'];
-        $this->passWord = $input['pass_word'];
-        $this->portNumber = $input['port_number'];
+        $this->connectionGenre = $input['connection_genre'] ?? null;
+        $this->connectionName  = $input['connection_name'] ?? null;
+        $this->urlHost = $input['url_host'] ?? null;
+        $this->userName = $input['user_name'] ?? null;
+        $this->passWord = $input['pass_word'] ?? null;
+        $this->portNumber = $input['port_number'] ?? null;
         $this->selectedFtp = $input['selected_ftp_id'] ?? null;
+        $this->validate();
     }
 
     /**
+     * @throws UserInputException
+     */
+    private function validate()
+    {
+        $missingParameters = [];
+        foreach (self::REQUIRED_FIELDS as $requiredField)
+        {
+            if (empty($this->$requiredField))
+            {
+                $missingParameters[] = $requiredField;
+            }
+        }
+
+        $nbErrors = count($missingParameters);
+        if ($nbErrors) {
+            throw new UserInputException(
+                $nbErrors == 1 ? 'A required parameter is missing: ' : 'Several required parameters are missing: '.
+                join(', ', $missingParameters)
+            );
+        }
+
+        if (!in_array($this->connectionGenre, ['db', 'ftp'])) {
+            throw new UserInputException('Invalid connection genre: ' . $this->connectionGenre);
+        }
+    }
+
+
+    /**
      * @param array $input
+     *
+     * @throws UserInputException
      */
     public function update(array $input)
     {
         // Genre not changeable
-        $this->connectionName  = $input['connection_name'];
-        $this->urlHost = $input['url_host'];
-        $this->userName = $input['user_name'];
-        $this->passWord = $input['pass_word'];
-        $this->portNumber = $input['port_number'];
+        $this->connectionName  = $input['connection_name'] ?? null;
+        $this->urlHost = $input['url_host'] ?? null;
+        $this->userName = $input['user_name'] ?? null;
+        $this->passWord = $input['pass_word'] ?? null;
+        $this->portNumber = $input['port_number'] ?? null;
         $this->selectedFtp = $input['selected_ftp_id'] ?? null;
+        $this->validate();
     }
 
     /**
@@ -199,7 +249,7 @@ class Connection
     }
 
     /**
-     * @return \Connection|mixed|null
+     * @return Connection|mixed|null
      */
     public function getSelectedFtp()
     {
@@ -218,6 +268,7 @@ class Connection
             'db_user_name' => $this->userName,
             'db_pass_word' => $this->passWord,
             'db_port_number' => $this->portNumber,
+            'db_connection_disabled' => $this->connectionDisabled,
             'db_selected_ftp_id' => empty($this->selectedFtp) ? 0 : $this->selectedFtp->getId(),
         ];
     }
@@ -248,6 +299,7 @@ class Connection
             'user_name' => $this->userName,
             'pass_word' => $this->passWord,
             'port_number' => $this->portNumber,
+            'connection_disabled' => $this->connectionDisabled,
             'selected_ftp' => empty($this->selectedFtp) ? null : [
                 'id' => $this->selectedFtp->id,
                 'connection_name' => $this->selectedFtp->connectionName,

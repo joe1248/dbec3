@@ -110,7 +110,7 @@ class UserConnectionService
             );
         }
 
-        if ($input['select_db_protocol'] === 'over_ssh') {
+        if ($this->hasFtpConnexion($input)) {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'ftp_'), 'ftp_');
             if (empty($connectionEntityDb ->getSelectedFtp())) {
                 $inputConnectionFtp['connection_genre'] = 'ftp';
@@ -145,7 +145,7 @@ class UserConnectionService
     ): Connection {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'db_'),'db_');
 
-        if ($input['select_db_protocol'] === 'over_ssh') {
+        if ($this->hasFtpConnexion($input)) {
             $inputConnectionFtp = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input,'ftp_'),'ftp_');
             $inputConnectionFtp['connection_genre'] = 'ftp';
             $connectionEntityFtp = new Connection($inputConnectionFtp, $user);
@@ -195,5 +195,17 @@ class UserConnectionService
             $withKeyRemoved[$key] = $value;
         }
         return $withKeyRemoved;
+    }
+
+    /**
+     * @param $input
+     *
+     * @return bool
+     */
+    private function hasFtpConnexion(array $input): bool
+    {
+        $protocol = $input['select_db_protocol'] ?? 'over_http';
+
+        return $protocol == 'over_ssh';
     }
 }

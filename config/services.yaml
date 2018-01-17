@@ -40,3 +40,9 @@ services:
             - "@router"
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # Subscribe to kernel.exception event, so publish any thrown PublishedException
+    published_message.listener:
+        class: App\EventListener\PublishedExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
