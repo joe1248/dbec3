@@ -74,6 +74,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "liip/functional-test-bundle": {
+        "version": "1.9.2"
+    },
     "myclabs/deep-copy": {
         "version": "1.7.0"
     },
