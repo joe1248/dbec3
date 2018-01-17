@@ -2,15 +2,23 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\DataFixtures\UserFixtures;
+use App\DataFixtures\ConnectionFixtures;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class ConnectionControllerTest extends WebTestCase
 {
+    protected $kernelDir = '/app';
+
     public function testGetAll()
     {
-        $client = static::createClient();
+        $this->loadFixtures([
+            UserFixtures::class,
+            ConnectionFixtures::class,
+        ]);
+        $client = $this->makeClient();
         $client->request('GET', '/connections', [], [], [
-            'PHP_AUTH_USER' => 'autotest',
+            'PHP_AUTH_USER' => 'autotest_fake',
             'PHP_AUTH_PW'   => 'autotest143RR',
         ]);
 
@@ -20,47 +28,9 @@ class ConnectionControllerTest extends WebTestCase
             "\n\n??? Issue with logging in. ???!!\n\n"
         );
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(json_decode(<<<JSON
-[{
-	"id": 12,
-	"deleted": false,
-	"connectionDisabled": false,
-	"connectionGenre": "db",
-	"connectionName": "aaa1112223s55",
-	"urlHost": "aaa",
-	"userName": "aaa",
-	"passWord": "aaa",
-	"portNumber": "111",
-	"method": "\u0027\u0027",
-	"extra": "\u0027\u0027",
-	"apiKey": "\u00270\u0027",
-	"keyDate": null,
-	"myKey": "NULL",
-	"myFour": "NULL",
-	"myPass": "NULL"
-},
-{
-	"id": 2,
-	"deleted": false,
-	"connectionDisabled": false,
-	"connectionGenre": "db",
-	"connectionName": "ok1",
-	"urlHost": "ok",
-	"userName": "ok",
-	"passWord": "ok",
-	"portNumber": "ok",
-	"method": "\u0027\u0027",
-	"extra": "\u0027\u0027",
-	"apiKey": "\u00270\u0027",
-	"keyDate": null,
-	"myKey": "NULL",
-	"myFour": "NULL",
-	"myPass": "NULL"
-}]
-JSON
-            ),
-            json_decode($client->getResponse()->getContent())
-        );
+        $connections = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals(1, count($connections));
+        //throw new \Exception($client->getResponse()->getContent());
     }
 
     public function testGetAllFailsIfWrongPassord()

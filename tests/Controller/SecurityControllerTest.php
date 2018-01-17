@@ -2,15 +2,24 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\DataFixtures\UserFixtures;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
+    protected $kernelDir = '/app';
+
     public function testRootRedirectToLogin()
     {
-        $client = static::createClient();
-        $client->request('GET', '/');
+        //$client = static::createClient();
+        //$client->request('GET', '/');
+        $this->loadFixtures([
+            UserFixtures::class
+        ]);
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/');
+        $this->assertStatusCode(301, $client);
 
         /** @var Response $response */
         $response = $client->getResponse();
@@ -51,12 +60,15 @@ class SecurityControllerTest extends WebTestCase
 
     public function testLoginPostWorks()
     {
-        $client = static::createClient();
+        $this->loadFixtures([
+            UserFixtures::class
+        ]);
+        $client = $this->makeClient();
         $client->request(
             'POST',
             '/login',
             [
-                '_username' => 'autotest',
+                '_username' => 'autotest_fake',
                 '_password' => 'autotest143RR',
                 '_target_path' => '/dashboard',
             ]
@@ -69,12 +81,15 @@ class SecurityControllerTest extends WebTestCase
 
     public function testDashboardGetFailsAfterLogout()
     {
-        $client = static::createClient();
+        $this->loadFixtures([
+            UserFixtures::class
+        ]);
+        $client = $this->makeClient();
         $client->request(
             'POST',
             '/login',
             [
-                '_username' => 'autotest',
+                '_username' => 'autotest_fake',
                 '_password' => 'autotest143RR', // strange if fails if less letter in password, or if username don't exists...
                 '_target_path' => '/dashboard',
             ]
@@ -103,12 +118,16 @@ class SecurityControllerTest extends WebTestCase
 
     public function testLoginGetRedirectToDashboardWhenAlreadyLoggedIn()
     {
-        $client = static::createClient();
+        $this->loadFixtures([
+            UserFixtures::class
+        ]);
+        $client = $this->makeClient();
+
         $client->request(
             'POST',
             '/login',
             [
-                '_username' => 'autotest',
+                '_username' => 'autotest_fake',
                 '_password' => 'autotest143RR', // strange if fails if less letter in password, or if username don't exists...
                 '_target_path' => '/dashboard',
             ]

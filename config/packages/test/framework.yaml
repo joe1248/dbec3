@@ -1,3 +1,4 @@
+liip_functional_test: ~
 framework:
     test: ~
     session:

@@ -25,7 +25,7 @@ class ConnectionController extends Controller
         /** @var ConnectionsRepo $connectionsRepo */
         $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
 
-        $connections = $connectionsRepo->getAll($user);
+        $connections = $connectionsRepo->getAllNonDeletedDatabaseConnectionsOfUser($user);
     
         return new JsonResponse($connections);
     }

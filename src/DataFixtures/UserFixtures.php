@@ -8,16 +8,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class UserFixtures extends Fixture implements FixtureInterface, DependentFixtureInterface
+class UserFixtures extends Fixture implements FixtureInterface
 {
-    /**
-     * @return array
-     */
-    public function getDependencies()
-    {
-        return [];
-    }
-
     /**
      * @param ObjectManager $manager
      *

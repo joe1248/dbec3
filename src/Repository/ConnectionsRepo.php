@@ -13,7 +13,7 @@ class ConnectionsRepo extends EntityRepository
      *
      * @return array
      */
-    public function getAll(UserInterface $user)
+    public function getAllNonDeletedDatabaseConnectionsOfUser(UserInterface $user)
     {
         return $this->createQueryBuilder('u')
             ->where('u.user = :user')
