@@ -1,4 +1,7 @@
-liip_functional_test: ~
+liip_functional_test:
+    authentication:
+        username: "autotest_fake"
+        password: "autotest143RR"
 framework:
     test: ~
     session:

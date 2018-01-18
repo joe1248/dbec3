@@ -11,29 +11,29 @@ class ConnectionControllerTest extends WebTestCase
 {
     protected $kernelDir = '/app';
 
-    public function testGetAll()
+    private $fixtures;
+
+    public function setUp()
     {
-        $this->loadFixtures(
+        $this->fixtures = $this->loadFixtures(
             [
                 UserFixtures::class,
                 ConnectionFixtures::class,
-            ],
-            null,
-            'doctrine',
-            \Doctrine\Common\DataFixtures\Purger\ORMPurger::PURGE_MODE_DELETE //TRUNCATE
-        );
-        $client = $this->makeClient();
-        $client->request('GET', '/connections', [], [], [
-            'PHP_AUTH_USER' => 'autotest_fake',
-            'PHP_AUTH_PW'   => 'autotest143RR',
-        ]);
+            ]
+        )->getReferenceRepository();
+    }
+
+    public function testGetAll()
+    {
+        $client = $this->makeClient(true);
+        $client->request('GET', '/connections');
 
         $this->assertNotEquals(
             302,
             $client->getResponse()->getStatusCode(),
             "\n\n??? Issue with logging in. ???!!\n\n"
         );
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertStatusCode(200, $client);
         $connections = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(1, count($connections));
 
@@ -74,40 +74,24 @@ JSON;
 
     public function testGetAllFailsIfWrongPassword()
     {
-        $client = static::createClient();
+        $client = $this->makeClient(false);
         $client->request('GET', '/connections', [], [], [
             'PHP_AUTH_USER' => 'autotest',
             'PHP_AUTH_PW'   => 'abcdefgh',
         ]);
-
-        $this->assertEquals(
-            302,
-            $client->getResponse()->getStatusCode(),
-            "\n\n??? SHOULD NOT BE LOGGED IN!! \n\n"
-        );
+        $this->assertStatusCode(302, $client);
     }
 
     public function testDeleteSuccess()
     {
-        $fixtures = $this->loadFixtures(
-            [
-                UserFixtures::class,
-                ConnectionFixtures::class,
-            ]
-        )->getReferenceRepository();
-        $client = $this->makeClient();
+        $client = $this->makeClient(true);
 
         /** @var Connection $connection */
-        $connection = $fixtures->getReference('test-db-connection');
-        $client->request('DELETE', '/connection/' . $connection->getId(), [], [], [
-            'PHP_AUTH_USER' => 'autotest_fake',
-            'PHP_AUTH_PW'   => 'autotest143RR',
-        ]);
+        $connection = $this->fixtures->getReference('test-db-connection');
+        $client->request('DELETE', '/connection/' . $connection->getId());
 
-        $this->assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
+        $this->assertStatusCode(200, $client);
+
         $response = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(2, count($response));
         $this->assertEquals(true, $response['success']);
@@ -145,6 +129,8 @@ JSON;
             'PHP_AUTH_USER' => 'autotest_fake',
             'PHP_AUTH_PW'   => 'autotest143RR',
         ]);
+        $this->assertStatusCode(200, $client);
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $connections = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(0, count($connections));
@@ -153,25 +139,13 @@ JSON;
 
     public function testPostWithoutParametersThrowUserInputException()
     {
-        $this->loadFixtures(
-            [
-                UserFixtures::class,
-                ConnectionFixtures::class,
-            ]
-        );
-        $client = $this->makeClient();
-        $client->request('POST', '/connection/new', [], [], [
-            'PHP_AUTH_USER' => 'autotest_fake',
-            'PHP_AUTH_PW'   => 'autotest143RR',
-        ]);
+        $client = $this->makeClient(true);
+        $client->request('POST', '/connection/new');
 
-        $this->assertEquals(
-            400,
-            $client->getResponse()->getStatusCode()
-        );
         $this->assertEquals(
             '{"error":{"code":400,"message":"Several required parameters are missing: connectionName, urlHost, userName, passWord, portNumber"}}',
             $client->getResponse()->getContent()
         );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 }
