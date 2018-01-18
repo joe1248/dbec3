@@ -37,8 +37,6 @@ class ConnectionController extends Controller
      * @param UserInterface $user
      *
      * @return JsonResponse
-     *
-     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function delete(
         string $id,
@@ -124,6 +122,7 @@ class ConnectionController extends Controller
         $userConnectionDb = $UserConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
 
         return new JsonResponse([
+            'success' => true,
             'entity' => $userConnectionDb->getAttributes()
         ]);
     }
@@ -149,6 +148,7 @@ class ConnectionController extends Controller
         $userConnectionDb = $UserConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
 
         return new JsonResponse([
+            'success' => true,
             'entity' => $userConnectionDb->getAttributes()
         ]);
     }

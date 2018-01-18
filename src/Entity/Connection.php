@@ -45,14 +45,14 @@ class Connection
      *
      * @ORM\Column(name="deleted", type="boolean", nullable=false)
      */
-    private $deleted = '0';
+    private $deleted = false;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="connection_disabled", type="boolean", nullable=false)
      */
-    private $connectionDisabled = '0';
+    private $connectionDisabled = false;
 
     /**
      * @var string
@@ -66,49 +66,49 @@ class Connection
      *
      * @ORM\Column(name="connection_name", type="string", length=55, nullable=true, options={"default"="''","comment"="Memorable name for user"})
      */
-    private $connectionName = '\'\'';
+    private $connectionName = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="url_host", type="string", length=75, nullable=true, options={"default"="''","comment"="Host IP or URL"})
      */
-    private $urlHost = '\'\'';
+    private $urlHost = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="user_name", type="string", length=55, nullable=true, options={"default"="''"})
      */
-    private $userName = '\'\'';
+    private $userName = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="pass_word", type="string", length=55, nullable=true, options={"default"="''"})
      */
-    private $passWord = '\'\'';
+    private $passWord = '';
 
     /**
-     * @var string|null
+     * @var integer|null
      *
      * @ORM\Column(name="port_number", type="string", length=10, nullable=true, options={"default"="''"})
      */
-    private $portNumber = '\'\'';
+    private $portNumber = 0;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="method", type="string", length=10, nullable=true, options={"default"="''","comment"="nothing means simple, or over_ssh, or pem_file, or pub_key"})
      */
-    private $method = '\'\'';
+    private $method = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="extra", type="string", length=255, nullable=true, options={"default"="''","comment"="USED to store JSON data depending on connection type"})
      */
-    private $extra = '\'\'';
+    private $extra = '';
 
     /**
      * @var string|null
@@ -221,6 +221,30 @@ class Connection
     }
 
     /**
+     *
+     */
+    public function enable()
+    {
+        $this->connectionDisabled = false;
+    }
+
+    /**
+     *
+     */
+    public function disable()
+    {
+        $this->connectionDisabled = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDisabled(): bool
+    {
+        return (bool) $this->connectionDisabled;
+    }
+
+    /**
      * @return int|mixed|null
      */
     public function getId()
@@ -256,7 +280,7 @@ class Connection
             'db_user_name' => $this->userName,
             'db_pass_word' => $this->passWord,
             'db_port_number' => $this->portNumber,
-            'db_connection_disabled' => $this->connectionDisabled,
+            'db_connection_disabled' => $this->isDisabled(),
             'db_selected_ftp_id' => empty($this->selectedFtp) ? 0 : $this->selectedFtp->getId(),
         ];
     }
@@ -288,8 +312,8 @@ class Connection
             'user_name' => $this->userName,
             'pass_word' => $this->passWord,
             'port_number' => $this->portNumber,
-            'connection_disabled' => $this->connectionDisabled,
-            'deleted' => $this->deleted,
+            'connection_disabled' => $this->isDisabled(),
+            'deleted' => $this->isDeleted(),
             'selected_ftp' => empty($this->selectedFtp) ? null : $this->selectedFtp->getAttributes()
         ];
     }

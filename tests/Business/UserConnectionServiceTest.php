@@ -109,7 +109,6 @@ class UserConnectionServiceTest extends TestCase
             $this->fail('Unexpected exception:' . $e->getMessage());
         }
 
-        // assert that your calculator added the numbers correctly!
         $this->assertEquals(
             [
                 'db_id' => 123,
@@ -124,7 +123,7 @@ class UserConnectionServiceTest extends TestCase
                 'ftp_user_name' => 'ssh_user',
                 'ftp_pass_word' => 'ssh_password',
                 'ftp_port_number' => 22,
-                'db_connection_disabled' => '0',
+                'db_connection_disabled' => false,
             ],
             $result
         );
@@ -160,7 +159,7 @@ class UserConnectionServiceTest extends TestCase
                 'db_pass_word' => 'db_password333',
                 'db_port_number' => 3306,
                 'db_selected_ftp_id' => 0,
-                'db_connection_disabled' => '0',
+                'db_connection_disabled' => false,
             ],
             $result
         );
