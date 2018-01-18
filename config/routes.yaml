@@ -53,6 +53,11 @@ register:
     path: /register
     controller: App\Controller\SecurityController::register
 
+exceptionRoute:
+    methods: [GET]
+    path: /log_exception
+    controller: App\Controller\SecurityController::getOneException
+
 indexRoute:
     methods: [GET]
     path: /

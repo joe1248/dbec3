@@ -143,4 +143,12 @@ class SecurityControllerTest extends WebTestCase
         $targetUrl = str_replace('http://localhost', '', $client->getResponse()->getTargetUrl());
         $this->assertEquals('/dashboard', $targetUrl);
     }
+
+    public function testGetLogException()
+    {
+        $client = $this->makeClient();
+        $client->request('GET', '/log_exception');
+
+        $this->assertStatusCode(500, $client);
+    }
 }

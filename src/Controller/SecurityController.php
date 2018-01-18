@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Exception\LoggedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -36,12 +37,22 @@ class SecurityController extends Controller
      *
      * @return Response
      */
-    public function register(UserPasswordEncoderInterface $encoder): Response
+    /*public function register(UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $plainPassword = 'autotest143RR';
         $encoded = $encoder->encodePassword($user, $plainPassword);
         return new Response($encoded);
         //$user->setPassword($encoded);
+    }*/
+
+    /**
+     * Throw generic exception to test if it is logged properly
+     *
+     * @throws
+     */
+    public function getOneException()
+    {
+        throw new LoggedException('No_error_here!!!');
     }
 }
