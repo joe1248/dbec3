@@ -1,10 +1,11 @@
 //? GENERAL_JS JS SESSION CLASS to setTimeout to propose auto relogging after Gsession_max_time / 4 ... (so no risk to be actually logged out by Apache !!): show_login_div...
+
 function Js_Class_Session(){
 	this.Gsession_clock = '';		// Time session started or "LOGGED_OUT"
-	this.MAX_SESSION_DURATION_IN_SECONDS = Gsession_max_time;	
+	this.MAX_SESSION_DURATION_IN_SECONDS = Gsession_max_time;
 	// TODO :  REPLACE GOsession.Gtimeout_session BY server ping at REGULAR intervals !
 	this.Gtimeout_session = null;	// TIMER : create by setTimeout in order to anticipate PHP session ends
-	this.userName = Gsession_user_name;	
+	this.userName = Gsession_user_name;
 	this.uniqueInitialSetup();
 	delete this.uniqueInitialSetup;
 }
@@ -23,8 +24,7 @@ $(document).ready(function(){
 		div_login.html(
 			'<div id="login_form_itself" class="centered">'+
 				'<form id="form_to_log_in" method="post">'+
-					'<br>Dear <input type="text" readonly="readonly" size="30" maxlength="30" name="user_name" id="user_name" value="' +
-					js_replace('"','',this.userName) + '"><br>'+
+					'<br>Dear <input type="text" readonly="readonly" size="30" maxlength="30" name="user_name" id="user_name"><br>'+
 					'<br>Please re-enter your password :'+
 					'<br><input type="password" size="30" maxlength="30" name="user_pass" id="user_pass"><br>'+
 					'<br><input type="button" id="button_submit_login" value="Click to login">'+
@@ -33,6 +33,7 @@ $(document).ready(function(){
 			'<div id="login_form_sent" class="centered" style="display:none;">'+
 				'<br><br><h2>Checking&nbsp;credentials...</h2>'+
 			'</div>');
+        $('#user_name').val(this.userName);
 		reset_jquery_styles();
 			
 		$('#button_submit_login').click( function(){ 
@@ -121,7 +122,7 @@ $(document).ready(function(){
 		div_login.dialog('open');
 		$('input[name=user_name]').focus();
 	};
-	
-	
-	GOsession = new Js_Class_Session();
+
+
+    GOsession = new Js_Class_Session();
 });
