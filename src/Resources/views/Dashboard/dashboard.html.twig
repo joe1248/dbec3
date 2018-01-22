@@ -14,7 +14,14 @@
             <div class="col-group">
                 <div>
                     <div><br><br>
-                        <div id="app"></div>
+                        <div id="app">
+                            Hello there
+                            <p>
+                                <router-link to="/list-of-connections">Go to Foo</router-link>
+                                <router-link to="/edit-connection/3">Go to Bar</router-link>
+                            </p>
+                            <router-view>VIEw here</router-view>
+                        </div>
                         <fieldset class="fieldset one_line hidden" style="position:relative;top:7px;height:60px;">
                             <input type="button" value="Add A DB Server" id="welcome_big_button_add_db_server" style="top:10px;" class="welcome_button_add_db_server">
                         </fieldset>
