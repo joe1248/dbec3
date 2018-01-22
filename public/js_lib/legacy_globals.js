@@ -1,4 +1,4 @@
-var Ajquery_themes = {	//"dark-hive",
+let Ajquery_themes = {	//"dark-hive",
     //"excite-bike",
     "ui-lightness":'Blue',
     "flick":'Pink',
@@ -8,13 +8,13 @@ var Ajquery_themes = {	//"dark-hive",
     "sunny":'Yellow' // only one with roundedd tabs though !!
 };
 /*** Default settings ***/
-var Ojson_settings = {
+let Ojson_settings = {
     'back_color'	:	'#b2cecf',
     'font_color'	:	'#444444',
     'title_color'	:	'#d02552',
     'css_file'		:	'flick'
 };
-var dialogOptions = {
+let dialogOptions = {
     modal: true,
     bgiframe: false,
     autoOpen: false,
@@ -28,25 +28,25 @@ var dialogOptions = {
         $('.ui-widget-overlay').addClass('ui-widget-overlay-override');
     }*/
 };
-var myDialogclose = function(event) {
+let myDialogclose = function(event) {
     parent.scrollTo(0,0);
 };
 
-var Gmax_nb_entity_to_copy = 10;
-var SESSION_DURATION_IN_MINUTES = 300;
-var GOsession;
-var Gsession_max_time = SESSION_DURATION_IN_MINUTES * 60;
-var Gsession_user_name = 'dummy_test';
-var Aconnections_db = [], A7db_entity_confirmed = [], A8db_entity_data = [], Aconnections_ftp = [];
-var Aobfuscation_types = [];
-var Aobfuscation_options = [];
-var Gdebug_debug_all = false;
-var Gdebug_debug_1_db_check = false;
-var Gdebug_debug_2_extraction = false;
-var Gdebug_debug_3_paste = false;///true;
+let Gmax_nb_entity_to_copy = 10;
+let SESSION_DURATION_IN_MINUTES = 300;
+let GOsession;
+let Gsession_max_time = SESSION_DURATION_IN_MINUTES * 60;
+let Gsession_user_name = 'dummy_test';
+let Aconnections_db = [], A7db_entity_confirmed = [], A8db_entity_data = [], Aconnections_ftp = [];
+let Aobfuscation_types = [];
+let Aobfuscation_options = [];
+let Gdebug_debug_all = false;
+let Gdebug_debug_1_db_check = false;
+let Gdebug_debug_2_extraction = false;
+let Gdebug_debug_3_paste = false;
 
-var Gnb_new_windows=0;
-var tabTemplate =
+let Gnb_new_windows=0;
+let tabTemplate =
     "<li>" +
     "<a href='#{href}' id='#{header_id}'>" +
     "#{label}" +
@@ -55,17 +55,17 @@ var tabTemplate =
     "<span class='ui-icon ui-icon-close' role='presentation'>Close Tab</span></li>",
     tabCounter = 1;///:
 tabNumber = 1;
-var debug = 0;// nb in consoloe Gi('db_cloner_right_side').GA_validated_id_multi_selected WORKS perfect !center
-var GA_validated_id_multi_selected = [];
-var varInTab = [];        // BIGGEST AND SOON FAIRLY UNIQUE GLOBAL VARIABLE.
-var Opages;
+let debug = 0;// nb in consoloe Gi('db_cloner_right_side').GA_validated_id_multi_selected WORKS perfect !center
+let GA_validated_id_multi_selected = [];
+let varInTab = [];        // BIGGEST AND SOON FAIRLY UNIQUE GLOBAL VARIABLE.
+let Opages;
 function js_log(debug, msg){
     if(debug){
         console.log( msg );
     }
 }
 
-var Gspinner_opts = {
+let Gspinner_opts = {
     lines: 11, // The number of lines to draw
     length: 36, // The length of each line
     width: 30, // The line thickness
@@ -87,7 +87,7 @@ var Gspinner_opts = {
 function show_central_spinner(){
     if( !G('spinner_wait_box') ) return;
     if(  G('spinner_wait_box').innerHTML === '' ){
-        var spinner = new Spinner( Gspinner_opts ).spin();
+        let spinner = new Spinner( Gspinner_opts ).spin();
         G('spinner_wait_box').appendChild(spinner.el);
     }
     $('#wait_box').dialog('open');
@@ -99,6 +99,7 @@ function hide_central_spinner(comment){
     $('#wait_box').dialog('close');
 }
 function check_ajax_response_first_2_chars_is_ok(response, error_id_or_message, callback_parameters, function_to_call_if_logged_out){
+    response = response.toString();
     if(response.substr(0,2) != 'OK'){
         if(response === 'Ide::YOU_ARE_NOW_LOGGED_OUT'){
             GOsession.show_login_div(false);
@@ -116,12 +117,12 @@ function check_ajax_response_first_2_chars_is_ok(response, error_id_or_message, 
             }
         }else{
             GOsession.reset_session_clock();
-            var pattern = '<!-- ERROR_DB_CONNECTION_NOT_WORKING -->';
+            let pattern = '<!-- ERROR_DB_CONNECTION_NOT_WORKING -->';
             if(response.substr(0, pattern.length) == pattern){
                 $('*').removeClass('jstree-loading');
                 showDivAlert(response.substr(pattern.length), 'Error DB connection', true);
             }else{
-                var button_on_top = response.length > 150 ? true : false;
+                let button_on_top = response.length > 150 ? true : false;
                 showDivAlert(response, 'Error 702: '+error_id_or_message, button_on_top);
             }
         }
@@ -136,7 +137,7 @@ function html_form_to_object(id){
         alert('Error in html_form_to_object( ' + id + ' BECAUSE form not found... !!!');
         return;
     }
-    var post_data = $("#" + id).serializeArray();
+    let post_data = $("#" + id).serializeArray();
     ///dump(post_data);
     if(post_data.length === 0) {
         alert('Error in html_form_to_object( ' + id + ' SURELY BECAUSE THE NAMES ARE MISSING as well as IDs !!!');
@@ -147,8 +148,8 @@ function html_form_to_object(id){
             }
         }*/
     }
-    var pair, new_post_data = {};
-    for(var i = 0 ; i < post_data.length ; i++){
+    let pair, new_post_data = {};
+    for(let i = 0 ; i < post_data.length ; i++){
         pair = post_data[i];
         new_post_data[pair.name] = pair.value;
     }
@@ -159,11 +160,11 @@ function trim(str){
     return str.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
 }
 function openNewWindow(url, id){
-    var myLatestNewTab = top.window.open(url, id);
+    let myLatestNewTab = top.window.open(url, id);
 }
 // CORE : replace for an iframe getElementById()..contentWindow
 function Gi(id){
-    var el= document.getElementById(id);
+    let el= document.getElementById(id);
     if(el === null){
         return false;
     }else{
@@ -180,7 +181,7 @@ function outro_easy(BooleanOnLoadGiveFocus){
 }
 // Return EVENT object
 function js_event(oEvent){
-    var e = window.event || oEvent; // WORKS EVEN IN FIREFOX if passing event in event call : onclick="handleEvent(event)"
+    let e = window.event || oEvent; // WORKS EVEN IN FIREFOX if passing event in event call : onclick="handleEvent(event)"
     return e;
 }
 function ajax_error_handler(XMLHttpRequest, textStatus, errorThrown) {
@@ -203,9 +204,9 @@ function openUrlInIframe(url, iframe_id, debug){
     $('#'+iframe_id+'>body').fadeOut();
     G(iframe_id).setAttribute('src',url);//in openUrlInIframe !
 }
-var showDivSimple = function( msg, title ){
+let showDivSimple = function( msg, title ){
     title = (typeof title !== 'undefined' ? title : '');
-    var html =	'<div class="centered"><br>' +
+    let html =	'<div class="centered"><br>' +
         '<br><div class="align_left" id="div_simple_content" style="position:relative;left:5%;width:90%;">' +
         msg +
         '</div><br>' +
@@ -215,12 +216,12 @@ var showDivSimple = function( msg, title ){
     $('#divSimple').dialog('option', 'title', title);
     $('#divSimple').dialog('open');
 };
-var showDivAlert = function( msg, title, button_at_the_top, fct_on_ok){
+let showDivAlert = function( msg, title, button_at_the_top, fct_on_ok){
     fct_on_ok = (typeof fct_on_ok !== 'undefined' ? fct_on_ok : null);
     title = (typeof title !== 'undefined' ? title : '');
     button_at_the_top = (typeof button_at_the_top !== 'undefined' && button_at_the_top === true ? true : false);
-    var html_button = '<input id="divAlertOk" style="margin:50px;" type="button" class="small-button" value="OK">';
-    var html =	'<div class="centered"><br>' +
+    let html_button = '<input id="divAlertOk" style="margin:50px;" type="button" class="small-button" value="OK">';
+    let html =	'<div class="centered"><br>' +
         (button_at_the_top ? html_button : '') +
         '<br><div id="divAlertContent" class="align_left" style="position:relative;left:5%;width:90%;">' +
         msg +
@@ -236,16 +237,16 @@ var showDivAlert = function( msg, title, button_at_the_top, fct_on_ok){
     $('#divAlert').dialog('option', 'title', title);
     $('#divAlert').dialog('open');
 };
-var showDivConfirm = function( msg, funct_confirm_ok, title, button_at_the_top, funct_confirm_ok_params){
+let showDivConfirm = function( msg, funct_confirm_ok, title, button_at_the_top, funct_confirm_ok_params){
     funct_confirm_ok_params = (typeof funct_confirm_ok_params	!== 'undefined'									? funct_confirm_ok_params	: '');
     title					= (typeof title						!== 'undefined'									? title						: '');
     button_at_the_top		= (typeof button_at_the_top			!== 'undefined' && button_at_the_top === true	? true						: false);
-    var html_button =	'<br>'
+    let html_button =	'<br>'
         + '<input id="divConfirmNo"  type="button" class="small-button" value="Cancel">'
         + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
         + '<input id="divConfirmYes" type="button" class="small-button user_instruction" value="Confirm">'
         + '<br>';
-    var html =	'<div class="centered"><br>' +
+    let html =	'<div class="centered"><br>' +
         (button_at_the_top ? html_button : '') +
         '<br>' +
         '<div class="align_left" id="divConfirmContent" style="position:relative;left:5%;width:90%;">' +
@@ -266,16 +267,16 @@ var showDivConfirm = function( msg, funct_confirm_ok, title, button_at_the_top, 
     $('#divConfirm').dialog('open');
 };
 /* YOU MAY UST AS use the fct above and pass <input as msg !
-var showDivPrompt = function( msg, funct_confirm_ok, title, button_at_the_top, funct_confirm_ok_params){
+let showDivPrompt = function( msg, funct_confirm_ok, title, button_at_the_top, funct_confirm_ok_params){
 	funct_confirm_ok_params = (typeof funct_confirm_ok_params	!== 'undefined'									? funct_confirm_ok_params	: '');
 	title					= (typeof title						!== 'undefined'									? title						: '');
 	button_at_the_top		= (typeof button_at_the_top			!== 'undefined' && button_at_the_top === true	? true						: false);
-	var html_button =	'<br>'
+	let html_button =	'<br>'
 						+ '<input id="divPromptNo"  type="button" class="small-button" value="Cancel">'
 						+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
 						+ '<input id="divPromptYes" type="button" class="small-button user_instruction" value="Continue">'
 						+ '<br>';
-	var html =	'<div class="centered"><br>' +
+	let html =	'<div class="centered"><br>' +
 					(button_at_the_top ? html_button : '') +
 					'<br>' +
 					'<div class="align_left" id="divPromptContent" style="position:relative;left:5%;width:90%;">' +
@@ -302,7 +303,7 @@ function make_strong_checkboxes() {
             alert('Bad checkbox!!' + typeof this.id + this.id.substr(0,5));
             return;
         }
-        var hidden_id = this.id.substr(5);
+        let hidden_id = this.id.substr(5);
         G(hidden_id).value = this.checked ? 'checked' : 'not_checked';
         console.log('HIDDEN input : ' + hidden_id + '(from '+ this.id + ') is now ' + this.checked);
     });
