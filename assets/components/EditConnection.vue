@@ -165,7 +165,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import ApiService from './../ApiService';
 
     export default {
         props: {
@@ -200,7 +200,19 @@
                 this.errors = [];
                 this.connection = null;
                 this.loading = true;
-                axios
+                ApiService.getConnection(this.id,  (err, data) => {
+                    this.loading = false;
+                    if (err) {
+                        this.errors = err.toString();
+                        return;
+                    }
+                    this.connection = data
+                    this.$nextTick(function () {
+                        $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
+                        reset_jquery_styles();
+                    });
+                });
+                /*axios
                     .get(`http://api.local.dbec3.com/connection/` + this.id)
                     .then(response => {
                         console.log(response.data);
@@ -213,22 +225,8 @@
                     })
                     .catch(e => {
                         this.errors.push(e)
-                    });
-            }/*
-            // API wrapper
-            //export function  LATER
-            getConnection(id) {
-                let errors = [];
-                axios
-                    .get(`http://api.local.dbec3.com/connection/` + id)
-                    .then(response => {
-                        console.log(response.data);
-                        return [errors, response.data];
-                    })
-                    .catch(e => {
-                        errors.push(e)
-                    });
-            }*/
+                    });*/
+            }
         }
     }
 </script>
