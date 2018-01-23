@@ -101,14 +101,15 @@ class UserConnectionService
     ): Connection {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'db_'), 'db_');
 
+        $dbId = $inputConnectionDb['db_id'];
         /** @var Connection $connectionEntityDb */
         $connectionEntityDb = $connectionsRepo->findOneBy([
-            'id' => $inputConnectionDb['id'],
+            'id' => $dbId,
             'user' => $user
         ]);
         if (empty($connectionEntityDb)) {
             throw new EntityNotFoundException(
-                'No connection found for id ' . $inputConnectionDb['id']
+                'No connection found for id ' . $dbId
             );
         }
 
@@ -139,6 +140,8 @@ class UserConnectionService
      * @param ObjectManager|MyMockObjectManager $dbManager
      *
      * @return Connection
+     *
+     * @throws UserInputException
      */
     public function createConnectionDbAndFtp(
         array $input,

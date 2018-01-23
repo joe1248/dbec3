@@ -3,7 +3,7 @@
 namespace App\EventListener;
 
 use App\Exception\PublishedExceptionInterface;
-//use App\Exception\UserInputException;
+use App\Exception\UserInputException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -26,13 +26,11 @@ class PublishedExceptionListener
             return;
         }
 
-        $code = 400;// $exception instanceof UserInputException ? 400 : 500;
+        $code = $exception instanceof UserInputException ? 400 : 500;
 
         $responseData = [
-            'error' => [
-                'code' => $code,
-                'message' => $exception->getMessage()
-            ]
+            'status' => $code,
+            'message' => $exception->getMessage()
         ];
 
         $event->setResponse(new JsonResponse($responseData, $code));

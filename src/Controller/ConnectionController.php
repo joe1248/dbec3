@@ -117,7 +117,9 @@ class ConnectionController extends Controller
         $dbManager = $this->getDoctrine()->getManager();
         /** @var ConnectionsRepo $connectionsRepo */
         $connectionsRepo= $this->getDoctrine()->getRepository(Connection::class);
-        $input = $request->request->all();
+        //$input = $request->request->all();
+        $input = json_decode($request->getContent(), true);
+        return new JsonResponse($input);
 
         $userConnectionDb = $UserConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
 
@@ -135,6 +137,8 @@ class ConnectionController extends Controller
      * @param UserInterface|null $user
      *
      * @return JsonResponse
+     *
+     * @throws \App\Exception\UserInputException
      */
     public function post(
         Request $request,
@@ -143,7 +147,7 @@ class ConnectionController extends Controller
     ): JsonResponse
     {
         $dbManager = $this->getDoctrine()->getManager();
-        $input = $request->request->all();
+        $input = json_decode($request->getContent(), true);
 
         $userConnectionDb = $UserConnectionService->createConnectionDbAndFtp($input, $user, $dbManager);
 

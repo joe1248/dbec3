@@ -14,7 +14,7 @@
                 <input id="button_test_connection_works_" style="display:none;" class="ui-button" type="button" value="Test this connection">&nbsp;&nbsp;&nbsp;
                 <input id="button_to_disable_one_connection_" style="display:none;" class="ui-button" type="button" value="Disable">
                 <input id="button_to_enable_one_connection_"  style="display:none;" class="ui-button" type="button" value="Enable">&nbsp;&nbsp;&nbsp;
-                <button>{{buttonLabel}}</button>
+                <button @click="save">{{buttonLabel}}</button>
             </div><br>
             <div class="center1 content"><div class="center2"><div class="center3" style="width:750px;"><div>
                 <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div><br><br>
@@ -217,7 +217,7 @@
                         return;
                     }
                     this.connection = data;
-               this.decorateUi();
+                    this.decorateUi();
                 });
              },
 
@@ -226,6 +226,20 @@
                     $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
                     reset_jquery_styles();
                 });
+            },
+
+            save() {
+                this.loading = true;
+                ApiService.saveConnection(this.connection,  (err, data) => {
+                    this.loading = false;
+                    if (err) {
+                        this.error = err.toString();
+                        return;
+                    }
+                    this.connection = data;
+                    this.decorateUi();
+                });
+
             }
         }
     }

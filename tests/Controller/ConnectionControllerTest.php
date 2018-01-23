@@ -136,28 +136,24 @@ JSON;
 
     }
 
-    public function testPostWithoutParametersThrowUserInputException()
-    {
-        $client = $this->makeClient(true);
-        $client->request('POST', '/connection/new');
-
-        $this->assertEquals(
-            '{"error":{"code":400,"message":"Several required parameters are missing: connectionName, urlHost, userName, passWord, portNumber"}}',
-            $client->getResponse()->getContent()
-        );
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
-
     public function testPostSuccessfulOnlyDbAndAlsoTestGet()
     {
         $client = $this->makeClient(true);
-        $client->request('POST', '/connection/new', [
+        $parameters = [
             "db_connection_name" => "my_very_new_test_connection_db",
             "db_url_host" => "aaa_host1234",
             "db_user_name" => "aaa_user5678",
             "db_pass_word" => "aaa_pass9",
             "db_port_number" => "1248",
-        ]);
+        ];
+        $client->request(
+            'POST',
+            '/connection/new',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($parameters)
+        );
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $response = json_decode($client->getResponse()->getContent(), true);
@@ -201,6 +197,25 @@ JSON;
 JSON;
         $expectedArray = json_decode(str_replace('#NEW_ID#', $newConnectionId, $expectedResult), true);
         $this->assertEquals($expectedArray, $newConnection);
+    }
+
+    public function testPostWithoutParametersThrowUserInputException()
+    {
+        $client = $this->makeClient(true);
+        $client->request(
+            'POST',
+            '/connection/new',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([])
+        );
+
+        $this->assertEquals(
+            '{"status":400,"message":"Several required parameters are missing: connectionName, urlHost, userName, passWord, portNumber"}',
+            $client->getResponse()->getContent()
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
     public function testGetAllThenPatchFirstOne()
