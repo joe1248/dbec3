@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import ListOfConnections from './components/ListOfConnections.vue'
 import EditConnection from './components/EditConnection.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
