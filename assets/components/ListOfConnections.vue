@@ -2,6 +2,7 @@
 <div class="centered" id="app">
     <div style="width:100%;" class="centered">
         <br>
+        <router-link :to="{name: 'NewConnection' }">Add New DB Server</router-link>
         <input class="medium-button" type="button" value="Add New DB Server" id="connection_list_button_add_connection">
         <br><br>
     </div>
@@ -22,7 +23,7 @@
                     <td style="text-indent:20px;">{{connection.connection_name}}</td>
                     <td class="centered" id="td_button_connection_sql_id" style="width:55px;">&nbsp;	</td>
                     <td><input type="button" value="Enable"	html_connection_id="" html_connection_label="" class="small-button button_connection_enable"></td>
-                    <td><router-link :to="{name: 'EditConnection', params: { id: connection.id } }" class="small-button">Edition</router-link>
+                    <td><router-link :to="{name: 'EditConnection', params: { id: connection.id } }" class="button">Edition</router-link>
                     <td><input type="button" value="Edit"		html_connection_id="" html_connection_label="" class="small-button button_connection_edit"></td>
                     <td><input type="button" value="Clone"		html_connection_id="" html_connection_label="" class="small-button button_connection_clone"></td>
                     <td><input type="button" value="Delete"		html_connection_id="" html_connection_label="" class="small-button button_connection_delete"></td>

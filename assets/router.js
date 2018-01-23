@@ -19,5 +19,11 @@ export default new Router({
             component: EditConnection,
             props: true,
         },
+        {
+            path: '/new-connection',
+            name: 'NewConnection',
+            component: EditConnection,
+            props: false,
+        },
     ],
 })

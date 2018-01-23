@@ -8,34 +8,61 @@
 {% endblock %}
 
 {% block body %}
-<!--body class="hidden" style="overflow:hidden;"-->
-    <div id="home_tabs" class="ui-layout-center">
+    <!-- TOP MENU = 1 setting icon and onmousehover : link to account settings, soon FK guesser and log out link  + Version number + occasional UPdate DBEC button.. --->
+
+    <div class="nobr dbec_about_menu"><br><br>
+        <!-- TOOLS BUTTON -->
+        <ul class="jquery_menu_main" id="menu_settings" style="position:relative;display:inline-block;">
+            <li>
+                <img style="height:20px;width:21px;" src="/images/settings.jpg">
+                <ul style="display:none;">
+                    <li><a href="#" class="nobr" id="button_account_details">Account Settings</a></li>
+                    <li><a href="#" id="button_new_logout" class="nobr">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span id="auto_test_user_home_title">DBEC Version 1.0</span>
+        <!-- DOCUMENTATION is about old veriosn of dbec, so maybe update it, or at least copy the intro on live web site-->
+        <!--a href="#"  id="button_documentation" style="position:relative;display:inline-block;">
+            <img style="height:24px;border:0;" src="../html_cdn/images_icon/help.jpg">
+        </a-->
+    </div>
+    <div class="title_color nobr dbec_update_menu_button">
+        <input type="button" class="small-button hidden" id="button_to_get_latest_dbec_version"
+               value="Update to DBec xxx" />
+        <span id="dbec_is_up_to_date"  class="color_inverted_1 hidden">Up to date ;)</span>
+    </div>
+    <div id="app">
+        <div id="menu" style="position: relative; margin-top: 100px;">
+            <p>
+                <router-link to="/list-of-connections">List of Connections</router-link>
+            </p>
+            <p>
+                <router-link to="/new-connection">Add new Connection</router-link>
+            </p>
+        </div>
+        <transition>
+            <router-view></router-view>
+        </transition>
+    </div>
+    <!--div id="home_tabs" class="ui-layout-center">
         <div id="home_tab_welcome" class="tab_content">
             <div class="col-group">
                 <div>
                     <div><br><br>
-                        <div id="app">
-                            Hello there
-                            <p>
-                                <router-link to="/list-of-connections">Go to Foo</router-link>
-                            </p>
-                            <router-view>VIEw here</router-view>
-                        </div>
                         <fieldset class="fieldset one_line hidden" style="position:relative;top:7px;height:60px;">
                             <input type="button" value="Add A DB Server" id="welcome_big_button_add_db_server" style="top:10px;" class="welcome_button_add_db_server">
                         </fieldset>
                         <fieldset class="fieldset one_line">
-                            <!--legend class="legend">DB Servers</legend-->
                             <legend class="legend">Basics</legend>
                             
-                            <!-- BIGGER BUTTON create entity if no DB SERVERS yet ==> manager button disappear too -->
                             <input type="button" value="Manage your servers" id="welcome_button_db_servers_list">
                             <input type="button" value="+" class="welcome_button_add_db_server" title="Add a DB server"> 
                             <br>
                             <br>
                             <input type="button" value="Create A New Entity" id="welcome_big_button_create_entity" class="welcome_button_create_entity">
                             
-                            <!-- BIGGER BUTTON create entity if no entities yet ==> manager button disappear too -->
                             <div>
                                 <input type="button" value="Manage your entities" id="welcome_button_entities_list">
                                 <input type="button" value="+" class="welcome_button_create_entity" title="Create a new entity">
@@ -51,21 +78,13 @@
                         <legend class="legend">Clone Data</legend>
                         <input type="button" value="one entire table" id="welcome_big_button_clone_entire_table" class="welcome_button_clone_entire_table">
                         <br>
-                        <!-- Message : please create an entity if none yet -->
                         <span id="div_list_of_entities_to_clone">...</span>
                     </fieldset>
                 </div>
             
                 <div style="clear:left;">
                 </div>
-    
-                <!--div><br><br>
-                    <fieldset class="fieldset one_line">
-                        <legend class="legend">Saved Data Files</legend>
-                        <span id="div_list_of_sql_file_ready_to_paste"></span>
-                    </fieldset>
-                </div-->
-    
+
                 <div><br><br>
                     <fieldset class="fieldset one_line">
                         <legend class="legend">Recent Transfers</legend>
@@ -80,32 +99,7 @@
     </div>
     <input type="hidden" id="new_registered_id" value="0">
 
-    <!-- TOP MENU = 1 setting icon and onmousehover : link to account settings, soon FK guesser and log out link  + Version number + occasional UPdate DBEC button.. --->
-
-    <div class="nobr dbec_about_menu"><br><br>
-        <!-- TOOLS BUTTON -->
-        <ul class="jquery_menu_main" id="menu_settings" style="position:relative;display:inline-block;">
-            <li> 
-                <img style="height:20px;width:21px;" src="/images/settings.jpg">
-                <ul style="display:none;"> 
-                    <li><a href="#" class="nobr" id="button_account_details">Account Settings</a></li>
-                    <li><a href="#" id="button_new_logout" class="nobr">Log out</a></li>
-                </ul>
-            </li> 
-        </ul>
-
-        <span id="auto_test_user_home_title">DBEC Version 1.0</span> 
-        <!-- DOCUMENTATION is about old veriosn of dbec, so maybe update it, or at least copy the intro on live web site-->
-        <!--a href="#"  id="button_documentation" style="position:relative;display:inline-block;">
-            <img style="height:24px;border:0;" src="../html_cdn/images_icon/help.jpg">
-        </a-->
-    </div>
-    <div class="title_color nobr dbec_update_menu_button">
-        <input type="button" class="small-button hidden" id="button_to_get_latest_dbec_version" 
-                value="Update to DBec xxx" /> 
-        <span id="dbec_is_up_to_date"  class="color_inverted_1 hidden">Up to date ;)</span>
-    </div>
-
+-->
 {% endblock %}
 
 {% block javascripts %}

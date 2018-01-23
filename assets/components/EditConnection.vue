@@ -5,18 +5,16 @@
             Loading one connection details.
         </div>
 
-        <div v-if="errors && errors.length" class="error">
-            {{ errors }}
+        <div v-if="error" class="error">
+            {{ error }}
         </div>
 
         <form id="form_connection_" v-if="connection">
-            <input type="hidden" id="hidden_input_connection_id_" name="db_id">
-            <input type="hidden" id="hidden_disabled_connection_id_"><br>
             <div class="nobr" style="position:relative;left:32%;width:50%;">
                 <input id="button_test_connection_works_" style="display:none;" class="ui-button" type="button" value="Test this connection">&nbsp;&nbsp;&nbsp;
                 <input id="button_to_disable_one_connection_" style="display:none;" class="ui-button" type="button" value="Disable">
                 <input id="button_to_enable_one_connection_"  style="display:none;" class="ui-button" type="button" value="Enable">&nbsp;&nbsp;&nbsp;
-                <input id="submit_conn_form_" class="ui-button" type="button" value="Save">
+                <button>{{buttonLabel}}</button>
             </div><br>
             <div class="center1 content"><div class="center2"><div class="center3" style="width:750px;"><div>
                 <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div><br><br>
@@ -25,7 +23,7 @@
 
                     <ul><li><a href="#tab_db">Database</a></li>
                         <li><a href="#tab_ssh">SSH</a></li>
-                        <li><div style="position:relative;top:-17px;width:400px;">
+                        <li><div style="position: relative; margin-top: 6px; width:400px;">
                             <label for="select_db_protocol">Choose a type: </label>
                             <select class="ui-button" style="width:250px;"
                                     id="select_db_protocol"
@@ -171,61 +169,63 @@
         props: {
             id: {
                 //type: Number,
-                required: true
+                //required: true
             }
         },
         data() {
             return {
                 loading: false,
-                connection: null,
-                errors: []
+                connection: {
+                    db_connection_disabled: false,
+                    db_connection_name: '',
+                    db_id: null,
+                    db_pass_word: '',
+                    db_port_number: '',
+                    db_selected_ftp_id: '',
+                    db_url_host: '',
+                    db_user_name: '',
+                    ftp_connection_name: '',
+                    ftp_pass_word: '',
+                    ftp_port_number: '',
+                    ftp_url_host: '',
+                    ftp_user_name: '',
+                    select_db_protocol: ''
+                },
+                error: null,
+                buttonLabel: this.id ? 'Save connection' : 'Create new connection'
             }
         },
         created() {
-            // fetch the data when the view is created and the data is
-            // already being observed
             this.fetchData()
         },
         watch: {
              // call again the method if the route changes
              '$route': 'fetchData'
-         },
+        },
         methods: {
             fetchData() {
                 if (!this.id) {
-                    console.log('NO ID !!!');
-                    console.log(this.errors );
+                    this.decorateUi();
                     return;
                 }
-                this.errors = [];
-                this.connection = null;
+                this.error = this.connection = null;
                 this.loading = true;
                 ApiService.getConnection(this.id,  (err, data) => {
                     this.loading = false;
                     if (err) {
-                        this.errors = err.toString();
+                        this.error = err.toString();
                         return;
                     }
-                    this.connection = data
-                    this.$nextTick(function () {
-                        $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
-                        reset_jquery_styles();
-                    });
+                    this.connection = data;
+               this.decorateUi();
                 });
-                /*axios
-                    .get(`http://api.local.dbec3.com/connection/` + this.id)
-                    .then(response => {
-                        console.log(response.data);
-                        this.loading = false;
-                        this.connection = response.data;
-                        this.$nextTick(function () {
-                            $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
-                            reset_jquery_styles();
-                        });
-                    })
-                    .catch(e => {
-                        this.errors.push(e)
-                    });*/
+             },
+
+            decorateUi() {
+                this.$nextTick(function () {
+                    $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
+                    reset_jquery_styles();
+                });
             }
         }
     }
