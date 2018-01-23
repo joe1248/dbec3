@@ -101,7 +101,7 @@ class UserConnectionService
     ): Connection {
         $inputConnectionDb = $this->removeKeyPrefix($this->filterArrayByKeyPrefix($input, 'db_'), 'db_');
 
-        $dbId = $inputConnectionDb['db_id'];
+        $dbId = $inputConnectionDb['id'];
         /** @var Connection $connectionEntityDb */
         $connectionEntityDb = $connectionsRepo->findOneBy([
             'id' => $dbId,
