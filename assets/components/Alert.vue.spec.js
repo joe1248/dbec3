@@ -1,9 +1,9 @@
-import { mount } from '@vue/test-utils'
+import { mount } from 'vue-test-utils'
 import Alert from './Alert'
 
-describe('Alert', () => {
+describe('AlertComponent', () => {
     test('is a Vue instance', () => {
-        const wrapper = mount(Component)
+        const wrapper = mount(Alert)
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 })

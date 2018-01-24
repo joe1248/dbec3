@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@symfony/webpack-encore": "^0.17.0",
+    "babel-jest": "^22.1.0",
     "jest": "^22.1.4",
     "jest-serializer-vue": "^0.3.0",
     "vue-jest": "^1.4.0",
@@ -29,7 +30,8 @@
       "vue"
     ],
     "transform": {
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
     "mapCoverage": true,
     "snapshotSerializers": [
