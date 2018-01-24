@@ -45,6 +45,15 @@ class ApiServiceHelper {
             );
     }
 
+    delete(path, callback) {
+        return this.service.delete(path)
+            .then(
+                (response) => callback('', response.data)
+            ).catch(
+                (error) => callback(error, {})
+            );
+    }
+
     patch(path, payload, callback) {
         return this.service.request({
                 method: 'PATCH',
