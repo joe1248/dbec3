@@ -16,11 +16,7 @@
             'Alert-Success': type == 'success',
             'Alert-Error': type == 'error',
         }"
-         v-show="show">
-        <p>
-            {{ msg }}
-        </p>
-    </div>
+         v-show="show"><p>{{ msg }}</p></div>
 </template>
 
 <script>
