@@ -61,7 +61,13 @@ class ApiServiceHelper {
                 responseType: 'json',
                 data: payload
             })
-            .then((response) => callback('', response.data))
+            .then((response) => {
+                if (response.data.success === true) {
+                    callback('', response.data.entity);
+                } else {
+                    callback('Error, update has failed.', {});
+                }
+            })
             .catch((error) => callback(error.response.data.message, {}))
     }
 
@@ -72,7 +78,13 @@ class ApiServiceHelper {
                 responseType: 'json',
                 data: payload
             })
-            .then((response) => callback(response.status, response.data))
+            .then((response) => {
+                if (response.data.success === true) {
+                    callback('', response.data.entity);
+                } else {
+                    callback('Error, creation has failed.', {});
+                }
+            })
             .catch((error) => callback(error.response.data.message, {}))
     }
 }

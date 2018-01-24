@@ -281,7 +281,7 @@ class Connection
             'db_pass_word' => $this->passWord,
             'db_port_number' => $this->portNumber,
             'db_connection_disabled' => $this->isDisabled(),
-            'db_selected_ftp_id' => empty($this->selectedFtp) ? 0 : $this->selectedFtp->getId(),
+            'db_selected_ftp_id' => empty($this->selectedFtp) ? null : $this->selectedFtp->getId(),
         ];
     }
 
@@ -304,17 +304,18 @@ class Connection
      */
     public function getAttributes(): array
     {
+        $prefix = $this->connectionGenre == 'db' ? 'db_' : 'ftp_';
         return [
-            'id' => $this->id,
-            'connection_name' => $this->connectionName,
-            'connection_genre' => $this->connectionGenre,
-            'url_host' => $this->urlHost,
-            'user_name' => $this->userName,
-            'pass_word' => $this->passWord,
-            'port_number' => $this->portNumber,
-            'connection_disabled' => $this->isDisabled(),
-            'deleted' => $this->isDeleted(),
-            'selected_ftp' => empty($this->selectedFtp) ? null : $this->selectedFtp->getAttributes()
+            $prefix . 'id' => $this->id,
+            $prefix . 'connection_name' => $this->connectionName,
+            $prefix . 'connection_genre' => $this->connectionGenre,
+            $prefix . 'url_host' => $this->urlHost,
+            $prefix . 'user_name' => $this->userName,
+            $prefix . 'pass_word' => $this->passWord,
+            $prefix . 'port_number' => $this->portNumber,
+            $prefix . 'connection_disabled' => $this->isDisabled(),
+            $prefix . 'deleted' => $this->isDeleted(),
+            $prefix . 'selected_ftp' => empty($this->selectedFtp) ? null : $this->selectedFtp->getAttributes()
         ];
     }
 

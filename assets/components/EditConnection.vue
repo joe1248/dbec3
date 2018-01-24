@@ -181,7 +181,7 @@
                     db_id: null,
                     db_pass_word: '',
                     db_port_number: '',
-                    db_selected_ftp_id: '',
+                    db_selected_ftp_id: null,
                     db_url_host: '',
                     db_user_name: '',
                     ftp_connection_name: '',

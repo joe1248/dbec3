@@ -116,10 +116,9 @@ class ConnectionController extends Controller
 
         $dbManager = $this->getDoctrine()->getManager();
         /** @var ConnectionsRepo $connectionsRepo */
-        $connectionsRepo= $this->getDoctrine()->getRepository(Connection::class);
-        //$input = $request->request->all();
+        $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
+        /** @var array $input */
         $input = json_decode($request->getContent(), true);
-        return new JsonResponse($input);
 
         $userConnectionDb = $UserConnectionService->updateConnectionDbAndFtp($input, $user, $dbManager, $connectionsRepo);
 
