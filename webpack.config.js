@@ -73,8 +73,10 @@ Encore
 
     .enableTypeScriptLoader(function (typeScriptConfigOptions) {
         typeScriptConfigOptions.transpileOnly = true;
-        //typeScriptConfigOptions.configFileName = './tsconfig.json';
+        typeScriptConfigOptions.configFile = 'tsconfig.json';
     })
+    // cos pb with Vue internal types...
+    .enableForkedTypeScriptTypesChecking()
 ;
 
 module.exports = Encore.getWebpackConfig();

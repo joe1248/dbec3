@@ -1,6 +1,7 @@
 import ApiServiceHelper from './js/lib/ApiServiceHelper';
 
 class ApiService {
+    ApiServiceHelper: any;
 
     constructor() {
         this.ApiServiceHelper = ApiServiceHelper;
@@ -14,7 +15,7 @@ class ApiService {
         this.ApiServiceHelper.get(`http://api.local.dbec3.com/connection/` + id, callback);
     }
 
-    saveConnection(connection: Object, callback: Function) {
+    saveConnection(connection: any, callback: Function) {
         const connectionId = connection && connection.db_id || null;
         if (connectionId) {
             this.ApiServiceHelper.patch('http://api.local.dbec3.com/connection/edit', connection, callback);
@@ -25,7 +26,7 @@ class ApiService {
 
     deleteConnection(connectionId: Number, callback: Function) {
         if (connectionId) {
-            this.ApiServiceHelper.delete('http://api.local.dbec3.com/connection/' + connectionId, callback);
+            this.ApiServiceHelper.erase('http://api.local.dbec3.com/connection/' + connectionId, callback);
         }
     }
 }

@@ -47,13 +47,13 @@
         },
 
         methods: {
-            fetchData() {
+            fetchData() : string {
                 this.loading = true;
-                ApiService.getUserDatabaseConnections((err: String, data: Object) => {
+                ApiService.getUserDatabaseConnections((err: string, data: object) => {
                     this.loading = false;
                     if (err) {
                         this.error = err.toString();
-                        return;
+                        return 3;
                     }
                     this.connections = data;
                     this.decorateUi();

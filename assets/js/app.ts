@@ -3,6 +3,7 @@ import router from '../router' // contains all components imports
 
 Vue.config.productionTip = false;
 
+// @ts-ignore: wrong type for router ??
 new Vue({
     //el: '#app',
     router,
