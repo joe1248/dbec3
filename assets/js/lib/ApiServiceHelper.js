@@ -3,38 +3,13 @@ import axios from 'axios';
 class ApiServiceHelper {
 
     constructor() {
-        let service = axios.create({
+        // this would NOT override, but allso run AFTER all the then/catch in all the methods below
+        //  service.interceptors.response.use(this.handleSuccess, this.handleError);
+        
+        this.service = axios.create({
             //headers: {csrf: 'token'}
         });
-        service.interceptors.response.use(this.handleSuccess, this.handleError);
-        this.service = service;
     }
-
-    handleSuccess(response) {
-        return response;
-    }
-
-    handleError(error) {
-        /*switch (error.response.status) {
-            case 401:
-                document.location = '/';
-                break;
-            case 404:
-                document.location = '/404';
-                break;
-            default:
-                document.location = '/500';
-                break;
-        }*/
-        console.log(' API CALL ERROR detected from the FE:');
-        console.log(error);
-        //const errorMsg = error.response.status === 400 ? error.response.message : 'Service broken...';
-        return error;
-    }
-
-    /*redirectTo(document, path) {
-        document.location = path
-    }*/
 
     get(path, callback) {
         return this.service.get(path)
@@ -68,7 +43,9 @@ class ApiServiceHelper {
                     callback('Error, update has failed.', {});
                 }
             })
-            .catch((error) => callback(error.response.data.message, {}))
+            .catch((error) => {
+                callback(error.response.data.message, {})
+            })
     }
 
     post(path, payload, callback) {
@@ -85,7 +62,9 @@ class ApiServiceHelper {
                     callback('Error, creation has failed.', {});
                 }
             })
-            .catch((error) => callback(error.response.data.message, {}))
+            .catch((error) => {
+                callback(error.response.data.message, {})
+            })
     }
 }
 

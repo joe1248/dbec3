@@ -35,7 +35,7 @@ Encore
         './assets/js_preloaded/session_timeout.js',
 
         './assets/js/app.js',
-        './assets/components/ListOfConnections.vue',
+        //'./assets/components/ListOfConnections.vue',
 
         /*       './assets/js_preloaded/0_common_delete.js',
                './assets/js_preloaded/js_trees/tree_core.js',

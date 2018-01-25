@@ -7,10 +7,8 @@
     </div>
     <fieldset class="fieldset one_line">
         <legend class="legend">Your DB Servers.</legend>
-        <ul v-if="errors && errors.length">
-            <li v-for="error of errors">
-                {{error.message}}
-            </li>
+        <ul v-if="error">
+            {{error}}
         </ul>
 
         <!--<ul v-if="!isLoading">-->

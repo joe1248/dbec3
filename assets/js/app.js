@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import ListOfConnections from '../components/ListOfConnections'
-import router from '../router'
+import router from '../router' // contains all components imports
 
 Vue.config.productionTip = false;
 
 new Vue({
     //el: '#app',
-    router
+    router,
     //template: '<ListOfConnections/>',
     //components: { ListOfConnections }
 }).$mount('#app');

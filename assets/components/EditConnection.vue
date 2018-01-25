@@ -5,16 +5,15 @@
             Loading one connection details.
         </div>
 
-        <div v-if="error" class="error">
-            {{ error }}
-        </div>
+        <Alert v-if="error" v-bind:msg="error" type="error"/>
+        <Alert v-if="successMessage" v-bind:msg="successMessage" type="success"/>
 
         <form id="form_connection_" v-if="connection">
             <div class="nobr" style="position:relative;left:32%;width:50%;">
                 <input id="button_test_connection_works_" style="display:none;" class="ui-button" type="button" value="Test this connection">&nbsp;&nbsp;&nbsp;
                 <input id="button_to_disable_one_connection_" style="display:none;" class="ui-button" type="button" value="Disable">
                 <input id="button_to_enable_one_connection_"  style="display:none;" class="ui-button" type="button" value="Enable">&nbsp;&nbsp;&nbsp;
-                <button @click="save">{{buttonLabel}}</button>
+                <input type="button" @click="save" v-bind:value="buttonLabel"/>
             </div><br>
             <div class="center1 content"><div class="center2"><div class="center3" style="width:750px;"><div>
                 <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div><br><br>
@@ -164,6 +163,7 @@
 
 <script>
     import ApiService from './../ApiService';
+    import Alert from './Alert';
 
     export default {
         props: {
@@ -192,7 +192,7 @@
                     select_db_protocol: ''
                 },
                 error: null,
-                buttonLabel: this.id ? 'Save connection' : 'Create new connection'
+                successMessage: ''
             }
         },
         created() {
@@ -202,9 +202,22 @@
              // call again the method if the route changes
              '$route': 'fetchData'
         },
+        computed: {
+            buttonLabel: {
+                get() {
+                    const label = this.id ? 'Save connection' : 'Create new connection';
+                    console.log('Refreshing button cos this.id = ' + this.id + ' so label = ' + label);
+                    return label;
+                }
+            }
+        },
         methods: {
+            resetFields() {
+                Object.assign(this.$data, this.$options.data.call(this));
+            },
             fetchData() {
                 if (!this.id) {
+                    this.resetFields();
                     this.decorateUi();
                     return;
                 }
@@ -213,7 +226,7 @@
                 ApiService.getConnection(this.id,  (err, data) => {
                     this.loading = false;
                     if (err) {
-                        this.error = err.toString();
+                        this.error = err.data.message.toString();
                         return;
                     }
                     this.connection = data;
@@ -230,17 +243,23 @@
 
             save() {
                 this.loading = true;
+                this.error = '';
                 ApiService.saveConnection(this.connection,  (err, data) => {
                     this.loading = false;
                     if (err) {
-                        this.error = err.toString();
+                        this.error = err;
                         return;
                     }
+                    this.successMessage = this.id ? 'All saved!' : 'Connection created';
                     this.connection = data;
                     this.decorateUi();
                 });
 
             }
+        },
+        components: {
+            // <my-component> will only be available in parent's template
+            'Alert': Alert
         }
     }
 </script>
