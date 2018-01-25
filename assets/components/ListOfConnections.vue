@@ -30,7 +30,7 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
     import ApiService from './../ApiService';
 
     export default {
@@ -49,7 +49,7 @@
         methods: {
             fetchData() {
                 this.loading = true;
-                ApiService.getUserDatabaseConnections((err, data) => {
+                ApiService.getUserDatabaseConnections((err: String, data: Object) => {
                     this.loading = false;
                     if (err) {
                         this.error = err.toString();

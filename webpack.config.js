@@ -34,7 +34,7 @@ Encore
         './assets/js_preloaded/welcome_page.js',
         './assets/js_preloaded/session_timeout.js',
 
-        './assets/js/app.js',
+        './assets/js/app.ts',
         //'./assets/components/ListOfConnections.vue',
 
         /*       './assets/js_preloaded/0_common_delete.js',
@@ -70,6 +70,11 @@ Encore
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     //.autoProvidejQuery()
+
+    .enableTypeScriptLoader(function (typeScriptConfigOptions) {
+        typeScriptConfigOptions.transpileOnly = true;
+        //typeScriptConfigOptions.configFileName = './tsconfig.json';
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

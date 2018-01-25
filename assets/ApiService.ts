@@ -6,15 +6,15 @@ class ApiService {
         this.ApiServiceHelper = ApiServiceHelper;
     }
 
-    getUserDatabaseConnections(callback) {
+    getUserDatabaseConnections(callback: Function) {
         this.ApiServiceHelper.get(`http://api.local.dbec3.com/connections`, callback);
     }
 
-    getConnection(id, callback) {
+    getConnection(id: Number, callback: Function) {
         this.ApiServiceHelper.get(`http://api.local.dbec3.com/connection/` + id, callback);
     }
 
-    saveConnection(connection, callback) {
+    saveConnection(connection: Object, callback: Function) {
         const connectionId = connection && connection.db_id || null;
         if (connectionId) {
             this.ApiServiceHelper.patch('http://api.local.dbec3.com/connection/edit', connection, callback);
@@ -23,7 +23,7 @@ class ApiService {
         }
     }
 
-    deleteConnection(connectionId, callback) {
+    deleteConnection(connectionId: Number, callback: Function) {
         if (connectionId) {
             this.ApiServiceHelper.delete('http://api.local.dbec3.com/connection/' + connectionId, callback);
         }

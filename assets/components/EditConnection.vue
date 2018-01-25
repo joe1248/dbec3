@@ -161,7 +161,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import ApiService from './../ApiService';
     import Alert from './Alert';
 
@@ -223,10 +223,10 @@
                 }
                 this.error = this.connection = null;
                 this.loading = true;
-                ApiService.getConnection(this.id,  (err, data) => {
+                ApiService.getConnection(this.id,  (err: String, data: Object) => {
                     this.loading = false;
                     if (err) {
-                        this.error = err.data.message.toString();
+                        this.error = err.toString();
                         return;
                     }
                     this.connection = data;
@@ -244,7 +244,7 @@
             save() {
                 this.loading = true;
                 this.error = '';
-                ApiService.saveConnection(this.connection,  (err, data) => {
+                ApiService.saveConnection(this.connection,  (err: String, data: Object) => {
                     this.loading = false;
                     if (err) {
                         this.error = err;

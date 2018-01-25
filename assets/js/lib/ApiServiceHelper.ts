@@ -5,13 +5,13 @@ class ApiServiceHelper {
     constructor() {
         // this would NOT override, but allso run AFTER all the then/catch in all the methods below
         //  service.interceptors.response.use(this.handleSuccess, this.handleError);
-        
+
         this.service = axios.create({
             //headers: {csrf: 'token'}
         });
     }
 
-    get(path, callback) {
+    get(path: String, callback: Function) {
         return this.service.get(path)
             .then(
                 (response) => callback('', response.data)
@@ -20,7 +20,7 @@ class ApiServiceHelper {
             );
     }
 
-    delete(path, callback) {
+    delete(path: String, callback: Function) {
         return this.service.delete(path)
             .then(
                 (response) => callback('', response.data)
@@ -29,7 +29,7 @@ class ApiServiceHelper {
             );
     }
 
-    patch(path, payload, callback) {
+    patch(path: String, payload: Object, callback: Function) {
         return this.service.request({
                 method: 'PATCH',
                 url: path,
@@ -48,7 +48,7 @@ class ApiServiceHelper {
             })
     }
 
-    post(path, payload, callback) {
+    post(path: String, payload: Object, callback: Function) {
         return this.service.request({
                 method: 'POST',
                 url: path,
