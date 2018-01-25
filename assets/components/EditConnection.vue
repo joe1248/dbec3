@@ -162,104 +162,104 @@
 </template>
 
 <script lang="ts">
-    import ApiService from './../ApiService';
-    import Alert from './Alert';
+import ApiService from './../ApiService';
+import Alert from './Alert';
 
-    export default {
-        props: {
-            id: {
-                //type: Number,
-                //required: true
-            }
-        },
-        data() {
-            return {
-                loading: false,
-                connection: {
-                    db_connection_disabled: false,
-                    db_connection_name: '',
-                    db_id: null,
-                    db_pass_word: '',
-                    db_port_number: '',
-                    db_selected_ftp_id: null,
-                    db_url_host: '',
-                    db_user_name: '',
-                    ftp_connection_name: '',
-                    ftp_pass_word: '',
-                    ftp_port_number: '',
-                    ftp_url_host: '',
-                    ftp_user_name: '',
-                    select_db_protocol: ''
-                },
-                error: null,
-                successMessage: ''
-            }
-        },
-        created() {
-            this.fetchData()
-        },
-        watch: {
-             // call again the method if the route changes
-             '$route': 'fetchData'
-        },
-        computed: {
-            buttonLabel: {
-                get() {
-                    const label = this.id ? 'Save connection' : 'Create new connection';
-                    console.log('Refreshing button cos this.id = ' + this.id + ' so label = ' + label);
-                    return label;
-                }
-            }
-        },
-        methods: {
-            resetFields() {
-                Object.assign(this.$data, this.$options.data.call(this));
+export default {
+    props: {
+        id: {
+            //type: Number,
+            //required: true
+        }
+    },
+    data() {
+        return {
+            loading: false,
+            connection: {
+                db_connection_disabled: false,
+                db_connection_name: '',
+                db_id: null,
+                db_pass_word: '',
+                db_port_number: '',
+                db_selected_ftp_id: null,
+                db_url_host: '',
+                db_user_name: '',
+                ftp_connection_name: '',
+                ftp_pass_word: '',
+                ftp_port_number: '',
+                ftp_url_host: '',
+                ftp_user_name: '',
+                select_db_protocol: ''
             },
-            fetchData() {
-                if (!this.id) {
-                    this.resetFields();
-                    this.decorateUi();
+            error: null,
+            successMessage: ''
+        }
+    },
+    created() {
+        this.fetchData()
+    },
+    watch: {
+         // call again the method if the route changes
+         '$route': 'fetchData'
+    },
+    computed: {
+        buttonLabel: {
+            get() {
+                const label = this.id ? 'Save connection' : 'Create new connection';
+                console.log('Refreshing button cos this.id = ' + this.id + ' so label = ' + label);
+                return label;
+            }
+        }
+    },
+    methods: {
+        resetFields() {
+            Object.assign(this.$data, this.$options.data.call(this));
+        },
+        fetchData() {
+            if (!this.id) {
+                this.resetFields();
+                this.decorateUi();
+                return;
+            }
+            this.error = this.connection = null;
+            this.loading = true;
+            ApiService.getConnection(this.id,  (err: String, data: Object) => {
+                this.loading = false;
+                if (err) {
+                    this.error = err.toString();
                     return;
                 }
-                this.error = this.connection = null;
-                this.loading = true;
-                ApiService.getConnection(this.id,  (err: String, data: Object) => {
-                    this.loading = false;
-                    if (err) {
-                        this.error = err.toString();
-                        return;
-                    }
-                    this.connection = data;
-                    this.decorateUi();
-                });
-             },
+                this.connection = data;
+                this.decorateUi();
+            });
+         },
 
-            decorateUi() {
-                this.$nextTick(function () {
-                    $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
-                    reset_jquery_styles();
-                });
-            },
-
-            save() {
-                this.loading = true;
-                this.error = '';
-                ApiService.saveConnection(this.connection,  (err: String, data: Object) => {
-                    this.loading = false;
-                    if (err) {
-                        this.error = err;
-                        return;
-                    }
-                    this.successMessage = this.id ? 'All saved!' : 'Connection created';
-                    this.connection = data;
-                    this.decorateUi();
-                });
-
-            }
+        decorateUi() {
+            this.$nextTick(function () {
+                $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
+                reset_jquery_styles();
+            });
         },
-        components: {
-            // <my-component> will only be available in parent's template
-            'Alert': Alert
+
+        save() {
+            this.loading = true;
+            this.error = '';
+            ApiService.saveConnection(this.connection,  (err: String, data: Object) => {
+                this.loading = false;
+                if (err) {
+                    this.error = err;
+                    return;
+                }
+                this.successMessage = this.id ? 'All saved!' : 'Connection created';
+                this.connection = data;
+                this.decorateUi();
+            });
+
         }
+    },
+    components: {
+        // <my-component> will only be available in parent's template
+        'Alert': Alert
     }
+}
 </script>

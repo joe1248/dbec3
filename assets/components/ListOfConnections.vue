@@ -31,51 +31,51 @@
 </template>
 
 <script lang="ts">
-    import ApiService from './../ApiService';
+import ApiService from './../ApiService';
 
-    export default {
-        data () {
-            return {
-                loading: false,
-                connections: [],
-                error: null
-            }
+export default {
+    data () {
+        return {
+            loading: false,
+            connections: [],
+            error: null
+        }
+    },
+
+    created() {
+        this.fetchData()
+    },
+
+    methods: {
+        fetchData() {
+            this.loading = true;
+            ApiService.getUserDatabaseConnections((err: string, data: object) => {
+                this.loading = false;
+                if (err) {
+                    this.error = err.toString();
+                    return ;
+                }
+                this.connections = data;
+                this.decorateUi();
+            });
         },
 
-        created() {
-            this.fetchData()
+        decorateUi() {
+            this.$nextTick(function () {
+                reset_jquery_styles();
+            });
         },
 
-        methods: {
-            fetchData() : string {
-                this.loading = true;
-                ApiService.getUserDatabaseConnections((err: string, data: object) => {
-                    this.loading = false;
-                    if (err) {
-                        this.error = err.toString();
-                        return 3;
-                    }
-                    this.connections = data;
-                    this.decorateUi();
-                });
-            },
+        deleteConnection(connection) {
+            ApiService.deleteConnection(connection.db_id, (err) => {
+                if (err) {
+                    this.error = err.toString();
+                    return;
+                }
+                this.fetchData();
+            });
+        }
 
-            decorateUi() {
-                this.$nextTick(function () {
-                    reset_jquery_styles();
-                });
-            },
-
-            deleteConnection(connection) {
-                ApiService.deleteConnection(connection.db_id, (err) => {
-                    if (err) {
-                        this.error = err.toString();
-                        return;
-                    }
-                    this.fetchData();
-                });
-            }
-
-        } // End of methods
-    }
+    } // End of methods
+}
 </script>

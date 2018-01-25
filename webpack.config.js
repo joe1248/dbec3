@@ -72,10 +72,9 @@ Encore
     //.autoProvidejQuery()
 
     .enableTypeScriptLoader(function (typeScriptConfigOptions) {
-        typeScriptConfigOptions.transpileOnly = true;
+        //typeScriptConfigOptions.transpileOnly = true;
         typeScriptConfigOptions.configFile = 'tsconfig.json';
     })
-    // cos pb with Vue internal types...
     .enableForkedTypeScriptTypesChecking()
 ;
 

@@ -15,7 +15,7 @@ class ApiService {
         this.ApiServiceHelper.get(`http://api.local.dbec3.com/connection/` + id, callback);
     }
 
-    saveConnection(connection: any, callback: Function) {
+    saveConnection(connection: UserDbConnection, callback: Function) {
         const connectionId = connection && connection.db_id || null;
         if (connectionId) {
             this.ApiServiceHelper.patch('http://api.local.dbec3.com/connection/edit', connection, callback);
