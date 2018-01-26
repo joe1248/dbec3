@@ -164,7 +164,7 @@
 <script lang="ts">
 import Alert from './Alert';
 import ApiService from './../ApiService';
-
+import Styling from './../js/lib/Styling';
 
 export default {
     props: {
@@ -207,16 +207,16 @@ export default {
         buttonLabel: {
             get() {
                 const label = this.id ? 'Save connection' : 'Create new connection';
-                console.log('Refreshing button cos this.id = ' + this.id + ' so label = ' + label);
+
                 return label;
             }
         }
     },
     methods: {
-        resetFields() {
+        resetFields: function () {
             Object.assign(this.$data, this.$options.data.call(this));
         },
-        fetchData() {
+        fetchData: function () {
             if (!this.id) {
                 this.resetFields();
                 this.decorateUi();
@@ -224,7 +224,7 @@ export default {
             }
             this.error = this.connection = null;
             this.loading = true;
-            ApiService.getConnection(this.id,  (err: String, data: Object) => {
+            ApiService.getConnection(this.id, (err: String, data: Object) => {
                 this.loading = false;
                 if (err) {
                     this.error = err.toString();
@@ -233,19 +233,20 @@ export default {
                 this.connection = data;
                 this.decorateUi();
             });
-         },
+        },
 
-        decorateUi() {
+        decorateUi: function () {
             this.$nextTick(function () {
+                // noinspection TypeScriptUnresolvedFunction
                 $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
-                reset_jquery_styles();
+                Styling.resetStyles();
             });
         },
 
-        save() {
+        save: function () {
             this.loading = true;
             this.error = '';
-            ApiService.saveConnection(this.connection,  (err: String, data: Object) => {
+            ApiService.saveConnection(this.connection, (err: String, data: Object) => {
                 this.loading = false;
                 if (err) {
                     this.error = err;

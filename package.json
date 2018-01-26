@@ -24,6 +24,7 @@
     "test": "jest --coverage"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.0",
     "axios": "^0.17.1",
     "vue": "^2.5.13",
     "vue-loader": "^13.7.0",
@@ -53,7 +54,7 @@
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "./assets/components/*.{js,jsx,vue}",
+      "assets/components/*.{js,jsx,vue}",
       "!**/node_modules/**",
       "!**/vendor/**"
     ]

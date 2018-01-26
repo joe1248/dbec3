@@ -1,9 +1,5 @@
-import $ from "jquery";
-//global.$ = $;
-import 'jquery-ui';
-
 class Styling {
-    reset_styles() {
+    resetStyles() {
         $('.top_tabs').css(			{ 'width':($(window).width() - 179) + 'px'});
         $('.tab_content').css(		{ 'width':($(window).width() - 5) + 'px'});
         $('.tab_content').css(		{ 'height':($(window).height() - 28) + 'px', 'margin-top':'40px'});// DO NOT CHANGE margin top cos scroll bar top too !!
