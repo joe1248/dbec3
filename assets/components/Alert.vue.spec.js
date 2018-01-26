@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
+import { mount, shallow } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
 import Alert from './Alert'
 
 describe('AlertComponent', () => {
@@ -7,7 +7,7 @@ describe('AlertComponent', () => {
 
     test('is a Vue instance', () => {
         expect(wrapper.isVueInstance()).toBeTruthy()
-    })
+    });
 
     test('should have default data', function () {
         let wrapper = mount(Alert);
@@ -28,13 +28,34 @@ describe('AlertComponent', () => {
             "type": undefined
         });
     });
+
+    test('render success properly', function () {
+        const wrapper = shallow(Alert, {
+            propsData: {
+                "msg": 'Well done',
+                "type": 'success'
+            }
+        });
+        expect(wrapper.html()).toBe('<div class="Alert Alert-Success"><p>Well done</p></div>');
+    });
+
+    test('render error properly', function () {
+        const wrapper = shallow(Alert, {
+            propsData: {
+                "msg": 'Unexpected problem',
+                "type": 'error'
+            }
+        });
+        expect(wrapper.html()).toBe('<div class="Alert Alert-Error"><p>Unexpected problem</p></div>');
+    });
+});
 //.toHaveBeenCalledWith(arg1, arg2, ...)
     /*test('throws on octopus', () => {
   expect(() => {
     drinkFlavor('octopus');
   }).toThrow(); or better .toThrowError('Yueck')
 });*/
-});
+
 
 // now look at https://github.com/vuejs/vue-test-utils-jest-example/blob/master/test/List.spec.js
 

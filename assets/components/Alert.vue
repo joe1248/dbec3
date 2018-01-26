@@ -26,8 +26,6 @@
                 show: true
             }
         },
-        props: ['msg', 'type'],
-        ready() {
-        }
+        props: ['msg', 'type']
     }
 </script>
