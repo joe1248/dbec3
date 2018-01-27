@@ -1,3 +1,106 @@
+<script lang="ts">
+import Alert from './Alert';
+import ApiService from './../ApiService';
+import Styling from './../js/lib/Styling';
+
+export default {
+    props: {
+        id: {
+            type: Number,
+            required: false
+        }
+    },
+    data() {
+        return {
+            loading: false,
+            connection: {
+                db_connection_disabled: false,
+                db_connection_name: '',
+                db_id: null,
+                db_pass_word: '',
+                db_port_number: '',
+                db_selected_ftp_id: null,
+                db_url_host: '',
+                db_user_name: '',
+                ftp_connection_name: '',
+                ftp_pass_word: '',
+                ftp_port_number: '',
+                ftp_url_host: '',
+                ftp_user_name: '',
+                select_db_protocol: ''
+            },
+            error: null,
+            successMessage: ''
+        }
+    },
+    created() {
+        this.fetchData()
+    },
+    watch: {
+         '$route': 'fetchData'// call again the method if the route changes
+    },
+    computed: {
+        buttonLabel: {
+            get() {
+                const label = this.id ? 'Save connection' : 'Create new connection';
+                return label;
+            }
+        }
+    },
+    methods: {
+        resetFields: function () {
+            Object.assign(this.$data, this.$options.data.call(this));
+        },
+        fetchData: function () {
+            if (!this.id) {
+                this.resetFields();
+                this.decorateUi();
+                return;
+            }
+            this.error = this.connection = null;
+            this.loading = true;
+            ApiService.getConnection(this.id, (err: String, data: Object) => {
+                this.loading = false;
+                if (err) {
+                    this.error = err.toString();
+                    return;
+                }
+                this.connection = data;
+                this.decorateUi();
+            });
+        },
+
+        decorateUi: function () {
+            this.$nextTick(function () {
+                // noinspection TypeScriptUnresolvedFunction
+                $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
+                Styling.resetStyles();
+            });
+        },
+
+        save: function () {
+            this.loading = true;
+            this.error = '';
+            ApiService.saveConnection(this.connection, (err: String, data: Object) => {
+                this.loading = false;
+                if (err) {
+                    this.error = err;
+                    return;
+                }
+                this.successMessage = this.id ? 'All saved!' : 'Connection created';
+                this.connection = data;
+                this.decorateUi();
+            });
+
+        }
+    },
+    components: {
+        // <my-component> will only be available in parent's template
+        'Alert': Alert
+    }
+}
+</script>
+
 <template>
     <div class="connection">
 
@@ -139,8 +242,8 @@
                                            v-model="connection.ftp_pass_word">
                                 </td>
                                 <td>
-                                <input type="button" class="small-button" id="view_ftp_pass_" value="View">
-                            </td>
+                                    <input type="button" class="small-button" id="view_ftp_pass_" value="View">
+                                </td>
                             </tr>
                             <tr>
                                 <td class="align_right">
@@ -160,108 +263,3 @@
         </form>
     </div>
 </template>
-
-<script lang="ts">
-import Alert from './Alert';
-import ApiService from './../ApiService';
-import Styling from './../js/lib/Styling';
-
-export default {
-    props: {
-        id: {
-            //type: Number,
-            //required: true
-        }
-    },
-    data() {
-        return {
-            loading: false,
-            connection: {
-                db_connection_disabled: false,
-                db_connection_name: '',
-                db_id: null,
-                db_pass_word: '',
-                db_port_number: '',
-                db_selected_ftp_id: null,
-                db_url_host: '',
-                db_user_name: '',
-                ftp_connection_name: '',
-                ftp_pass_word: '',
-                ftp_port_number: '',
-                ftp_url_host: '',
-                ftp_user_name: '',
-                select_db_protocol: ''
-            },
-            error: null,
-            successMessage: ''
-        }
-    },
-    created() {
-        this.fetchData()
-    },
-    watch: {
-         // call again the method if the route changes
-         '$route': 'fetchData'
-    },
-    computed: {
-        buttonLabel: {
-            get() {
-                const label = this.id ? 'Save connection' : 'Create new connection';
-
-                return label;
-            }
-        }
-    },
-    methods: {
-        resetFields: function () {
-            Object.assign(this.$data, this.$options.data.call(this));
-        },
-        fetchData: function () {
-            if (!this.id) {
-                this.resetFields();
-                this.decorateUi();
-                return;
-            }
-            this.error = this.connection = null;
-            this.loading = true;
-            ApiService.getConnection(this.id, (err: String, data: Object) => {
-                this.loading = false;
-                if (err) {
-                    this.error = err.toString();
-                    return;
-                }
-                this.connection = data;
-                this.decorateUi();
-            });
-        },
-
-        decorateUi: function () {
-            this.$nextTick(function () {
-                // noinspection TypeScriptUnresolvedFunction
-                $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
-                Styling.resetStyles();
-            });
-        },
-
-        save: function () {
-            this.loading = true;
-            this.error = '';
-            ApiService.saveConnection(this.connection, (err: String, data: Object) => {
-                this.loading = false;
-                if (err) {
-                    this.error = err;
-                    return;
-                }
-                this.successMessage = this.id ? 'All saved!' : 'Connection created';
-                this.connection = data;
-                this.decorateUi();
-            });
-
-        }
-    },
-    components: {
-        // <my-component> will only be available in parent's template
-        'Alert': Alert
-    }
-}
-</script>
