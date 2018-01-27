@@ -365,6 +365,9 @@ class UserConnectionServiceTest extends TestCase
         $this->assertEquals($expectedFtpConnectionEntity , $dbConnectionUpdated->getSelectedFtp());
     }
 
+    /**
+     * @throws UserInputException
+     */
     public function testUpdateConnectionDbAndFtpUpdatesWillUpdateOneConnectionAndCreateTheOther()
     {
         $input = [

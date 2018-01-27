@@ -198,6 +198,64 @@ JSON;
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
+    public function testPostFailsEvenIfOneParameterMissingThrowUserInputException()
+    {
+        $client = $this->makeClient(true);
+        $parameters = [
+            "db_connection_name" => "my_very_new_test_connection_db",
+            "db_url_host" => "aaa_host1234",
+            "db_user_name" => "aaa_user5678",
+            //"db_pass_word" => "aaa_pass9",
+            "db_port_number" => "1248",
+        ];
+        $client->request(
+            'POST',
+            '/connection/new',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($parameters)
+        );
+
+        $response = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals(
+            '{"status":400,"message":"A required parameter is missing: passWord"}',
+            $client->getResponse()->getContent()
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPostFailsIfCrazyProtocolParamThrowUserInputException()
+    {
+        $client = $this->makeClient(true);
+        $parameters = [
+            "db_connection_name" => "my_very_new_test_connection_db",
+            "db_url_host" => "aaa_host1234",
+            "db_user_name" => "aaa_user5678",
+            "db_pass_word" => "aaa_pass9",
+            "db_port_number" => "1248",
+            "select_db_protocol" => "CRAZY+HERE"
+        ];
+        $client->request(
+            'POST',
+            '/connection/new',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($parameters)
+        );
+
+        $response = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals(
+            '{"status":400,"message":"Invalid input select_db_protocol. ' .
+            'it must be nothing or over_ssh, not: CRAZY+HERE"}',
+            $client->getResponse()->getContent()
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
     public function testGetAllThenPatchFirstOne()
     {
         $this->setUp();

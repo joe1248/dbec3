@@ -201,10 +201,18 @@ class UserConnectionService
      * @param $input
      *
      * @return bool
+     *
+     * @throws UserInputException
      */
     private function hasFtpConnexion(array $input): bool
     {
-        $protocol = $input['select_db_protocol'] ?? 'over_http';
+        $protocol = $input['select_db_protocol'] ?? '';
+
+        if (!in_array($protocol, ['', 'over_ssh'])) {
+            throw new UserInputException(
+                'Invalid input select_db_protocol. it must be nothing or over_ssh, not: ' . $protocol
+            );
+        }
 
         return $protocol == 'over_ssh';
     }

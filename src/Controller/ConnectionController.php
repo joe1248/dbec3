@@ -51,15 +51,7 @@ class ConnectionController extends Controller
 
         $dbAndFtpDetails = $UserConnectionService->getConnectionDbAndFtpDetails($id, $connectionsRepo, $user);
 
-        return new JsonResponse($dbAndFtpDetails);/*
-            array_merge(
-                $dbAndFtpDetails,
-                [
-                    'form_id' => 'form_connection_',
-                    'select_db_protocol' => empty($dbAndFtpDetails['db_selected_ftp_id']) ? '' : 'over_ssh'
-                ]
-            )
-        );*/
+        return new JsonResponse($dbAndFtpDetails);
     }
 
     /**

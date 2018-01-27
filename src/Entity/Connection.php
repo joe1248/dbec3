@@ -220,21 +220,15 @@ class Connection
         return (bool) $this->deleted;
     }
 
-    /**
-     *
-     */
-    public function enable()
+    /*public function enable()
     {
         $this->connectionDisabled = false;
     }
 
-    /**
-     *
-     */
     public function disable()
     {
         $this->connectionDisabled = true;
-    }
+    }*/
 
     /**
      * @return bool
@@ -319,10 +313,6 @@ class Connection
                 ) .
                 join(', ', $missingParameters)
             );
-        }
-
-        if (!in_array($this->connectionGenre, self::VALID_CONNECTIONS_TYPES)) {
-            throw new UserInputException('Invalid connection genre: ' . $this->connectionGenre);
         }
     }
 }
