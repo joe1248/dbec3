@@ -41,22 +41,18 @@ class ConnectionControllerTest extends WebTestCase
 
         $expectedConnections = <<<JSON
 [{
+    "select_db_protocol": "over_ssh",
 	"db_connection_name": "my_test_connection_db",
-	"db_connection_genre": "db",
 	"db_url_host": "aaa_host",
 	"db_user_name": "aaa_user",
 	"db_pass_word": "aaa_pass",
 	"db_port_number": "1234",
 	"db_connection_disabled": false,
-	"db_deleted": false,
     "ftp_connection_name": "my_test_connection_ssh",
-    "ftp_connection_genre": "ssh",
     "ftp_url_host": "bbb_host",
     "ftp_user_name": "bbb_user",
     "ftp_pass_word": "bbb_pass",
-    "ftp_port_number": "5678",
-    "ftp_connection_disabled": false,
-    "ftp_deleted": false
+    "ftp_port_number": "5678"
 }]
 JSON;
         $expectedConnectionOne = json_decode($expectedConnections, true)[0];
@@ -95,22 +91,18 @@ JSON;
         $this->assertTrue($response['success']);
         $expectedResult = <<<JSON
 {
+    "select_db_protocol": "over_ssh",
 	"db_connection_name": "my_test_connection_db",
-	"db_connection_genre": "db",
 	"db_url_host": "aaa_host",
 	"db_user_name": "aaa_user",
 	"db_pass_word": "aaa_pass",
 	"db_port_number": "1234",
 	"db_connection_disabled": false,
-	"db_deleted": true,
     "ftp_connection_name": "my_test_connection_ssh",
-    "ftp_connection_genre": "ssh",
     "ftp_url_host": "bbb_host",
     "ftp_user_name": "bbb_user",
     "ftp_pass_word": "bbb_pass",
-    "ftp_port_number": "5678",
-    "ftp_connection_disabled": false,
-    "ftp_deleted": true
+    "ftp_port_number": "5678"
 }
 JSON;
         $connectionOne = $response['connection'];
@@ -155,14 +147,13 @@ JSON;
         unset($newConnection['db_id']);
         $expectedResult = <<<JSON
 {
+    "select_db_protocol": "",
 	"db_connection_name": "my_very_new_test_connection_db",
-	"db_connection_genre": "db",
 	"db_url_host": "aaa_host1234",
 	"db_user_name": "aaa_user5678",
 	"db_pass_word": "aaa_pass9",
 	"db_port_number": "1248",
-	"db_connection_disabled": false,
-	"db_deleted": false
+	"db_connection_disabled": false
 }
 JSON;
         $this->assertEquals(json_decode($expectedResult, true), $newConnection);
@@ -181,9 +172,7 @@ JSON;
 	"db_pass_word": "aaa_pass9",
 	"db_port_number": "1248",
 	"db_connection_disabled": false,
-	"form_id": "form_connection_",
-	"select_db_protocol": "",
-	"db_selected_ftp_id": 0
+	"select_db_protocol": ""
 }
 JSON;
         $expectedArray = json_decode(str_replace('#NEW_ID#', $newConnectionId, $expectedResult), true);
@@ -221,22 +210,18 @@ JSON;
 
         $expectedConnections = <<<JSON
 [{
+    "select_db_protocol": "over_ssh",
 	"db_connection_name": "my_test_connection_db",
-	"db_connection_genre": "db",
 	"db_url_host": "aaa_host",
 	"db_user_name": "aaa_user",
 	"db_pass_word": "aaa_pass",
 	"db_port_number": "1234",
 	"db_connection_disabled": false,
-	"db_deleted": false,
     "ftp_connection_name": "my_test_connection_ssh",
-    "ftp_connection_genre": "ssh",
     "ftp_url_host": "bbb_host",
     "ftp_user_name": "bbb_user",
     "ftp_pass_word": "bbb_pass",
-    "ftp_port_number": "5678",
-    "ftp_connection_disabled": false,
-    "ftp_deleted": false
+    "ftp_port_number": "5678"
 }]
 JSON;
         $expectedConnectionOne = json_decode($expectedConnections, true)[0];
@@ -280,28 +265,24 @@ JSON;
         $this->assertEquals(2, count($response));
         $this->assertTrue($response['success']);
         $patchedConnection = $response['entity'];
-        $this->assertEquals(18, count($patchedConnection));
+        $this->assertEquals(13, count($patchedConnection));
 
         unset($patchedConnection['db_id']); // id always changing cos dynamically loaded at each test.
         unset($patchedConnection['ftp_id']); // id always changing cos dynamically loaded at each test.
         $expectedConnection = <<<JSON
 {
+    "select_db_protocol": "over_ssh",
 	"db_connection_name": "Test_connection_ONE.",
 	"db_url_host": "localhost",
 	"db_user_name": "db_user",
 	"db_pass_word": "db_password",
 	"db_port_number": 3306,
-    "db_connection_genre": "db",
-    "db_deleted": false,
     "db_connection_disabled": false,
     "ftp_connection_name": "Test_connection_TWO.",
     "ftp_url_host": "example_ssh.com",
     "ftp_user_name": "ssh_user",
     "ftp_pass_word": "ssh_password",
-    "ftp_port_number": 22,
-    "ftp_connection_disabled": false,
-    "ftp_deleted": false,
-    "ftp_connection_genre": "ssh"
+    "ftp_port_number": 22
 }
 JSON;
         $this->assertEquals(json_decode($expectedConnection, true), $patchedConnection);

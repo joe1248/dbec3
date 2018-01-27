@@ -271,52 +271,29 @@ class Connection
     /**
      * @return array
      */
-    public function readAsDbDetails(): array
-    {
-        return [
-            'db_id' => $this->id,
-            'db_connection_name' => $this->connectionName,
-            'db_url_host' => $this->urlHost,
-            'db_user_name' => $this->userName,
-            'db_pass_word' => $this->passWord,
-            'db_port_number' => $this->portNumber,
-            'db_connection_disabled' => $this->isDisabled(),
-            'db_selected_ftp_id' => empty($this->selectedFtp) ? null : $this->selectedFtp->getId(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function readAsFtpDetails(): array
-    {
-        return [
-            'ftp_connection_name' => $this->connectionName,
-            'ftp_url_host' => $this->urlHost,
-            'ftp_user_name' => $this->userName,
-            'ftp_pass_word' => $this->passWord,
-            'ftp_port_number' => $this->portNumber,
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public function getAttributes(): array
     {
         $prefix = $this->connectionGenre == 'db' ? 'db_' : 'ftp_';
-        return array_merge([
-            $prefix . 'id' => $this->id,
-            $prefix . 'connection_name' => $this->connectionName,
-            $prefix . 'connection_genre' => $this->connectionGenre,
-            $prefix . 'url_host' => $this->urlHost,
-            $prefix . 'user_name' => $this->userName,
-            $prefix . 'pass_word' => $this->passWord,
-            $prefix . 'port_number' => $this->portNumber,
-            $prefix . 'connection_disabled' => $this->isDisabled(),
-            $prefix . 'deleted' => $this->isDeleted(),
-        ],
-        empty($this->selectedFtp) ? [] : $this->selectedFtp->getAttributes()
+        $dbOnlyAttributes = $this->connectionGenre != 'db'
+            ? []
+            : array_merge(
+                [
+                    'select_db_protocol' => empty($this->selectedFtp) ? '' : 'over_ssh',
+                    $prefix . 'id' => $this->id,
+                    $prefix . 'connection_disabled' => $this->isDisabled(),
+                ],
+                empty($this->selectedFtp) ? [] : $this->selectedFtp->getAttributes()
+            );
+
+        return array_merge(
+            $dbOnlyAttributes,
+            [
+                $prefix . 'connection_name' => $this->connectionName,
+                $prefix . 'url_host' => $this->urlHost,
+                $prefix . 'user_name' => $this->userName,
+                $prefix . 'pass_word' => $this->passWord,
+                $prefix . 'port_number' => $this->portNumber,
+            ]
         );
     }
 

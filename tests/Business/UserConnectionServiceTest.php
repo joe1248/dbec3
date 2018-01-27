@@ -111,13 +111,14 @@ class UserConnectionServiceTest extends TestCase
 
         $this->assertEquals(
             [
+                'select_db_protocol' => 'over_ssh',
                 'db_id' => 123,
                 'db_connection_name' => 'Test_connection_ONE.',
                 'db_url_host' => 'localhost',
                 'db_user_name' => 'db_user',
                 'db_pass_word' => 'db_password',
                 'db_port_number' => 3306,
-                'db_selected_ftp_id' => 248,
+                //'db_selected_ftp_id' => 248,
                 'ftp_connection_name' => 'Test_connection_TWO.',
                 'ftp_url_host' => 'example_ssh.com',
                 'ftp_user_name' => 'ssh_user',
@@ -152,13 +153,13 @@ class UserConnectionServiceTest extends TestCase
         // assert that your calculator added the numbers correctly!
         $this->assertEquals(
             [
+                'select_db_protocol' => '',
                 'db_id' => 456,
                 'db_connection_name' => 'Test_connection_THREE.',
                 'db_url_host' => 'localhost333',
                 'db_user_name' => 'db_user333',
                 'db_pass_word' => 'db_password333',
                 'db_port_number' => 3306,
-                'db_selected_ftp_id' => 0,
                 'db_connection_disabled' => false,
             ],
             $result
@@ -492,12 +493,12 @@ class UserConnectionServiceTest extends TestCase
             'db_user_name' => 'db_user',
             'db_pass_word' => 'db_password',
             'db_port_number' => 3306,
-            'db_selected_ftp_id' => null,
             'ftp_connection_name' => 'Test_connection_TWO. brand_new',
             'ftp_url_host' => 'example_ssh.com',
             'ftp_user_name' => 'ssh_user',
             'ftp_pass_word' => 'ssh_password',
             'ftp_port_number' => 22,
+            'db_connection_disabled' => false,
         ];
 
 
@@ -513,24 +514,8 @@ class UserConnectionServiceTest extends TestCase
             $dbManager
         );
 
-        // Build expectations as they use objects
-        $this->ftpConnectionParameters['id'] = 555; // SSH connection id : First one to be created
-        $this->ftpConnectionParameters['connection_name'] .= ' brand_new';
-
-        /** @var Connection $expectedFtpConnectionEntity */
-        $expectedFtpConnectionEntity = new Connection($this->ftpConnectionParameters, $this->user);
-
-        $this->dbConnectionParametersA['id'] = 556; // DB id : Second one to be created
-        $this->dbConnectionParametersA['selected_ftp_id'] = $expectedFtpConnectionEntity;
-        $this->dbConnectionParametersA['connection_name'] .= ' brand_new';
-
-        /** @var Connection $expectedDbConnectionEntity1 */
-        $expectedDbConnectionEntity = new Connection($this->dbConnectionParametersA, $this->user);
-
-        $expectedFtpDetails = $expectedFtpConnectionEntity->readAsFtpDetails();
-        $expectedDbDetails = $expectedDbConnectionEntity->readAsDbDetails();
-
-        $this->assertEquals($expectedFtpDetails, $dbConnectionCreated->getSelectedFtp()->readAsFtpDetails());
-        $this->assertEquals($expectedDbDetails, $dbConnectionCreated->readAsDbDetails());
+        $expectation = $input;
+        $expectation['db_id'] = 556;
+        $this->assertEquals($expectation, $dbConnectionCreated->getAttributes());
     }
 }

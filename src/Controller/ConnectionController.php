@@ -30,38 +30,6 @@ class ConnectionController extends Controller
     }
 
     /**
-     * Delete 1 DB connection (if exists, delete linked FTP connection too)
-     *
-     * @param string $id
-     * @param UserConnectionService $UserConnectionService
-     * @param UserInterface $user
-     *
-     * @return JsonResponse
-     */
-    public function delete(
-        string $id,
-        UserConnectionService $UserConnectionService,
-        UserInterface $user
-    ): JsonResponse
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $dbManager = $this->getDoctrine()->getManager();
-        /** @var ConnectionsRepo $connectionsRepo */
-        $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
-
-        $success = $UserConnectionService->deleteDbAndFtpConnection((int) $id, $user, $dbManager, $connectionsRepo);
-
-        /** @var Connection $connection */
-        $connection = $connectionsRepo ->findOneBy(['id' => (int) $id]);
-
-        return new JsonResponse([
-            'success' => $success,
-            'connection' => $connection->getAttributes(),
-        ]);
-    }
-
-    /**
      * Get 1 connection details
      *
      * @param string $id
@@ -83,7 +51,7 @@ class ConnectionController extends Controller
 
         $dbAndFtpDetails = $UserConnectionService->getConnectionDbAndFtpDetails($id, $connectionsRepo, $user);
 
-        return new JsonResponse(
+        return new JsonResponse($dbAndFtpDetails);/*
             array_merge(
                 $dbAndFtpDetails,
                 [
@@ -91,7 +59,7 @@ class ConnectionController extends Controller
                     'select_db_protocol' => empty($dbAndFtpDetails['db_selected_ftp_id']) ? '' : 'over_ssh'
                 ]
             )
-        );
+        );*/
     }
 
     /**
@@ -153,6 +121,38 @@ class ConnectionController extends Controller
         return new JsonResponse([
             'success' => true,
             'entity' => $userConnectionDb->getAttributes()
+        ]);
+    }
+
+    /**
+     * Delete 1 DB connection (if exists, delete linked FTP connection too)
+     *
+     * @param string $id
+     * @param UserConnectionService $UserConnectionService
+     * @param UserInterface $user
+     *
+     * @return JsonResponse
+     */
+    public function delete(
+        string $id,
+        UserConnectionService $UserConnectionService,
+        UserInterface $user
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $dbManager = $this->getDoctrine()->getManager();
+        /** @var ConnectionsRepo $connectionsRepo */
+        $connectionsRepo = $this->getDoctrine()->getRepository(Connection::class);
+
+        $success = $UserConnectionService->deleteDbAndFtpConnection((int) $id, $user, $dbManager, $connectionsRepo);
+
+        /** @var Connection $connection */
+        $connection = $connectionsRepo ->findOneBy(['id' => (int) $id]);
+
+        return new JsonResponse([
+            'success' => $success,
+            'connection' => $connection->getAttributes(),
         ]);
     }
 }

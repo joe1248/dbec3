@@ -34,13 +34,8 @@ class UserConnectionService
                 'No connection found for id ' . $id
             );
         }
-        /** @var Connection $connectionTwo */
-        $connectionTwo = $connectionOne->getSelectedFtp();
 
-        /** @var [] $connectionTwoDetails */
-        $connectionTwoDetails = empty($connectionTwo) ? [] : $connectionTwo->readAsFtpDetails();
-
-        return array_merge($connectionOne->readAsDbDetails(), $connectionTwoDetails);
+        return $connectionOne->getAttributes();
     }
 
     /**
