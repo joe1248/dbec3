@@ -58,48 +58,84 @@ describe('EditConnectionComponent', () => {
         //expect(mockGetConnection).not.toBeCalled();// toHaveBeenCalledTimes(1);
     });
 
-    test('should fetch data', function () {
-        //const wrapper = shallow(EditConnection, { propsData: { id: 555 } });
-        const wrapper = mount(EditConnection, { propsData: { id: 555 } });
+    test('should fetch SUCCESS', function () {
+        const wrapper = shallow(EditConnection, { propsData: { id: 555 } });
         expect(wrapper.vm._data).toMatchObject({
-            loading: true,
-            connection: null,
+            loading: false,
+            connection: {
+                db_id: 555,
+                db_connection_name: 'bingo_test_db_connection_name'
+            },
             error: null,
             successMessage: ''
         });
-        //console.log("\n\n\n\n\n\n\n----------------------------ApiService----------------------------\n\n\n");
-        //console.log(ApiService);
-
-        //expect(mockGetConnection).toHaveBeenCalledTimes(1);
-   //     expect(mockGetConnection).toHaveBeenCalledWith(55);
     });
 
-    /*    test('should have 2 default props empty', function () {
-                let wrapper = mount(EditConnection);
-                expect(wrapper.props()).toMatchObject({
-                    "msg": undefined,
-                    "type": undefined
-                });
-            });
+    test('should fetch FAILS', function () {
+        const wrapper = shallow(EditConnection, { propsData: { id: -1 } });
+        expect(wrapper.vm._data).toMatchObject({
+            loading: false,
+            connection: null,
+            error: "Error on purpose loading connection data",
+            successMessage: ''
+        });
+    });
 
-            test('render success properly', function () {
-                const wrapper = shallow(EditConnection, {
-                    propsData: {
-                        "msg": 'Well done',
-                        "type": 'success'
-                    }
-                });
-                expect(wrapper.html()).toBe('<div class="EditConnection EditConnection-Success"><p>Well done</p></div>');
-            });
+    test('should save SUCCESS updating', function () {
+        const wrapper = shallow(EditConnection, { propsData: { id: 555 } });
+        const saveButton = wrapper.find('#button_to_save_one_connection');
+        saveButton.trigger('click');
+        expect(wrapper.vm._data).toMatchObject({
+            loading: false,
+            connection: {
+                db_id: 555,
+                db_connection_name: 'bingo_test_db_connection_name'
+            },
+            error: '',
+            successMessage: 'All saved!'
+        });
+    });
 
-            test('render error properly', function () {
-                const wrapper = shallow(EditConnection, {
-                    propsData: {
-                        "msg": 'Unexpected problem',
-                        "type": 'error'
-                    }
-                });
-                expect(wrapper.html()).toBe('<div class="EditConnection EditConnection-Error"><p>Unexpected problem</p></div>');
-            });
-            */
+    test('should save SUCCESS creating', function () {
+        const wrapper = shallow(EditConnection, { propsData: { id: null } });
+        const saveButton = wrapper.find('#button_to_save_one_connection');
+        saveButton.trigger('click');
+        expect(wrapper.vm._data).toMatchObject({
+            loading: false,
+            connection: {
+                db_connection_disabled: false,
+                db_connection_name: '',
+                db_id: null,
+                db_pass_word: '',
+                db_port_number: '',
+                db_selected_ftp_id: null,
+                db_url_host: '',
+                db_user_name: '',
+                ftp_connection_name: '',
+                ftp_pass_word: '',
+                ftp_port_number: '',
+                ftp_url_host: '',
+                ftp_user_name: '',
+                select_db_protocol: ''
+            },
+            error: '',
+            successMessage: 'Connection created'
+        });
+    });
+
+    test('should save FAILS', function () {
+        const wrapper = shallow(EditConnection, { propsData: { id: 555 } });
+        const saveButton = wrapper.find('#button_to_save_one_connection');
+        wrapper.vm._data.connection.db_id = -1;
+        saveButton.trigger('click');
+        expect(wrapper.vm._data).toMatchObject({
+            loading: false,
+            connection: {
+                db_id: -1,
+                db_connection_name: 'bingo_test_db_connection_name'
+            },
+            error: 'Error on purpose saving connection data',
+            successMessage: ''
+        });
+    });
 });

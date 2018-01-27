@@ -116,7 +116,7 @@ export default {
                 <input id="button_test_connection_works_" style="display:none;" class="ui-button" type="button" value="Test this connection">&nbsp;&nbsp;&nbsp;
                 <input id="button_to_disable_one_connection_" style="display:none;" class="ui-button" type="button" value="Disable">
                 <input id="button_to_enable_one_connection_"  style="display:none;" class="ui-button" type="button" value="Enable">&nbsp;&nbsp;&nbsp;
-                <input type="button" @click="save" v-bind:value="buttonLabel"/>
+                <input id="button_to_save_one_connection" type="button" @click="save" v-bind:value="buttonLabel"/>
             </div><br>
             <div class="center1 content"><div class="center2"><div class="center3" style="width:750px;"><div>
                 <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div><br><br>

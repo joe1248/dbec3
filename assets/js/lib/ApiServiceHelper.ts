@@ -4,7 +4,7 @@ class ApiServiceHelper {
     service: any;
 
     constructor() {
-        // this would NOT override, but allso run AFTER all the then/catch in all the methods below
+        // this would NOT override, but also run AFTER all the then/catch in all the methods below
         //  service.interceptors.response.use(this.handleSuccess, this.handleError);
 
         this.service = axios.create({
