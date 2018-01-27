@@ -3,37 +3,36 @@ import ListOfConnections from './../components/ListOfConnections'
 import { createRenderer } from 'vue-server-renderer'
 
 jest.mock('./../ApiService');
+import ApiService from './../ApiService';
 
 beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
-    //ApiServiceMock.service.mockClear();
+    //ApiServiceMock.mockReset();
 });
 
 describe('ListOfConnectionsComponent', () => {
 
-    const wrapper = mount(ListOfConnections);
-
     test('is a Vue instance', () => {
+        const wrapper = mount(ListOfConnections);
         expect(wrapper.isVueInstance()).toBeTruthy()
     });
 
-    /*test('should fails on purpose', function () {
-
+    test('should fails on purpose', function () {
+        ApiService.forceFailsGetUserDatabaseConnections = true;
         const wrapper = shallow(ListOfConnections);
-        //wrapper.vm.ApiService.fails == 'DB_IS_BROKEN_TEST';
-        wrapper.vm.fetchData();
         // Match Object
         expect(wrapper.vm._data).toEqual({
             loading: false,
             connections: [],
-            error: null
+            error: 'Error on purpose getting UserDatabaseConnections.'
         });
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         });
-    });*/
+        ApiService.forceFailsGetUserDatabaseConnections = false;
+    });
 
     test('should fetch SUCCESS without any props', function () {
         const wrapper = shallow(ListOfConnections);
@@ -56,7 +55,7 @@ describe('ListOfConnectionsComponent', () => {
         });
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         });
     });
@@ -85,7 +84,7 @@ describe('ListOfConnectionsComponent', () => {
 
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });

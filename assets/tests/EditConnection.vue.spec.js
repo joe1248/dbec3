@@ -4,21 +4,15 @@ import { createRenderer } from 'vue-server-renderer'
 
 jest.mock('./../ApiService');
 
-beforeEach(() => {
-    // Clear all instances and calls to constructor and all methods:
-    //ApiServiceMock.service.mockClear();
-});
-
 describe('EditConnectionComponent', () => {
 
-    const wrapper = mount(EditConnection);
-
     test('is a Vue instance', () => {
+        const wrapper = mount(EditConnection);
         expect(wrapper.isVueInstance()).toBeTruthy()
     });
 
     test('should have default data', function () {
-        let wrapper = mount(EditConnection);
+        const wrapper = mount(EditConnection);
         expect(wrapper.vm._data).toEqual({
             loading: false,
             connection: {
@@ -50,7 +44,7 @@ describe('EditConnectionComponent', () => {
 
         const wrapper = shallow(EditConnection, {
             propsData: {}
-        })
+        });
         expect(wrapper.findAll('input[type="button"]')).toHaveLength(numberOfButtons);
         expect(wrapper.findAll('input[type="password"]')).toHaveLength(numberOfPasswords);
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(numberOfInputs);
@@ -59,7 +53,7 @@ describe('EditConnectionComponent', () => {
         //expect(mockGetConnection).not.toBeCalled();// toHaveBeenCalledTimes(1);
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });
@@ -90,7 +84,7 @@ describe('EditConnectionComponent', () => {
         });
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });
@@ -106,7 +100,7 @@ describe('EditConnectionComponent', () => {
 
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });
@@ -139,7 +133,7 @@ describe('EditConnectionComponent', () => {
 
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });
@@ -172,7 +166,7 @@ describe('EditConnectionComponent', () => {
 
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });
@@ -194,7 +188,7 @@ describe('EditConnectionComponent', () => {
 
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
-            if (err) throw new Error(err)
+            if (err) throw new Error(err.toString());
             expect(str).toMatchSnapshot()
         })
     });

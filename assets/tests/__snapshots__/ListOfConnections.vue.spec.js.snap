@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListOfConnectionsComponent should delete success 1`] = `
+<div id="app" class="centered">
+    <div class="centered" style="width:100%;">
+        <br>
+        <router-link to="[object Object]" tag="button">Add New DB Server</router-link>
+        <br>
+        <br>
+    </div>
+    <fieldset class="fieldset one_line">
+        <legend class="legend">Your DB Servers.</legend>
+        <!---->
+        <table style="width:400px;">
+            <tr>
+                <td class="centered" style="width:20px;">
+                    <div class="connection_statuses"> </div>
+                </td>
+                <td style="text-indent:20px;">nice_test_db_connection_name</td>
+                <td id="td_button_connection_sql_id" class="centered" style="width:55px;">  </td>
+                <td>
+                    <router-link to="[object Object]" tag="button" class="small-button">Edit</router-link>
+                </td>
+                <td>
+                    <button class="small-button deleteConnectionClass">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="centered" style="width:20px;">
+                    <div class="connection_statuses"> </div>
+                </td>
+                <td style="text-indent:20px;">nice_too_test_db_connection_name</td>
+                <td id="td_button_connection_sql_id" class="centered" style="width:55px;">  </td>
+                <td>
+                    <router-link to="[object Object]" tag="button" class="small-button">Edit</router-link>
+                </td>
+                <td>
+                    <button class="small-button deleteConnectionClass">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+`;
+
+exports[`ListOfConnectionsComponent should fails on purpose 1`] = `
+<div id="app" class="centered">
+    <div class="centered" style="width:100%;">
+        <br>
+        <router-link to="[object Object]" tag="button">Add New DB Server</router-link>
+        <br>
+        <br>
+    </div>
+    <fieldset class="fieldset one_line">
+        <legend class="legend">Your DB Servers.</legend>
+        <ul>
+            Error on purpose getting UserDatabaseConnections.
+        </ul>
+        <!---->
+    </fieldset>
+</div>
+`;
+
+exports[`ListOfConnectionsComponent should fetch SUCCESS without any props 1`] = `
+<div id="app" class="centered">
+    <div class="centered" style="width:100%;">
+        <br>
+        <router-link to="[object Object]" tag="button">Add New DB Server</router-link>
+        <br>
+        <br>
+    </div>
+    <fieldset class="fieldset one_line">
+        <legend class="legend">Your DB Servers.</legend>
+        <!---->
+        <table style="width:400px;">
+            <tr>
+                <td class="centered" style="width:20px;">
+                    <div class="connection_statuses"> </div>
+                </td>
+                <td style="text-indent:20px;">nice_test_db_connection_name</td>
+                <td id="td_button_connection_sql_id" class="centered" style="width:55px;">  </td>
+                <td>
+                    <router-link to="[object Object]" tag="button" class="small-button">Edit</router-link>
+                </td>
+                <td>
+                    <button class="small-button deleteConnectionClass">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="centered" style="width:20px;">
+                    <div class="connection_statuses"> </div>
+                </td>
+                <td style="text-indent:20px;">nice_too_test_db_connection_name</td>
+                <td id="td_button_connection_sql_id" class="centered" style="width:55px;">  </td>
+                <td>
+                    <router-link to="[object Object]" tag="button" class="small-button">Edit</router-link>
+                </td>
+                <td>
+                    <button class="small-button deleteConnectionClass">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+`;

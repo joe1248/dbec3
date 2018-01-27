@@ -1,6 +1,7 @@
 class ApiService {
+    forceFailsGetUserDatabaseConnections: boolean = false;
+
     constructor() {
-        //console.log('Mock ApiService: constructor was called');
     }
 
     getConnection(id: Number, callback: Function) {
@@ -43,10 +44,12 @@ class ApiService {
     }
 
     getUserDatabaseConnections(callback: Function) {
-        if (this.fails == 'DB_IS_BROKEN_TEST') {
+        if (this.forceFailsGetUserDatabaseConnections) {
             callback('Error on purpose getting UserDatabaseConnections.');
             return;
         }
+        //console.log("\n\n\n\n\n-------------------------this\n\n");
+        //console.log(this);
         callback(null, [
             {
                 db_connection_disabled: false,

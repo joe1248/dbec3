@@ -1,12 +1,14 @@
+<script lang="ts">
+export default {
+    name: 'Loader',
+    created() {
+    },
+}
+</script>
+
 <template>
     <div class="spinner"></div>
 </template>
-
-<script>
-    export default {
-        name: 'Loader',
-    }
-</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
