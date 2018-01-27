@@ -94,7 +94,6 @@ export default {
         }
     },
     components: {
-        // <my-component> will only be available in parent's template
         'Alert': Alert
     }
 }

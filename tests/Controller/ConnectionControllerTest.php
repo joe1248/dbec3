@@ -49,24 +49,20 @@ class ConnectionControllerTest extends WebTestCase
 	"db_port_number": "1234",
 	"db_connection_disabled": false,
 	"db_deleted": false,
-	"db_selected_ftp": {
-        "ftp_connection_name": "my_test_connection_ssh",
-        "ftp_connection_genre": "ssh",
-        "ftp_url_host": "bbb_host",
-        "ftp_user_name": "bbb_user",
-        "ftp_pass_word": "bbb_pass",
-        "ftp_port_number": "5678",
-        "ftp_connection_disabled": false,
-        "ftp_deleted": false,
-        "ftp_selected_ftp": null
-        
-	}
+    "ftp_connection_name": "my_test_connection_ssh",
+    "ftp_connection_genre": "ssh",
+    "ftp_url_host": "bbb_host",
+    "ftp_user_name": "bbb_user",
+    "ftp_pass_word": "bbb_pass",
+    "ftp_port_number": "5678",
+    "ftp_connection_disabled": false,
+    "ftp_deleted": false
 }]
 JSON;
         $expectedConnectionOne = json_decode($expectedConnections, true)[0];
         $connectionOne = $connections[0];
         unset($connectionOne['db_id']); // id always changing cos dynamically loaded at each test.
-        unset($connectionOne['db_selected_ftp']['ftp_id']); // id always changing cos dynamically loaded at each test.
+        unset($connectionOne['ftp_id']); // id always changing cos dynamically loaded at each test.
         $this->assertEquals(
             $expectedConnectionOne,
             $connectionOne,
@@ -107,23 +103,19 @@ JSON;
 	"db_port_number": "1234",
 	"db_connection_disabled": false,
 	"db_deleted": true,
-	"db_selected_ftp": {
-        "ftp_connection_name": "my_test_connection_ssh",
-        "ftp_connection_genre": "ssh",
-        "ftp_url_host": "bbb_host",
-        "ftp_user_name": "bbb_user",
-        "ftp_pass_word": "bbb_pass",
-        "ftp_port_number": "5678",
-        "ftp_connection_disabled": false,
-        "ftp_deleted": true,
-        "ftp_selected_ftp": null
-        
-	}
+    "ftp_connection_name": "my_test_connection_ssh",
+    "ftp_connection_genre": "ssh",
+    "ftp_url_host": "bbb_host",
+    "ftp_user_name": "bbb_user",
+    "ftp_pass_word": "bbb_pass",
+    "ftp_port_number": "5678",
+    "ftp_connection_disabled": false,
+    "ftp_deleted": true
 }
 JSON;
         $connectionOne = $response['connection'];
         unset($connectionOne['db_id']); // id always changing cos dynamically loaded at each test.
-        unset($connectionOne['db_selected_ftp']['ftp_id']); // id always changing cos dynamically loaded at each test.
+        unset($connectionOne['ftp_id']); // id always changing cos dynamically loaded at each test.
         $this->assertEquals(json_decode($expectedResult, true), $connectionOne);
 
         // so they were deleted fine, now let's check they don't come back
@@ -170,8 +162,7 @@ JSON;
 	"db_pass_word": "aaa_pass9",
 	"db_port_number": "1248",
 	"db_connection_disabled": false,
-	"db_deleted": false,
-	"db_selected_ftp": null
+	"db_deleted": false
 }
 JSON;
         $this->assertEquals(json_decode($expectedResult, true), $newConnection);
@@ -238,24 +229,21 @@ JSON;
 	"db_port_number": "1234",
 	"db_connection_disabled": false,
 	"db_deleted": false,
-	"db_selected_ftp": {
-        "ftp_connection_name": "my_test_connection_ssh",
-        "ftp_connection_genre": "ssh",
-        "ftp_url_host": "bbb_host",
-        "ftp_user_name": "bbb_user",
-        "ftp_pass_word": "bbb_pass",
-        "ftp_port_number": "5678",
-        "ftp_connection_disabled": false,
-        "ftp_deleted": false,
-        "ftp_selected_ftp": null
-	}
+    "ftp_connection_name": "my_test_connection_ssh",
+    "ftp_connection_genre": "ssh",
+    "ftp_url_host": "bbb_host",
+    "ftp_user_name": "bbb_user",
+    "ftp_pass_word": "bbb_pass",
+    "ftp_port_number": "5678",
+    "ftp_connection_disabled": false,
+    "ftp_deleted": false
 }]
 JSON;
         $expectedConnectionOne = json_decode($expectedConnections, true)[0];
         $connectionOne = $connections[0];
         $dbConnectionId = $connectionOne['db_id'];
         unset($connectionOne['db_id']); // id always changing cos dynamically loaded at each test.
-        unset($connectionOne['db_selected_ftp']['ftp_id']); // id always changing cos dynamically loaded at each test.
+        unset($connectionOne['ftp_id']); // id always changing cos dynamically loaded at each test.
         $this->assertEquals(
             $expectedConnectionOne,
             $connectionOne,
@@ -292,10 +280,10 @@ JSON;
         $this->assertEquals(2, count($response));
         $this->assertTrue($response['success']);
         $patchedConnection = $response['entity'];
-        $this->assertEquals(10, count($patchedConnection));
+        $this->assertEquals(18, count($patchedConnection));
 
         unset($patchedConnection['db_id']); // id always changing cos dynamically loaded at each test.
-        unset($patchedConnection['db_selected_ftp']['ftp_id']); // id always changing cos dynamically loaded at each test.
+        unset($patchedConnection['ftp_id']); // id always changing cos dynamically loaded at each test.
         $expectedConnection = <<<JSON
 {
 	"db_connection_name": "Test_connection_ONE.",
@@ -306,17 +294,14 @@ JSON;
     "db_connection_genre": "db",
     "db_deleted": false,
     "db_connection_disabled": false,
-	"db_selected_ftp": {
-        "ftp_connection_name": "Test_connection_TWO.",
-        "ftp_url_host": "example_ssh.com",
-        "ftp_user_name": "ssh_user",
-        "ftp_pass_word": "ssh_password",
-        "ftp_port_number": 22,
-        "ftp_connection_disabled": false,
-        "ftp_deleted": false,
-        "ftp_selected_ftp": null,
-        "ftp_connection_genre": "ssh"
-	}
+    "ftp_connection_name": "Test_connection_TWO.",
+    "ftp_url_host": "example_ssh.com",
+    "ftp_user_name": "ssh_user",
+    "ftp_pass_word": "ssh_password",
+    "ftp_port_number": 22,
+    "ftp_connection_disabled": false,
+    "ftp_deleted": false,
+    "ftp_connection_genre": "ssh"
 }
 JSON;
         $this->assertEquals(json_decode($expectedConnection, true), $patchedConnection);

@@ -101,49 +101,49 @@ class Connection
      *
      * @ORM\Column(name="method", type="string", length=10, nullable=true, options={"default"="''","comment"="nothing means simple, or over_ssh, or pem_file, or pub_key"})
      */
-    private $method = '';
+    //private $method = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="extra", type="string", length=255, nullable=true, options={"default"="''","comment"="USED to store JSON data depending on connection type"})
      */
-    private $extra = '';
+    //private $extra = '';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="api_key", type="string", length=65, nullable=true, options={"default"="'0'"})
      */
-    private $apiKey = '\'0\'';
+    //private $apiKey = '\'0\'';
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="key_date", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $keyDate = null;
+    //private $keyDate = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="my_key", type="string", length=512, nullable=true, options={"default"="NULL"})
      */
-    private $myKey = 'NULL';
+    //private $myKey = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="my_four", type="string", length=512, nullable=true, options={"default"="NULL"})
      */
-    private $myFour = 'NULL';
+    //private $myFour = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="my_pass", type="string", length=512, nullable=true, options={"default"="NULL"})
      */
-    private $myPass = 'NULL';
+    //private $myPass = 'NULL';
 
     /**
      * @var User
@@ -305,7 +305,7 @@ class Connection
     public function getAttributes(): array
     {
         $prefix = $this->connectionGenre == 'db' ? 'db_' : 'ftp_';
-        return [
+        return array_merge([
             $prefix . 'id' => $this->id,
             $prefix . 'connection_name' => $this->connectionName,
             $prefix . 'connection_genre' => $this->connectionGenre,
@@ -315,8 +315,9 @@ class Connection
             $prefix . 'port_number' => $this->portNumber,
             $prefix . 'connection_disabled' => $this->isDisabled(),
             $prefix . 'deleted' => $this->isDeleted(),
-            $prefix . 'selected_ftp' => empty($this->selectedFtp) ? null : $this->selectedFtp->getAttributes()
-        ];
+        ],
+        empty($this->selectedFtp) ? [] : $this->selectedFtp->getAttributes()
+        );
     }
 
     /**
