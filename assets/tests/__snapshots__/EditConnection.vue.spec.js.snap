@@ -1,0 +1,755 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditConnectionComponent should fetch FAILS 1`] = `
+<div class="connection">
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+</div>
+`;
+
+exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
+<div class="connection">
+    <!---->
+    <!---->
+    <!---->
+    <form id="form_connection_">
+        <div class="nobr" style="position:relative;left:32%;width:50%;">
+            <input id="button_test_connection_works_" type="button" value="Test this connection" class="ui-button" style="display:none;">
+            <input id="button_to_disable_one_connection_" type="button" value="Disable" class="ui-button" style="display:none;">
+            <input id="button_to_enable_one_connection_" type="button" value="Enable" class="ui-button" style="display:none;">
+            <input id="button_to_save_one_connection" type="button" value="Save connection">
+        </div>
+        <br>
+        <div class="center1 content">
+            <div class="center2">
+                <div class="center3" style="width:750px;">
+                    <div>
+                        <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div>
+                        <br>
+                        <br>
+                        <div id="edit_connection_jquery_tabs_">
+                            <ul>
+                                <li>
+                                    <a href="#tab_db">Database</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_ssh">SSH</a>
+                                </li>
+                                <li>
+                                    <div style="position:relative;margin-top:6px;width:400px;">
+                                        <label for="select_db_protocol">Choose a type: </label>
+                                        <select id="select_db_protocol" class="ui-button" style="width:250px;">
+                                            <option value="">Over HTTP</option>
+                                            <option value="over_ssh">Over SSH</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div id="tab_db">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="db_connection_name">DB Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="db_connection_name" value="bingo_test_db_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_url_host">DB Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="db_password" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_db_pass" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="tab_ssh">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="ftp_connection_name">SSH Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th> </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_url_host">SSH Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_ftp_pass_" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+`;
+
+exports[`EditConnectionComponent should have default html 1`] = `
+<div class="connection">
+    <!---->
+    <!---->
+    <!---->
+    <form id="form_connection_">
+        <div class="nobr" style="position:relative;left:32%;width:50%;">
+            <input id="button_test_connection_works_" type="button" value="Test this connection" class="ui-button" style="display:none;">
+            <input id="button_to_disable_one_connection_" type="button" value="Disable" class="ui-button" style="display:none;">
+            <input id="button_to_enable_one_connection_" type="button" value="Enable" class="ui-button" style="display:none;">
+            <input id="button_to_save_one_connection" type="button" value="Create new connection">
+        </div>
+        <br>
+        <div class="center1 content">
+            <div class="center2">
+                <div class="center3" style="width:750px;">
+                    <div>
+                        <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div>
+                        <br>
+                        <br>
+                        <div id="edit_connection_jquery_tabs_">
+                            <ul>
+                                <li>
+                                    <a href="#tab_db">Database</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_ssh">SSH</a>
+                                </li>
+                                <li>
+                                    <div style="position:relative;margin-top:6px;width:400px;">
+                                        <label for="select_db_protocol">Choose a type: </label>
+                                        <select id="select_db_protocol" class="ui-button" style="width:250px;">
+                                            <option value="">Over HTTP</option>
+                                            <option value="over_ssh">Over SSH</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div id="tab_db">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="db_connection_name">DB Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="db_connection_name" value="" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_url_host">DB Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="db_password" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_db_pass" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="tab_ssh">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="ftp_connection_name">SSH Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" value="" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th> </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_url_host">SSH Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_ftp_pass_" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+`;
+
+exports[`EditConnectionComponent should save FAILS 1`] = `
+<div class="connection">
+    <!---->
+    <!---->
+    <!---->
+    <form id="form_connection_">
+        <div class="nobr" style="position:relative;left:32%;width:50%;">
+            <input id="button_test_connection_works_" type="button" value="Test this connection" class="ui-button" style="display:none;">
+            <input id="button_to_disable_one_connection_" type="button" value="Disable" class="ui-button" style="display:none;">
+            <input id="button_to_enable_one_connection_" type="button" value="Enable" class="ui-button" style="display:none;">
+            <input id="button_to_save_one_connection" type="button" value="Save connection">
+        </div>
+        <br>
+        <div class="center1 content">
+            <div class="center2">
+                <div class="center3" style="width:750px;">
+                    <div>
+                        <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div>
+                        <br>
+                        <br>
+                        <div id="edit_connection_jquery_tabs_">
+                            <ul>
+                                <li>
+                                    <a href="#tab_db">Database</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_ssh">SSH</a>
+                                </li>
+                                <li>
+                                    <div style="position:relative;margin-top:6px;width:400px;">
+                                        <label for="select_db_protocol">Choose a type: </label>
+                                        <select id="select_db_protocol" class="ui-button" style="width:250px;">
+                                            <option value="">Over HTTP</option>
+                                            <option value="over_ssh">Over SSH</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div id="tab_db">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="db_connection_name">DB Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="db_connection_name" value="bingo_test_db_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_url_host">DB Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="db_password" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_db_pass" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="tab_ssh">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="ftp_connection_name">SSH Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th> </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_url_host">SSH Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_ftp_pass_" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+`;
+
+exports[`EditConnectionComponent should save SUCCESS creating 1`] = `
+<div class="connection">
+    <!---->
+    <!---->
+    <!---->
+    <form id="form_connection_">
+        <div class="nobr" style="position:relative;left:32%;width:50%;">
+            <input id="button_test_connection_works_" type="button" value="Test this connection" class="ui-button" style="display:none;">
+            <input id="button_to_disable_one_connection_" type="button" value="Disable" class="ui-button" style="display:none;">
+            <input id="button_to_enable_one_connection_" type="button" value="Enable" class="ui-button" style="display:none;">
+            <input id="button_to_save_one_connection" type="button" value="Create new connection">
+        </div>
+        <br>
+        <div class="center1 content">
+            <div class="center2">
+                <div class="center3" style="width:750px;">
+                    <div>
+                        <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div>
+                        <br>
+                        <br>
+                        <div id="edit_connection_jquery_tabs_">
+                            <ul>
+                                <li>
+                                    <a href="#tab_db">Database</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_ssh">SSH</a>
+                                </li>
+                                <li>
+                                    <div style="position:relative;margin-top:6px;width:400px;">
+                                        <label for="select_db_protocol">Choose a type: </label>
+                                        <select id="select_db_protocol" class="ui-button" style="width:250px;">
+                                            <option value="">Over HTTP</option>
+                                            <option value="over_ssh">Over SSH</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div id="tab_db">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="db_connection_name">DB Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="db_connection_name" value="" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_url_host">DB Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="db_password" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_db_pass" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="tab_ssh">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="ftp_connection_name">SSH Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" value="" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th> </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_url_host">SSH Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_ftp_pass_" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" value="" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+`;
+
+exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
+<div class="connection">
+    <!---->
+    <!---->
+    <!---->
+    <form id="form_connection_">
+        <div class="nobr" style="position:relative;left:32%;width:50%;">
+            <input id="button_test_connection_works_" type="button" value="Test this connection" class="ui-button" style="display:none;">
+            <input id="button_to_disable_one_connection_" type="button" value="Disable" class="ui-button" style="display:none;">
+            <input id="button_to_enable_one_connection_" type="button" value="Enable" class="ui-button" style="display:none;">
+            <input id="button_to_save_one_connection" type="button" value="Save connection">
+        </div>
+        <br>
+        <div class="center1 content">
+            <div class="center2">
+                <div class="center3" style="width:750px;">
+                    <div>
+                        <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div>
+                        <br>
+                        <br>
+                        <div id="edit_connection_jquery_tabs_">
+                            <ul>
+                                <li>
+                                    <a href="#tab_db">Database</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_ssh">SSH</a>
+                                </li>
+                                <li>
+                                    <div style="position:relative;margin-top:6px;width:400px;">
+                                        <label for="select_db_protocol">Choose a type: </label>
+                                        <select id="select_db_protocol" class="ui-button" style="width:250px;">
+                                            <option value="">Over HTTP</option>
+                                            <option value="over_ssh">Over SSH</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div id="tab_db">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="db_connection_name">DB Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="db_connection_name" value="bingo_test_db_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_url_host">DB Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="db_password" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_db_pass" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="db_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="tab_ssh">
+                                <table class="align_right" style="border-spacing:10px;border-collapse:separate;">
+                                    <tr>
+                                        <th class="align_right">
+                                            <label for="ftp_connection_name">SSH Label</label>
+                                        </th>
+                                        <th>
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                        </th>
+                                        <th> </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_url_host">SSH Host</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_username">User Name</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_password">Password</label>
+                                        </td>
+                                        <td>
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td>
+                                            <input type="button" id="view_ftp_pass_" value="View" class="small-button">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align_right">
+                                            <label for="ftp_port_number">Port Number</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" class="ui-button" style="width:371px;">
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+`;

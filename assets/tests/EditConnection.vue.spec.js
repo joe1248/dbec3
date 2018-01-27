@@ -1,5 +1,6 @@
 import { mount, shallow } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
 import EditConnection from './../components/EditConnection'
+import { createRenderer } from 'vue-server-renderer'
 
 jest.mock('./../ApiService');
 
@@ -56,6 +57,11 @@ describe('EditConnectionComponent', () => {
 
         //expect(mockPlaySoundFile).toHaveBeenCalledWith(coolSoundFileName);
         //expect(mockGetConnection).not.toBeCalled();// toHaveBeenCalledTimes(1);
+        const renderer = createRenderer();
+        renderer.renderToString(wrapper.vm, (err, str) => {
+            if (err) throw new Error(err)
+            expect(str).toMatchSnapshot()
+        })
     });
 
     test('should fetch SUCCESS', function () {
@@ -69,6 +75,12 @@ describe('EditConnectionComponent', () => {
             error: null,
             successMessage: ''
         });
+
+        const renderer = createRenderer();
+        renderer.renderToString(wrapper.vm, (err, str) => {
+            if (err) throw new Error(err)
+            expect(str).toMatchSnapshot()
+        })
     });
 
     test('should fetch FAILS', function () {
@@ -79,6 +91,12 @@ describe('EditConnectionComponent', () => {
             error: "Error on purpose loading connection data",
             successMessage: ''
         });
+
+        const renderer = createRenderer();
+        renderer.renderToString(wrapper.vm, (err, str) => {
+            if (err) throw new Error(err)
+            expect(str).toMatchSnapshot()
+        })
     });
 
     test('should save SUCCESS updating', function () {
@@ -94,6 +112,12 @@ describe('EditConnectionComponent', () => {
             error: '',
             successMessage: 'All saved!'
         });
+
+        const renderer = createRenderer();
+        renderer.renderToString(wrapper.vm, (err, str) => {
+            if (err) throw new Error(err)
+            expect(str).toMatchSnapshot()
+        })
     });
 
     test('should save SUCCESS creating', function () {
@@ -121,6 +145,12 @@ describe('EditConnectionComponent', () => {
             error: '',
             successMessage: 'Connection created'
         });
+
+        const renderer = createRenderer();
+        renderer.renderToString(wrapper.vm, (err, str) => {
+            if (err) throw new Error(err)
+            expect(str).toMatchSnapshot()
+        })
     });
 
     test('should save FAILS', function () {
@@ -137,5 +167,11 @@ describe('EditConnectionComponent', () => {
             error: 'Error on purpose saving connection data',
             successMessage: ''
         });
+
+        const renderer = createRenderer();
+        renderer.renderToString(wrapper.vm, (err, str) => {
+            if (err) throw new Error(err)
+            expect(str).toMatchSnapshot()
+        })
     });
 });
