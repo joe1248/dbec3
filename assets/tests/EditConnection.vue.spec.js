@@ -19,7 +19,7 @@ describe('EditConnectionComponent', () => {
 
     test('should have default data', function () {
         let wrapper = mount(EditConnection);
-        expect(wrapper.vm).toMatchObject({
+        expect(wrapper.vm._data).toEqual({
             loading: false,
             connection: {
                 db_connection_disabled: false,

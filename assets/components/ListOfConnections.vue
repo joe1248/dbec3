@@ -21,7 +21,7 @@
                     <td class="centered" id="td_button_connection_sql_id" style="width:55px;">&nbsp;	</td>
                     <!--<td><input type="button" value="Enable"	html_connection_id="" html_connection_label="" class="small-button button_connection_enable"></td>-->
                     <td><router-link :to="{name: 'EditConnection', params: { id: connection.db_id } }" tag="button" class="small-button">Edit</router-link></td>
-                    <td><button @click="deleteConnection(connection)" class="small-button">Delete</button></td>
+                    <td><button @click="deleteConnection(connection)" class="small-button deleteConnectionClass">Delete</button></td>
                     <!--<td><input type="button" value="Clone"		html_connection_id="" html_connection_label="" class="small-button button_connection_clone"></td>-->
                 </tr>
             </table>
@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import ApiService from './../ApiService';
+import Styling from './../js/lib/Styling.js';
 
 export default {
     data () {
@@ -62,7 +63,7 @@ export default {
 
         decorateUi() {
             this.$nextTick(function () {
-                reset_jquery_styles();
+                Styling.resetStyles();
             });
         },
 

@@ -36,7 +36,7 @@
     "setupFiles": [
       "./assets/tests/setup-jest.js"
     ],
-    "verbose": true,
+    "verbose": false,
     "bail": true,
     "moduleFileExtensions": [
       "ts",

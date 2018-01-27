@@ -1,7 +1,7 @@
 <script lang="ts">
 import Alert from './Alert';
 import ApiService from './../ApiService';
-import Styling from './../js/lib/Styling';
+import Styling from './../js/lib/Styling.js';
 
 export default {
     props: {
@@ -42,8 +42,7 @@ export default {
     computed: {
         buttonLabel: {
             get() {
-                const label = this.id ? 'Save connection' : 'Create new connection';
-                return label;
+                return this.id ? 'Save connection' : 'Create new connection';
             }
         }
     },

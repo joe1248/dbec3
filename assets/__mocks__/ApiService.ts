@@ -3,7 +3,7 @@ class ApiService {
         //console.log('Mock ApiService: constructor was called');
     }
 
-    getConnection(id, callback) {
+    getConnection(id: Number, callback: Function) {
         if (id > 0) {
             callback(null, {
                 db_connection_disabled: false,
@@ -26,12 +26,39 @@ class ApiService {
         callback('Error on purpose loading connection data', {});
     }
 
-    saveConnection(connection, callback) {
+    saveConnection(connection: UserDbConnection, callback: Function) {
         if (connection && connection.db_id >= 0) {
             callback(null, connection);
             return;
         }
         callback('Error on purpose saving connection data', {});
+    }
+
+    deleteConnection(connectionId: Number, callback: Function) {
+        if (connectionId >= 0) {
+            callback(null);
+            return;
+        }
+        callback('Error on purpose deleting connection data');
+    }
+
+    getUserDatabaseConnections(callback: Function) {
+        if (this.fails == 'DB_IS_BROKEN_TEST') {
+            callback('Error on purpose getting UserDatabaseConnections.');
+            return;
+        }
+        callback(null, [
+            {
+                db_connection_disabled: false,
+                db_connection_name: 'nice_test_db_connection_name',
+                db_id: 123
+            },
+            {
+                db_connection_disabled: true,
+                db_connection_name: 'nice_too_test_db_connection_name',
+                db_id: 456
+            }
+        ]);
     }
 }
 export default new ApiService;
