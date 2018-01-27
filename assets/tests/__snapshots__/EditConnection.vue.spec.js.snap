@@ -42,7 +42,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                         <label for="select_db_protocol">Choose a type: </label>
                                         <select id="select_db_protocol" class="ui-button" style="width:250px;">
                                             <option value="">Over HTTP</option>
-                                            <option value="over_ssh">Over SSH</option>
+                                            <option value="over_ssh" selected="selected">Over SSH</option>
                                         </select>
                                     </div>
                                 </li>
@@ -63,7 +63,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="db_url_host">DB Host</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="db_url_host" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" value="db_host" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -72,7 +72,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="db_username">User Name</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" value="db_user" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -81,7 +81,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="db_password">Password</label>
                                         </td>
                                         <td>
-                                            <input type="password" size="50" maxlength="50" id="db_password" class="ui-button" style="width:371px;">
+                                            <input type="password" size="50" maxlength="50" id="db_password" value="db_password_111" class="ui-button" style="width:371px;">
                                         </td>
                                         <td>
                                             <input type="button" id="view_db_pass" value="View" class="small-button">
@@ -92,7 +92,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="db_port_number">Port Number</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="10" id="db_port_number" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" value="3333" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -105,7 +105,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="ftp_connection_name">SSH Label</label>
                                         </th>
                                         <th>
-                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" value="ssh_name" class="ui-button" style="width:371px;background-color:orange;">
                                         </th>
                                         <th> </th>
                                     </tr>
@@ -114,7 +114,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="ftp_url_host">SSH Host</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" value="ssh_host" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -123,7 +123,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="ftp_username">User Name</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" value="ssh_user" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -132,7 +132,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="ftp_password">Password</label>
                                         </td>
                                         <td>
-                                            <input type="password" size="50" maxlength="50" id="ftp_password" class="ui-button" style="width:371px;">
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" value="ssh_pass" class="ui-button" style="width:371px;">
                                         </td>
                                         <td>
                                             <input type="button" id="view_ftp_pass_" value="View" class="small-button">
@@ -143,7 +143,7 @@ exports[`EditConnectionComponent should fetch SUCCESS 1`] = `
                                             <label for="ftp_port_number">Port Number</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" value="22" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -340,7 +340,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                         <label for="select_db_protocol">Choose a type: </label>
                                         <select id="select_db_protocol" class="ui-button" style="width:250px;">
                                             <option value="">Over HTTP</option>
-                                            <option value="over_ssh">Over SSH</option>
+                                            <option value="over_ssh" selected="selected">Over SSH</option>
                                         </select>
                                     </div>
                                 </li>
@@ -361,7 +361,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="db_url_host">DB Host</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="db_url_host" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" value="db_host" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -370,7 +370,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="db_username">User Name</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" value="db_user" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -379,7 +379,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="db_password">Password</label>
                                         </td>
                                         <td>
-                                            <input type="password" size="50" maxlength="50" id="db_password" class="ui-button" style="width:371px;">
+                                            <input type="password" size="50" maxlength="50" id="db_password" value="db_password_111" class="ui-button" style="width:371px;">
                                         </td>
                                         <td>
                                             <input type="button" id="view_db_pass" value="View" class="small-button">
@@ -390,7 +390,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="db_port_number">Port Number</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="10" id="db_port_number" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" value="3333" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -403,7 +403,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="ftp_connection_name">SSH Label</label>
                                         </th>
                                         <th>
-                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" value="ssh_name" class="ui-button" style="width:371px;background-color:orange;">
                                         </th>
                                         <th> </th>
                                     </tr>
@@ -412,7 +412,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="ftp_url_host">SSH Host</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" value="ssh_host" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -421,7 +421,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="ftp_username">User Name</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" value="ssh_user" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -430,7 +430,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="ftp_password">Password</label>
                                         </td>
                                         <td>
-                                            <input type="password" size="50" maxlength="50" id="ftp_password" class="ui-button" style="width:371px;">
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" value="ssh_pass" class="ui-button" style="width:371px;">
                                         </td>
                                         <td>
                                             <input type="button" id="view_ftp_pass_" value="View" class="small-button">
@@ -441,7 +441,7 @@ exports[`EditConnectionComponent should save FAILS 1`] = `
                                             <label for="ftp_port_number">Port Number</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" value="22" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -638,7 +638,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                         <label for="select_db_protocol">Choose a type: </label>
                                         <select id="select_db_protocol" class="ui-button" style="width:250px;">
                                             <option value="">Over HTTP</option>
-                                            <option value="over_ssh">Over SSH</option>
+                                            <option value="over_ssh" selected="selected">Over SSH</option>
                                         </select>
                                     </div>
                                 </li>
@@ -659,7 +659,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="db_url_host">DB Host</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="db_url_host" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="db_url_host" value="db_host" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -668,7 +668,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="db_username">User Name</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="db_username" autocomplete="off" value="db_user" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -677,7 +677,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="db_password">Password</label>
                                         </td>
                                         <td>
-                                            <input type="password" size="50" maxlength="50" id="db_password" class="ui-button" style="width:371px;">
+                                            <input type="password" size="50" maxlength="50" id="db_password" value="db_password_111" class="ui-button" style="width:371px;">
                                         </td>
                                         <td>
                                             <input type="button" id="view_db_pass" value="View" class="small-button">
@@ -688,7 +688,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="db_port_number">Port Number</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="10" id="db_port_number" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="10" id="db_port_number" value="3333" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -701,7 +701,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="ftp_connection_name">SSH Label</label>
                                         </th>
                                         <th>
-                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" class="ui-button" style="width:371px;background-color:orange;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_connection_name" value="ssh_name" class="ui-button" style="width:371px;background-color:orange;">
                                         </th>
                                         <th> </th>
                                     </tr>
@@ -710,7 +710,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="ftp_url_host">SSH Host</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_url_host" value="ssh_host" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -719,7 +719,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="ftp_username">User Name</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="50" id="ftp_username" autocomplete="off" value="ssh_user" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>
@@ -728,7 +728,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="ftp_password">Password</label>
                                         </td>
                                         <td>
-                                            <input type="password" size="50" maxlength="50" id="ftp_password" class="ui-button" style="width:371px;">
+                                            <input type="password" size="50" maxlength="50" id="ftp_password" value="ssh_pass" class="ui-button" style="width:371px;">
                                         </td>
                                         <td>
                                             <input type="button" id="view_ftp_pass_" value="View" class="small-button">
@@ -739,7 +739,7 @@ exports[`EditConnectionComponent should save SUCCESS updating 1`] = `
                                             <label for="ftp_port_number">Port Number</label>
                                         </td>
                                         <td>
-                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" class="ui-button" style="width:371px;">
+                                            <input type="text" size="50" maxlength="10" id="ftp_port_number" value="22" class="ui-button" style="width:371px;">
                                         </td>
                                         <td> </td>
                                     </tr>

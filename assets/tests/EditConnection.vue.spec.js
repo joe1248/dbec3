@@ -66,16 +66,28 @@ describe('EditConnectionComponent', () => {
 
     test('should fetch SUCCESS', function () {
         const wrapper = shallow(EditConnection, { propsData: { id: 555 } });
-        expect(wrapper.vm._data).toMatchObject({
+        // Match Object
+        expect(wrapper.vm._data).toEqual({
             loading: false,
             connection: {
+                db_connection_disabled: false,
+                db_connection_name: 'bingo_test_db_connection_name',
                 db_id: 555,
-                db_connection_name: 'bingo_test_db_connection_name'
+                db_pass_word: 'db_password_111',
+                db_port_number: '3333',
+                db_selected_ftp_id: 777,
+                db_url_host: 'db_host',
+                db_user_name: 'db_user',
+                ftp_connection_name: 'ssh_name',
+                ftp_pass_word: 'ssh_pass',
+                ftp_port_number: '22',
+                ftp_url_host: 'ssh_host',
+                ftp_user_name: 'ssh_user',
+                select_db_protocol: 'over_ssh'
             },
             error: null,
             successMessage: ''
         });
-
         const renderer = createRenderer();
         renderer.renderToString(wrapper.vm, (err, str) => {
             if (err) throw new Error(err)
@@ -85,7 +97,7 @@ describe('EditConnectionComponent', () => {
 
     test('should fetch FAILS', function () {
         const wrapper = shallow(EditConnection, { propsData: { id: -1 } });
-        expect(wrapper.vm._data).toMatchObject({
+        expect(wrapper.vm._data).toEqual({
             loading: false,
             connection: null,
             error: "Error on purpose loading connection data",
@@ -103,11 +115,23 @@ describe('EditConnectionComponent', () => {
         const wrapper = shallow(EditConnection, { propsData: { id: 555 } });
         const saveButton = wrapper.find('#button_to_save_one_connection');
         saveButton.trigger('click');
-        expect(wrapper.vm._data).toMatchObject({
+        expect(wrapper.vm._data).toEqual({
             loading: false,
             connection: {
+                db_connection_disabled: false,
+                db_connection_name: 'bingo_test_db_connection_name',
                 db_id: 555,
-                db_connection_name: 'bingo_test_db_connection_name'
+                db_pass_word: 'db_password_111',
+                db_port_number: '3333',
+                db_selected_ftp_id: 777,
+                db_url_host: 'db_host',
+                db_user_name: 'db_user',
+                ftp_connection_name: 'ssh_name',
+                ftp_pass_word: 'ssh_pass',
+                ftp_port_number: '22',
+                ftp_url_host: 'ssh_host',
+                ftp_user_name: 'ssh_user',
+                select_db_protocol: 'over_ssh'
             },
             error: '',
             successMessage: 'All saved!'
@@ -124,7 +148,7 @@ describe('EditConnectionComponent', () => {
         const wrapper = shallow(EditConnection, { propsData: { id: null } });
         const saveButton = wrapper.find('#button_to_save_one_connection');
         saveButton.trigger('click');
-        expect(wrapper.vm._data).toMatchObject({
+        expect(wrapper.vm._data).toEqual({
             loading: false,
             connection: {
                 db_connection_disabled: false,
