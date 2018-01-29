@@ -67,6 +67,7 @@ export default {
         },
 
         decorateUi() {
+            ;// needed for code coverage
             this.$nextTick(function () {
                 Styling.resetStyles();
             });

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardComponent should have default html 1`] = `
+<div id="menu" style="position:relative;margin-top:100px;">
+    <p>
+        <router-link to="[object Object]">List of connections</router-link>
+    </p>
+    <p>
+        <router-link to="[object Object]">Add new connection</router-link>
+    </p>
+</div>
+`;

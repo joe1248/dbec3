@@ -4,6 +4,7 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production",
+    "fe-test-u": "jest -u",
     "fe-test": "jest --coverage",
     "be-test": "./bin/phpunit --coverage-text --stop-on-failure",
     "test": "jest --coverage && ./bin/phpunit --coverage-text --stop-on-failure",
@@ -56,7 +57,7 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/typescript-babel-jest",
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
-    "mapCoverage": false,
+    "mapCoverage": true,
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
     ],
