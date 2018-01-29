@@ -6,7 +6,7 @@ function Js_Class_Session(){
 	// TODO :  REPLACE GOsession.Gtimeout_session BY server ping at REGULAR intervals !
 	this.Gtimeout_session = null;	// TIMER : create by setTimeout in order to anticipate PHP session ends
 	this.userName = Gsession_user_name;
-	this.uniqueInitialSetup();
+	//this.uniqueInitialSetup();
 	delete this.uniqueInitialSetup;
 }
 

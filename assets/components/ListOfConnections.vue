@@ -1,5 +1,5 @@
 <template>
-<div class="centered" id="app">
+<div class="centered">
     <div style="width:100%;" class="centered">
         <br>
         <router-link :to="{name: 'NewConnection' }" tag="button">Add New DB Server</router-link>
@@ -24,7 +24,12 @@
                 <!--<td><input type="button" value="Clone"		html_connection_id="" html_connection_label="" class="small-button button_connection_clone"></td>-->
             </tr>
         </table>
-        <Loader v-else="!loading"/>
+
+        <span v-else-if="!loading && connections && connections.length === 0"
+              style="margin: 50px; display: block;"
+        >No database connection yet, please add one.</span>
+
+        <Loader v-else="loading"/>
     </fieldset>
 </div>
 </template>

@@ -9,6 +9,10 @@ $(document).ready(function() {
     refresh_jquery_menus();
 
     $("body").fadeIn('slow').delay(1000);
+
+    return;
+
+
     /*$(document).on({
         ajaxStart	: function() { $body.addClass("loading");    },
         ajaxStop	: function() { $body.removeClass("loading"); }
