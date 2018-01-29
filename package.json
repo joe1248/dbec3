@@ -1,8 +1,22 @@
 {
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production",
+    "fe-test": "jest --coverage",
+    "be-test": "./bin/phpunit --coverage-text --stop-on-failure",
+    "test": "jest --coverage && ./bin/phpunit --coverage-text --stop-on-failure",
+    "fe-testx": "jest ",
+    "be-testx": "./bin/phpunit --stop-on-failure",
+    "testx": "jest && ./bin/phpunit --stop-on-failure",
+    "e2e": "cypress open"
+  },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.17.0",
     "babel-jest": "^22.1.0",
     "babel-preset-es2015": "^6.24.1",
+    "cypress": "^1.4.1",
     "fork-ts-checker-webpack-plugin": "^0.3.0",
     "jest": "^22.1.4",
     "jest-serializer-vue": "^0.3.0",
@@ -17,13 +31,6 @@
   },
   "license": "UNLICENSED",
   "private": true,
-  "scripts": {
-    "dev-server": "encore dev-server",
-    "dev": "encore dev",
-    "watch": "encore dev --watch",
-    "build": "encore production",
-    "test": "jest --coverage"
-  },
   "dependencies": {
     "@types/jquery": "^3.3.0",
     "axios": "^0.17.1",
@@ -49,11 +56,11 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/typescript-babel-jest",
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
-    "mapCoverage": true,
+    "mapCoverage": false,
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
     ],
-    "collectCoverage": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
       "assets/components/*.{js,jsx,vue}",
       "!**/node_modules/**",

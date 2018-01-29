@@ -103,5 +103,6 @@
     <orderEntry type="library" name="@types/jest" level="application" />
     <orderEntry type="library" name="@types/jquery" level="application" />
     <orderEntry type="library" name="@types/jqueryui" level="application" />
+    <orderEntry type="library" name="@types/mocha" level="application" />
   </component>
 </module>
