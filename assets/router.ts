@@ -10,20 +10,23 @@ export default new VueRouter({
         {
             path: '/list-of-connections',
             name: 'ListOfConnections',
+            meta: {title: 'Your connections'},
             component: ListOfConnections,
             props: true,
         },
         {
             path: '/edit-connection/:id',
             name: 'EditConnection',
+            meta: {title: 'Edit connection'},
             component: EditConnection,
             props: true,
         },
         {
             path: '/new-connection',
             name: 'NewConnection',
+            meta: {title: 'New connection'},
             component: EditConnection,
             props: false,
         },
-    ],
-})
+    ]
+});
