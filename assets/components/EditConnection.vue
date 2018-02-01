@@ -37,7 +37,15 @@ export default {
         this.fetchData();
     },
     watch: {
-         '$route': 'fetchData'// call again the method if the route changes
+        '$route': 'fetchData', // call again the method if the route changes
+        error: function (val) {
+            Materialize.toast(val, 2000);
+            this.error = null;
+        },
+        successMessage: function (val) {
+            Materialize.toast(val, 2000);
+            this.successMessage = '';
+        }
     },
     computed: {
         buttonLabel: {
@@ -79,7 +87,8 @@ export default {
             });
         },
 
-        save: function () {
+        save: function (e: Event) {
+            e.preventDefault();
             this.loading = true;
             this.error = '';
             ApiService.saveConnection(this.connection, (err: String, data: Object) => {
@@ -94,9 +103,6 @@ export default {
             });
 
         }
-    },
-    components: {
-        'Alert': Alert
     }
 }
 </script>
@@ -104,12 +110,9 @@ export default {
 <template>
     <div class="center" style="width:600px;">
 
-        <div class="loading" v-if="loading">
-            Loading one connection details.
+        <div class="progress" v-if="loading">
+            <div class="indeterminate"></div>
         </div>
-
-        <Alert v-if="error" v-bind:msg="error" type="error"/>
-        <Alert v-if="successMessage" v-bind:msg="successMessage" type="success"/>
 
         <form id="form_connection_" v-if="connection"  autocomplete="off">
             <div class="nobr center">
@@ -119,33 +122,27 @@ export default {
                 <a href="#" id="button_to_save_one_connection" class="btn" @click="save">{{buttonLabel}}</a>
             </div>
 
+            <br>
+            <div style="position: relative; margin-top: 6px; text-indent: 20px; width:400px; display: inline-block;">
+                <label for="select_db_protocol" style="font-size: 1.1rem">Choose the connection protocol: </label>
+                <select style="width:130px; height: 34px; display:inline;"
+                        class="black-text"
+                        id="select_db_protocol"
+                        v-model="connection.select_db_protocol">
+                    <option value=""           >Over HTTP</option>
+                    <option value="over_ssh"   >Over SSH</option>
+                </select>
+            </div>
             <br><br>
-
-            <nav class="nav-extended z-depth-3">
-                <div class="nav-content">
-                    <ul class="tabs tabs-transparent blue lighten-3">
-                        <li class="tab">
-                            <a href="#tab_db" class="active">Database</a>
-                        </li>
-                        <li class="tab"
-                            v-bind:class="{disabled: connection.select_db_protocol !== 'over_ssh'}">
-                            <a href="#tab_ssh">SSH</a>
-                        </li>
-                        <li>
-                            <div style="position: relative; margin-top: 6px; text-indent: 20px; width:400px; display: inline-block;">
-                                <label for="select_db_protocol" style="font-size: 1.1rem">Type: </label>
-                                <select style="width:130px; height: 34px; display:inline;"
-                                        class="black-text"
-                                        id="select_db_protocol"
-                                        v-model="connection.select_db_protocol">
-                                    <option value=""           >Over HTTP</option>
-                                    <option value="over_ssh"   >Over SSH</option>
-                                </select>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <ul class="tabs tabs-transparent blue lighten-3  z-depth-3">
+                <li class="tab">
+                    <a href="#tab_db" class="active">Database</a>
+                </li>
+                <li class="tab"
+                    v-bind:class="{disabled: connection.select_db_protocol !== 'over_ssh'}">
+                    <a href="#tab_ssh">SSH</a>
+                </li>
+            </ul>
 
             <div id="tab_db" class="col s12 z-depth-5">
                 <br>

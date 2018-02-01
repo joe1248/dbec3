@@ -25,7 +25,7 @@ var html_choice_form =    '<br><br><span>How will you use ' + Gapplication_name 
     '<input type="button" id="button_ide_on_own_server" value="On your own server" />' +
     '</h4>';
 
-$(document).ready(function(){
+$(function() {
     var validateEmail = function (email)
     {
         var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
