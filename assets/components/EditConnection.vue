@@ -1,7 +1,7 @@
 <script lang="ts">
 import Alert from './Alert';
 import ApiService from './../ApiService';
-import Styling from './../js/lib/Styling.js';
+import Materialize from 'materialize-css/dist/js/materialize.min.js';
 
 export default {
     props: {
@@ -34,7 +34,7 @@ export default {
         }
     },
     created() {
-        this.fetchData()
+        this.fetchData();
     },
     watch: {
          '$route': 'fetchData'// call again the method if the route changes
@@ -72,8 +72,10 @@ export default {
         decorateUi: function () {
             this.$nextTick(function () {
                 // noinspection TypeScriptUnresolvedFunction
-                $('#edit_connection_jquery_tabs_').tabs(); // Create 2 TABS within edit DB connection screen : DB details on TAB_1 and SSH details on TAB_2.
-                Styling.resetStyles();
+                // Keep the line above in case add new js library not working in settings. (works on immediate next line)
+                // Materialize.sayHelloInSpanish();
+                $('ul.tabs').tabs();
+                Materialize.updateTextFields();
             });
         },
 
@@ -100,7 +102,7 @@ export default {
 </script>
 
 <template>
-    <div class="connection">
+    <div class="center" style="width:600px;">
 
         <div class="loading" v-if="loading">
             Loading one connection details.
@@ -109,155 +111,141 @@ export default {
         <Alert v-if="error" v-bind:msg="error" type="error"/>
         <Alert v-if="successMessage" v-bind:msg="successMessage" type="success"/>
 
-        <form id="form_connection_" v-if="connection">
-            <div class="nobr" style="position:relative;left:32%;width:50%;">
+        <form id="form_connection_" v-if="connection"  autocomplete="off">
+            <div class="nobr center">
                 <input id="button_test_connection_works_" style="display:none;" class="ui-button" type="button" value="Test this connection">&nbsp;&nbsp;&nbsp;
                 <input id="button_to_disable_one_connection_" style="display:none;" class="ui-button" type="button" value="Disable">
                 <input id="button_to_enable_one_connection_"  style="display:none;" class="ui-button" type="button" value="Enable">&nbsp;&nbsp;&nbsp;
-                <input id="button_to_save_one_connection" type="button" @click="save" v-bind:value="buttonLabel"/>
-            </div><br>
-            <div class="center1 content"><div class="center2"><div class="center3" style="width:750px;"><div>
-                <div id="div_for_server_messages_" class="ui-corner-all" style="display:inline-block;line-height:30px;text-align:center;width:550px;"></div><br><br>
+                <a href="#" id="button_to_save_one_connection" class="btn" @click="save">{{buttonLabel}}</a>
+            </div>
 
-                <div id="edit_connection_jquery_tabs_">
+            <br><br>
 
-                    <ul><li><a href="#tab_db">Database</a></li>
-                        <li><a href="#tab_ssh">SSH</a></li>
-                        <li><div style="position: relative; margin-top: 6px; width:400px;">
-                            <label for="select_db_protocol">Choose a type: </label>
-                            <select class="ui-button" style="width:250px;"
-                                    id="select_db_protocol"
-                                    v-model="connection.select_db_protocol">
-                                <option value=""           >Over HTTP</option>
-                                <option value="over_ssh"   >Over SSH</option>
-                            </select>
-                        </div>
+            <nav class="nav-extended z-depth-3">
+                <div class="nav-content">
+                    <ul class="tabs tabs-transparent blue lighten-3">
+                        <li class="tab">
+                            <a href="#tab_db" class="active">Database</a>
+                        </li>
+                        <li class="tab"
+                            v-bind:class="{disabled: connection.select_db_protocol !== 'over_ssh'}">
+                            <a href="#tab_ssh">SSH</a>
+                        </li>
+                        <li>
+                            <div style="position: relative; margin-top: 6px; text-indent: 20px; width:400px; display: inline-block;">
+                                <label for="select_db_protocol" style="font-size: 1.1rem">Type: </label>
+                                <select style="width:130px; height: 34px; display:inline;"
+                                        class="black-text"
+                                        id="select_db_protocol"
+                                        v-model="connection.select_db_protocol">
+                                    <option value=""           >Over HTTP</option>
+                                    <option value="over_ssh"   >Over SSH</option>
+                                </select>
+                            </div>
                         </li>
                     </ul>
-                    <div id="tab_db">
-                        <table class="align_right" style="border-spacing: 10px; border-collapse: separate;">
-                            <tr>
-                                <th class="align_right">
-                                    <label for="db_connection_name">DB Label</label>
-                                </th>
-                                <th>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;background-color:orange;" maxlength="50"
-                                           v-model="connection.db_connection_name"
-                                           id="db_connection_name">
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="db_url_host">DB Host</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;" maxlength="50"
-                                           id="db_url_host"
-                                           v-model="connection.db_url_host">
-                                </td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="db_username">User Name</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;" maxlength="50"
-                                           id="db_username" autocomplete="off"
-                                           v-model="connection.db_user_name">
-                                </td><td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="db_password">Password</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="password" size="50" style="width:371px;" maxlength="50"
-                                           id="db_password"
-                                           v-model="connection.db_pass_word">
+                </div>
+            </nav>
 
-                                </td>
-                                <td>
-                                    <input type="button" class="small-button" id="view_db_pass" value="View">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="db_port_number">Port&nbsp;Number</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;" maxlength="10"
-                                           id="db_port_number"
-                                           v-model="connection.db_port_number">
-                                </td>
-                                <td>&nbsp;</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="tab_ssh">
-                        <table class="align_right" style="border-spacing: 10px; border-collapse: separate;">
-                            <tr>
-                                <th class="align_right">
-                                    <label for="ftp_connection_name">SSH Label</label>
-                                </th>
-                                <th>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;background-color:orange;" maxlength="50"
-                                           id="ftp_connection_name"
-                                           v-model="connection.ftp_connection_name">
-                                </th>
-                                <th>&nbsp;</th>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="ftp_url_host">SSH Host</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;" maxlength="50"
-                                           id="ftp_url_host"
-                                           v-model="connection.ftp_url_host">
-                                </td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="ftp_username">User Name</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;" maxlength="50"
-                                           id="ftp_username" autocomplete="off"
-                                           v-model="connection.ftp_user_name">
-                                </td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="ftp_password">Password</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="password" size="50" style="width:371px;" maxlength="50"
-                                           id="ftp_password"
-                                           v-model="connection.ftp_pass_word">
-                                </td>
-                                <td>
-                                    <input type="button" class="small-button" id="view_ftp_pass_" value="View">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align_right">
-                                    <label for="ftp_port_number">Port&nbsp;Number</label>
-                                </td>
-                                <td>
-                                    <input class="ui-button" type="text" size="50" style="width:371px;" maxlength="10"
-                                           id="ftp_port_number"
-                                           v-model="connection.ftp_port_number">
-                                </td>
-                                <td>&nbsp;</td>
-                            </tr>
-                        </table>
+            <div id="tab_db" class="col s12 z-depth-5">
+                <br>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="db_connection_name">DB Label</label>
+                        <input type="text" size="50" maxlength="50" class="validate"
+                               v-model="connection.db_connection_name"
+                               id="db_connection_name">
                     </div>
                 </div>
-            </div></div></div></div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="db_url_host">DB Host</label>
+                        <input type="text" size="50" maxlength="50" class="validate"
+                               id="db_url_host"
+                               v-model="connection.db_url_host">
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="db_username">User Name</label>
+                        <input type="text" size="50" maxlength="50" class="validate"
+                               v-model="connection.db_user_name"
+                               id="db_username">
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="db_password">Password</label>
+                        <input type="password" size="50" maxlength="50" class="validate"
+                               id="db_password"
+                               v-model="connection.db_pass_word">
+                    </div>
+                    <div class="col s2 offset-s1">
+                        <a href="#" class="btn small" id="view_db_pass">View</a>
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="db_port_number">Port&nbsp;Number</label>
+                        <input type="text" size="10" maxlength="6" class="validate"
+                               placeholder="3306"
+                               id="db_port_number"
+                               v-model="connection.db_port_number">
+                    </div>
+                </div>
+            </div>
+            <div id="tab_ssh" class="col s12 z-depth-5">
+                <br>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="ftp_connection_name">SSH Label</label>
+                        <input type="text" size="50" maxlength="50" class="validate"
+                               v-model="connection.ftp_connection_name"
+                               id="ftp_connection_name">
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="ftp_url_host">SSH Host</label>
+                        <input type="text" size="50" maxlength="50" class="validate"
+                               id="ftp_url_host"
+                               v-model="connection.ftp_url_host">
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="ftp_username">User Name</label>
+                        <input type="text" size="50" maxlength="50" class="validate"
+                               v-model="connection.ftp_user_name"
+                               id="ftp_username">
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="ftp_password">Password</label>
+                        <input type="password" size="50" maxlength="50" class="validate"
+                               id="ftp_password"
+                               v-model="connection.ftp_pass_word">
+                    </div>
+                    <div class="col s2 offset-s1">
+                        <a href="#" class="btn small" id="view_ftp_pass">View</a>
+                    </div>
+                </div>
+                <div class="row slim">
+                    <div class="input-field col s6 offset-s1">
+                        <label for="ftp_port_number">Port&nbsp;Number</label>
+                        <input type="text" size="10" maxlength="6" class="validate"
+                               placeholder="22"
+                               id="ftp_port_number"
+                               v-model="connection.ftp_port_number">
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </template>
+
+<style scoped>
+    .slim { margin-bottom: 0;}
+    *::-moz-placeholder, *::placeholder { color: black;}
+</style>

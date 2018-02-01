@@ -22,8 +22,9 @@ Encore
         //'./assets/js/lib/spin.min.js',
         './assets/js/lib/proto.js',
 
-        './assets/css/lib/jquery-ui.min.css',
-        './assets/css/lib/flick.css',
+        'materialize-css/dist/css/materialize.min.css',
+        //'./assets/css/lib/jquery-ui.min.css',
+        //'./assets/css/lib/flick.css',
         './assets/css/lib/css.css',
     ])
 
