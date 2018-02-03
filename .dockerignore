@@ -1,0 +1,6 @@
+Dockerfile
+.dockerignore
+.ide_beta/
+log/
+node_modules/
+vendor/
