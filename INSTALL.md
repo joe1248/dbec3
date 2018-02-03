@@ -1,15 +1,12 @@
-To build the assets, use the encore executable:
-
-compile assets once
- ./node_modules/.bin/encore dev
-
-watch changes 
- ./node_modules/.bin/encore dev --watch
-
-compile + minify
- ./node_modules/.bin/encore production
+Remove any existing containers:
+docker container rm $(docker container ls --all -q) && docker container ls --all
 
 
- yarn run encore dev
- yarn run encore dev --watch
- yarn run encore production
+
+Build an image
+cd dbec_docker/dbec3
+docker build -t my_dbec3_image .
+
+
+Launch on localhost
+docker run -d -p80:80 --rm --name my_running_container_dbec3 my_dbec3_image
