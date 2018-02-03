@@ -1,3 +1,6 @@
+
+GRANT ALL PRIVILEGES ON db_cloner_dev.* TO 'dbuser'@'%';
+
 -- 1. in IDE, DROP DATABASE db_cloner_test_db;
 -- 2. in console: php bin/console doctrine:database:create
 -- 3. in IDE, execute that file

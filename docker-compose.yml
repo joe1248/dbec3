@@ -10,6 +10,7 @@ services:
   dbec_db:
     image: mariadb
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
     environment:
       - "MYSQL_ROOT_PASSWORD=dbpassword"
       - "MYSQL_USER=dbuser"
@@ -17,3 +18,12 @@ services:
       - "MYSQL_DATABASE=db_cloner_dev"
     ports:
       - "3306:3306"
+    volumes:
+      - ./docker-entrypoint-initdb.d/a_schema.sql:/docker-entrypoint-initdb.d/a_schema.sql
+      - ./docker-entrypoint-initdb.d/b_fixture.sql:/docker-entrypoint-initdb.d/b_fixture.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
