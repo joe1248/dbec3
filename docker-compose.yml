@@ -4,15 +4,15 @@ services:
     build: .
     ports:
         - "80:80"
-    depends_on:
-        - dbec_db
+    links:
+        - my_dbec_db_service
 
-  dbec_db:
+  my_dbec_db_service:
     image: mariadb
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
     environment:
-      - "MYSQL_ROOT_PASSWORD=dbpassword"
+      - "MYSQL_ROOT_PASSWORD=ilkj531665s1dcs6df31asd16"
       - "MYSQL_USER=dbuser"
       - "MYSQL_PASSWORD=dbpassword"
       - "MYSQL_DATABASE=db_cloner_dev"

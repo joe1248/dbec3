@@ -5,7 +5,12 @@ docker container rm $(docker container ls --all -q) && docker container ls --all
 BUILD ALL: App + db + tools
 docker-compose up -d --build
 
-JUST Build an image
+# Get inside the apache server
+winpty docker run -ti --rm my_dbec3_image bash
+# Get inside the MariaDB server
+
+
+#JUST Build an image
 cd dbec_docker/dbec3
 docker build -t my_dbec3_image .
 

@@ -1,4 +1,9 @@
-#  TODO : copy folder by folder from your app, starting by the FE so that npm run dev can be cached if only back is touched.
+#  TODO : check db issues using      mysqld --verbose --help | grep bind-address   ===> fix in my.cnf !
+
+#https://mariadb.com/kb/en/library/configuring-mariadb-for-remote-client-access/
+
+# netstat -tlnp
+# telnet localhost 3306
 #  TODO : install locate comand cos it is practical!
 
 # STEP 0 : Get PHP-cli + APACHE-server, then copy php.ini into the image, then copy the code into the image
@@ -8,6 +13,7 @@ FROM php:7.2-apache
 # STEP 1 : Update OS, add some tools and nodeJS which includes NPM
 RUN apt-get update && apt-get install -y \
     apt-utils \
+    net-tools \
     mysql-client \
     zip \
     unzip \
@@ -32,9 +38,6 @@ COPY composer.lock ./
 # STEP 4: install Back-End dependencies
 RUN composer install --no-interaction --no-scripts --no-autoloader --no-plugins
 
-
-# DO NOT TOUCH ABOVE HERE or you will have to install all the composer deps again...
-
 # STEP 5: Copy NPM files
 COPY package.json ./
 COPY package-lock.json ./
@@ -42,17 +45,15 @@ COPY package-lock.json ./
 # STEP 6: install Front-End dependencies
 RUN npm install --ignore-scripts --unsafe-perm
 
-
-
+# STEP 7: BUILD FRONT-end minimized assets
 COPY assets ./assets
 COPY public ./public
 COPY .babelrc ./
 COPY tsconfig.json ./
 COPY webpack.config.js ./
-# BUILD FRONT-end minimized assets
 RUN npm run dev
 
-# STEP 7: copy confs...
+# STEP 8: copy confs...
     # copy PHP ini file to configure PHP
 COPY docker/php.ini /usr/local/etc/php/conf.d/
     # copy HTTPD.conf ini file to configure Apache
