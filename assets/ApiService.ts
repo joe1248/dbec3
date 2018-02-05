@@ -8,25 +8,25 @@ class ApiService {
     }
 
     getUserDatabaseConnections(callback: Function) {
-        this.ApiServiceHelper.get(`http://api.local.dbec3.com/connections`, callback);
+        this.ApiServiceHelper.get(`/connections`, callback);
     }
 
     getConnection(id: Number, callback: Function) {
-        this.ApiServiceHelper.get(`http://api.local.dbec3.com/connection/` + id, callback);
+        this.ApiServiceHelper.get(`/connection/` + id, callback);
     }
 
     saveConnection(connection: UserDbConnection, callback: Function) {
         const connectionId = connection && connection.db_id || null;
         if (connectionId) {
-            this.ApiServiceHelper.patch('http://api.local.dbec3.com/connection/edit', connection, callback);
+            this.ApiServiceHelper.patch('/connection/edit', connection, callback);
         } else {
-            this.ApiServiceHelper.post('http://api.local.dbec3.com/connection/new', connection, callback);
+            this.ApiServiceHelper.post('/connection/new', connection, callback);
         }
     }
 
     deleteConnection(connectionId: Number, callback: Function) {
         if (connectionId) {
-            this.ApiServiceHelper.erase('http://api.local.dbec3.com/connection/' + connectionId, callback);
+            this.ApiServiceHelper.erase('/connection/' + connectionId, callback);
         }
     }
 }

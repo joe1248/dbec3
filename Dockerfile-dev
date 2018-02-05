@@ -1,0 +1,41 @@
+# Prerequisite :    cd dbec_docker/shared/
+#                   git clone https://github.com/joe1248/dbec3.git
+#                   cd dbec3
+# RUN THIS :        docker-compose up -d --build -f docker-compose-dev.yml
+# post script :     docker exec -it dbec3_my_dbec_web_server_1 install-dev.sh
+
+
+# STEP 0 : Get PHP-cli + APACHE-server, then copy php.ini into the image, then copy the code into the image
+FROM php:7.2-apache
+
+
+# STEP 1 : Update OS, add some tools and nodeJS which includes NPM
+RUN apt-get update && apt-get install -y \
+    apt-utils \
+    net-tools \
+    mysql-client \
+    zip \
+    unzip \
+    unzip \
+    git \
+    wget \
+    gnupg \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs
+
+# STEP 2 : get PHP extensions and composer
+RUN docker-php-ext-install pdo_mysql \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
+	&& chmod +sx /usr/local/bin/composer
+
+# Including apache expires module
+#RUN ln -s /etc/apache2/mods-available/expires.load /etc/apache2/mods-enabled/
+
+# Enabling module headers
+RUN a2enmod headers
+# Enabling module rewrite
+RUN a2enmod rewrite
+
+EXPOSE 80 443

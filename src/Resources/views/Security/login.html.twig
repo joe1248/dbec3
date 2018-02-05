@@ -15,7 +15,7 @@
     {% endif  %}
         <div class="centered center" style="position:relative;top:44px;padding:30px; background-color:#ccc;width:575px;height:234px;opacity: 0.75;filter: alpha(opacity=75);border-radius:175px;">
             <br><br><br><br>
-            <span class="nobr yourLoginFontBig">Welcome At Data Cloner.</span>
+            <span class="nobr yourLoginFontBig">DB Entity Cloner</span>
             <br><br><br>
             <form id="form_to_log_in"
                   method="post"
@@ -23,8 +23,10 @@
                   action="{{ path('login') }}"
             >
                 <input type="text" placeholder="User name or email" name="_username" id="user_name"
+                       style="width: auto;"
                        value="{{ last_username  }}">
-                <input type="password" placeholder="Password" name="_password" id="user_pass">&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="password" placeholder="Password" name="_password" id="user_pass"
+                       style="width: auto;">&nbsp;&nbsp;
                 <input type="button" class="btn btn-primary" id="button_submit_login"
                        value="Sign in">
                 <!--

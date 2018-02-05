@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" promptOnRemoteOverwrite="CHECK_TIMESTAMP" serverName="vagrant dbec3" stopOnFirstError="true" overwriteAll="false" notifyRemoteChanges="true">
+  <component name="PublishConfigData" promptOnRemoteOverwrite="CHECK_TIMESTAMP" stopOnFirstError="true" overwriteAll="false" notifyRemoteChanges="true">
     <serverData>
       <paths name="TNA web app">
         <serverdata>

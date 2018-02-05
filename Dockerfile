@@ -1,10 +1,8 @@
-#  TODO : check db issues using      mysqld --verbose --help | grep bind-address   ===> fix in my.cnf !
+# Prerequisite : git clone dbec,
+# docker build -t my_dbec3_image .
 
-#https://mariadb.com/kb/en/library/configuring-mariadb-for-remote-client-access/
+# docker run -d -p80:80 --rm --name my_dbec_web_server my_dbec3_image
 
-# netstat -tlnp
-# telnet localhost 3306
-#  TODO : install locate comand cos it is practical!
 
 # STEP 0 : Get PHP-cli + APACHE-server, then copy php.ini into the image, then copy the code into the image
 FROM php:7.2-apache

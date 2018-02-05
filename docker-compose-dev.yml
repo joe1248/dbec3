@@ -16,10 +16,13 @@ services:
       - ./docker-entrypoint-initdb.d/b_fixture.sql:/docker-entrypoint-initdb.d/b_fixture.sql
 
   my_dbec_web_server:
-    build: .
-    image: joseph1248/dbec
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
     ports:
       - "80:80"
+    volumes:
+      - .:/var/www/html
     links:
       - my_dbec_database_server
 
