@@ -1,15 +1,12 @@
-/* Requires the Docker Pipeline plugin
-        docker.image('node:6.3').inside {
-            sh 'npm --version'
-        }
-
-
-*/
-node('docker') {
-    checkout scm
-    stage('Build') {
-        docker.image('php').inside {
-            sh 'php --version'
+pipeline {
+    agent {
+        docker { image 'joseph1248/dbec' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
         }
     }
 }
