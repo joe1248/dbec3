@@ -34,15 +34,14 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests/</directory>
+            <directory>tests/Business/</directory>
         </testsuite>
     </testsuites>
 
+    <!-- Filters for code coverage only -->
     <filter>
         <whitelist>
-            <!--directory>./src/Business</directory-->
             <file>./src/Business/UserConnectionService.php</file>
-            <!-- Excluding file>./src/Controller/ConfigController</file-->
             <file>./src/Controller/ConnectionController.php</file>
             <file>./src/Controller/DashboardController.php</file>
             <file>./src/Controller/SecurityController.php</file>

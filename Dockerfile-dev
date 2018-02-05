@@ -10,25 +10,39 @@ FROM php:7.2-apache
 
 
 # STEP 1 : Update OS, add some tools and nodeJS which includes NPM
-RUN apt-get update && apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y \
     apt-utils \
+    # net-tools needed to be able to test network interfaces: netstat -tlnp
     net-tools \
     mysql-client \
     zip \
-    unzip \
+    # libzip-dev needed by docker-php-ext-install zip
+    libzip-dev \
     unzip \
     git \
+    # wget and gnupg need by node.js
     wget \
     gnupg \
     && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get install -y nodejs
 
 # STEP 2 : get PHP extensions and composer
-RUN docker-php-ext-install pdo_mysql \
+RUN docker-php-ext-install \
+    pdo_mysql \
+    # zip extension needed by phpunit
+    zip \
     && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable \
+    xdebug \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
 	&& chmod +sx /usr/local/bin/composer
+
+
+######### DO  NOT EDIT ABOVE as it is a copy of Dockerfile.
+
+
+
 
 # Including apache expires module
 #RUN ln -s /etc/apache2/mods-available/expires.load /etc/apache2/mods-enabled/
