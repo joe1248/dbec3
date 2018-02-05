@@ -1,4 +1,4 @@
-import { mount, shallow } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
+import { mount, shallow } from '@vue/test-utils' // see https://vue-test-utils.vuejs.org
 import Dashboard from './../components/Dashboard'
 import {createRenderer} from "vue-server-renderer";
 

@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
+import { mount } from '@vue/test-utils' // see https://vue-test-utils.vuejs.org
 import Loader from './../components/Loader'
 
 describe('LoaderComponent', () => {
@@ -13,7 +13,9 @@ describe('LoaderComponent', () => {
     });
 
     test('should have default html', function () {
-        expect(wrapper.html()).toBe('<div class="spinner"></div>');
+        expect(wrapper.html()).toBe(
+            "<div class=\"preloader-wrapper big active\"><div class=\"spinner-layer spinner-blue-only\"><div class=\"circle-clipper left\"><div class=\"circle\"></div></div><div class=\"gap-patch\"><div class=\"circle\"></div></div><div class=\"circle-clipper right\"><div class=\"circle\"></div></div></div></div>"
+        );
     });
 
     test('should have no default props', function () {

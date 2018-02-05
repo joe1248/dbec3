@@ -1,4 +1,4 @@
-import { mount, shallow } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
+import { mount, shallow } from '@vue/test-utils' // see https://vue-test-utils.vuejs.org
 import Alert from './../components/Alert'
 
 describe('AlertComponent', () => {

@@ -1,4 +1,4 @@
-import { mount, shallow } from 'vue-test-utils' // see https://vue-test-utils.vuejs.org
+import { mount, shallow } from '@vue/test-utils' // see https://vue-test-utils.vuejs.org
 import EditConnection from './../components/EditConnection'
 import { createRenderer } from 'vue-server-renderer'
 
@@ -37,7 +37,7 @@ describe('EditConnectionComponent', () => {
     });
 
     test('should have default html', function () {
-        const numberOfButtons = 6; // 4 on top + 2 to view passwords in clear.
+        const numberOfButtons = 3; // 1 on top + 2 to view passwords in clear.
         const numberOfPasswords = 2;
         const numberOfInputs = 8;
 

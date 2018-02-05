@@ -35,6 +35,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.0",
     "axios": "^0.17.1",
+    "hammerjs": "^2.0.8",
     "materialize-css": "^0.100.2",
     "vue": "^2.5.13",
     "vue-loader": "^13.7.0",
@@ -44,6 +45,9 @@
   "jest": {
     "setupFiles": [
       "./assets/tests/setup-jest.js"
+    ],
+    "roots": [
+      "./assets/"
     ],
     "verbose": false,
     "bail": true,

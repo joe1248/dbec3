@@ -39,12 +39,18 @@ export default {
     watch: {
         '$route': 'fetchData', // call again the method if the route changes
         error: function (val) {
-            Materialize.toast(val, 2000);
-            this.error = null;
+            if (typeof Materialize.toast == 'function') {
+                Materialize.toast(val, 2000);
+                this.error = null;
+            }
         },
         successMessage: function (val) {
-            Materialize.toast(val, 2000);
-            this.successMessage = '';
+            if (typeof Materialize.toast == 'function') {
+                Materialize.toast(val, 2000);
+                setTimeout(() => {
+                    this.successMessage = '';
+                }, 2000);
+            }
         }
     },
     computed: {
@@ -83,7 +89,9 @@ export default {
                 // Keep the line above in case add new js library not working in settings. (works on immediate next line)
                 // Materialize.sayHelloInSpanish();
                 $('ul.tabs').tabs();
-                Materialize.updateTextFields();
+                if (typeof Materialize.updateTextFields == 'function'){ // bug in materializeCss where updateTextFields is defined in docReady only
+                    Materialize.updateTextFields();
+                }
             });
         },
 
