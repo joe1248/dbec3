@@ -23,6 +23,15 @@ services:
     links:
       - my_dbec_database_server
 
+  my_dbec_jenkins_server:
+    image: jenkins/jenkins:lts
+    restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./vol_jenkins_home:/var/jenkins_home
+
   my_dbec_adminer_server:
     image: adminer
     restart: always

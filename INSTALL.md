@@ -11,14 +11,6 @@ docker-compose up -d --build
  dbec3_my_dbec_database_server_1
  dbec3_my_dbec_web_server_1          
  
-   my_dbec_jenkins_server:
-     image: jenkins/jenkins:lts
-     restart: always
-     ports:
-       - 8080:8080
-       - 50000:50000
-     volumes:
-       - ./vol_jenkins_home:/var/jenkins_home
 
 
 
@@ -69,3 +61,9 @@ configs:
 # netstat -tlnp
 # telnet localhost 3306
 #  TODO : install locate comand cos it is practical!
+
+
+DB:
+/etc/mysql/my.cnf
+apt-get update && apt-get install vim -y
+REtart may be auto upon changes ? /etc/init.d/mysql restart

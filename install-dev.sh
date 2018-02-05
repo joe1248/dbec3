@@ -6,4 +6,6 @@ npm run dev
 cp .env.dist ./.env
 cp docker/php.ini /usr/local/etc/php/conf.d/
 cp docker/httpd.conf /etc/apache2/sites-enabled/000-default.conf
+cp docker/my.cnf /etc/mysql/my.cnf
 
+echo '<?php phpinfo();' > ./public/build/index.php
