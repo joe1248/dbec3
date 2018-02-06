@@ -7,6 +7,8 @@
 # STEP 0 : Get PHP-cli + APACHE-server, then copy php.ini into the image, then copy the code into the image
 FROM php:7.2-apache
 
+# set maintainer
+LABEL maintainer "josephbarban@gmail.com"
 
 # STEP 1 : Update OS, add some tools and nodeJS which includes NPM
 RUN apt-get update \
@@ -36,7 +38,7 @@ RUN docker-php-ext-install \
     xdebug \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
 	&& chmod +sx /usr/local/bin/composer
-
+	
 # STEP 3: Copy composer files
 COPY composer.json ./
 COPY composer.lock ./
