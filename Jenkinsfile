@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'joseph1248:dbec' }
+        dockerfile true
     }
     stages {
         stage('Test') {
