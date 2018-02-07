@@ -7,6 +7,8 @@
 # STEP 0 : Get PHP-cli + APACHE-server, then copy php.ini into the image, then copy the code into the image
 FROM php:7.2-apache
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # set maintainer
 LABEL maintainer "josephbarban@gmail.com"
 
@@ -81,6 +83,11 @@ RUN a2enmod rewrite
 
 # STEP 8 : Copy the App
 COPY . ./
+
+#RUN useradd -s /bin/bash Jenkins
+#works but then permission issues : composer cannot create cahce fodlers not write in vendor...
+# RUN useradd --system -s /sbin/nologin someuser
+#USER someuser
 
 # STEP 9: generate autoloader MUST BE DONE AFTER COPYING THE APP
 RUN composer dump-autoload --optimize
