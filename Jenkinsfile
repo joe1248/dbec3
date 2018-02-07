@@ -3,17 +3,16 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
     }
-    
   }
   stages {
-    stage('Install') {
+    stage('Build') {
       parallel {
-        stage('Composer Install') {
+        stage('Composer') {
           steps {
             sh 'composer install'
           }
         }
-        stage('') {
+        stage('NPM') {
           steps {
             sh 'npm install'
             sh 'npm run dev'
@@ -23,12 +22,12 @@ pipeline {
     }
     stage('Unit-Test') {
       parallel {
-        stage('Front-End Unit-Test') {
+        stage('Front-End') {
           steps {
             sh 'npm run fe-testx'
           }
         }
-        stage('') {
+        stage('Back-End') {
           steps {
             sh 'npm run be-testx'
           }
