@@ -14,19 +14,25 @@ pipeline {
                 sh 'composer install'
             }
         }
-        stage('Back-End Unit-Test') {
-            steps {
-                sh './bin/phpunit --stop-on-failure'
-            }
-        }
         stage('NPM Install') {
             steps {
                 sh 'npm install'
             }
         }
+        stage('NPM Package') {
+            steps {
+                sh 'npm run dev'
+            }
+        }
         stage('Front-End Unit-Test') {
             steps {
                 sh 'npm run fe-testx'
+            }
+        }
+        stage('Back-End Unit-Test + Functional') {
+            steps {
+                //sh './bin/phpunit --stop-on-failure'
+				sh 'npm run be-testx'
             }
         }
     }
