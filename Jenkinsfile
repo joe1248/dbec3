@@ -1,39 +1,42 @@
-#!groovy
-
 pipeline {
-	options {
-		// Only keep the 2 most recent builds
-		buildDiscarder(logRotator(numToKeepStr:'2'))
-	}
-    agent {
-        dockerfile true
+  agent {
+    dockerfile {
+      filename 'Dockerfile'
     }
-    stages {
+    
+  }
+  stages {
+    stage('Install') {
+      parallel {
         stage('Composer Install') {
-            steps {
-                sh 'composer install'
-            }
+          steps {
+            sh 'composer install'
+          }
         }
-        stage('NPM Install') {
-            steps {
-                sh 'npm install'
-            }
+        stage('') {
+          steps {
+            sh 'npm install'
+            sh 'npm run dev'
+          }
         }
-        stage('NPM Package') {
-            steps {
-                sh 'npm run dev'
-            }
-        }
-        stage('Front-End Unit-Test') {
-            steps {
-                sh 'npm run fe-testx'
-            }
-        }
-        stage('Back-End Unit-Test + Functional') {
-            steps {
-                //sh './bin/phpunit --stop-on-failure'
-				sh 'npm run be-testx'
-            }
-        }
+      }
     }
+    stage('Unit-Test') {
+      parallel {
+        stage('Front-End Unit-Test') {
+          steps {
+            sh 'npm run fe-testx'
+          }
+        }
+        stage('') {
+          steps {
+            sh 'npm run be-testx'
+          }
+        }
+      }
+    }
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '2'))
+  }
 }
