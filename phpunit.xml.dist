@@ -28,13 +28,13 @@
         <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->
         <!-- For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db" -->
         <!-- Configure your db driver and server_version in config/packages/doctrine.yaml -->
-        <env name="DATABASE_URL" value="mysql://dbuser:dbpassword@my_dbec_database_server:3306/db_cloner_dev"/>
+        <env name="DATABASE_URL" value="mysql://db_cloner_user:oVG6[o2fo}QD@foreignkeywizard.com:3306/db_cloner_test"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
     </php>
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests/Business/</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 
