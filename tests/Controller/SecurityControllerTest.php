@@ -32,7 +32,11 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/login');
-		$this->assertContains('<meta name="author" content="Joseph Barban">', $client->getResponse()->getContent());
+		$this->assertContains(
+			'<meta name="author" content="Joseph Barban">',
+			$client->getResponse()->getContent(),
+			'You need to check : C:\Users\Victoria\dbec_docker\vol_jenkins_home\workspace\DBEC_job_master-...\var\log\test.log'
+		);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
